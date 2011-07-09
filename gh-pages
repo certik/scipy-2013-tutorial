@@ -1,0 +1,9 @@
+#!/bin/bash
+
+rm -rf html
+cp -r build/html .
+cd html
+sphinxtogithub --verbose .
+cd ..
+git add html
+git ci -m "Update"
