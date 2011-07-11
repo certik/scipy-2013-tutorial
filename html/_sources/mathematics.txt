@@ -8,11 +8,10 @@ Mathematical problem solving with SymPy
 Knowing the basics of SymPy, let's now solve several mathematical problems
 with it. The level of difficulty of examples in this section varies from
 simple symbolic manipulation to theorem proving in algebraic geometry.
-
-Each section includes a short theoretical background, that explains all
-mathematical knowledge needed to understand a particular example. Code
-examples and size of problems were adjusted to make them unobtrusive to
-tutorial readers and make it possible to run them even on mobile devices.
+Each section includes a short theoretical background, that introduces
+mathematics needed to understand a particular example. Code examples and
+size of problems were adjusted to make them unobtrusive to tutorial
+readers and make it possible to run them even on mobile devices.
 
 Partial fraction decomposition
 ==============================
@@ -39,8 +38,7 @@ rationals) of `q`:
 
 If `p` and `q` aren't co-prime, we can use :func:`cancel` to remove common
 factors and if `\deg(p) >= \deg(q)`, then :func:`div` can be used to extract
-the polynomial part of partial fraction expansion of `f` and reduce the degree
-of `p`.
+the polynomial part of `f` and reduce the degree of `p`.
 
 Suppose we would like to compute partial fraction decomposition of::
 

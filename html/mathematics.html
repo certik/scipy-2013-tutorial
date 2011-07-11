@@ -26,6 +26,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
     <link rel="top" title="Guide to symbolic mathematics with SymPy 1.0 documentation" href="index.html" />
     <link rel="prev" title="Introduction to SymPy" href="introduction.html" /> 
   </head>
@@ -52,11 +53,11 @@
 <h1>Mathematical problem solving with SymPy<a class="headerlink" href="#mathematical-problem-solving-with-sympy" title="Permalink to this headline">¶</a></h1>
 <p>Knowing the basics of SymPy, let&#8217;s now solve several mathematical problems
 with it. The level of difficulty of examples in this section varies from
-simple symbolic manipulation to theorem proving in algebraic geometry.</p>
-<p>Each section includes a short theoretical background, that explains all
-mathematical knowledge needed to understand a particular example. Code
-examples and size of problems were adjusted to make them unobtrusive to
-tutorial readers and make it possible to run them even on mobile devices.</p>
+simple symbolic manipulation to theorem proving in algebraic geometry.
+Each section includes a short theoretical background, that introduces
+mathematics needed to understand a particular example. Code examples and
+size of problems were adjusted to make them unobtrusive to tutorial
+readers and make it possible to run them even on mobile devices.</p>
 <div class="section" id="partial-fraction-decomposition">
 <h2>Partial fraction decomposition<a class="headerlink" href="#partial-fraction-decomposition" title="Permalink to this headline">¶</a></h2>
 <p>The partial fraction decomposition of a univariate rational function:</p>
@@ -72,8 +73,7 @@ rationals) of <span class="math">\(q\)</span>:</p>
 \[q(x) = \prod_{i=1}^k q_i^{n_i}\]</div>
 <p>If <span class="math">\(p\)</span> and <span class="math">\(q\)</span> aren&#8217;t co-prime, we can use <tt class="xref py py-func docutils literal"><span class="pre">cancel()</span></tt> to remove common
 factors and if <span class="math">\(\deg(p) &gt;= \deg(q)\)</span>, then <tt class="xref py py-func docutils literal"><span class="pre">div()</span></tt> can be used to extract
-the polynomial part of partial fraction expansion of <span class="math">\(f\)</span> and reduce the degree
-of <span class="math">\(p\)</span>.</p>
+the polynomial part of <span class="math">\(f\)</span> and reduce the degree of <span class="math">\(p\)</span>.</p>
 <p>Suppose we would like to compute partial fraction decomposition of:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span>
