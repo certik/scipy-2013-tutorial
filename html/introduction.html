@@ -522,8 +522,8 @@ SymPy&#8217;s classes:</p>
 this expression in a different way? Write a function that could generate an
 expression for <span class="math">\(1 + x + x^2 + \ldots + x^n\)</span> for any integer <span class="math">\(n &gt;= 0\)</span>. Extend
 this function to allow <span class="math">\(n &lt; 0\)</span>.</li>
-<li>Write a function that can compute nested powers, e.g. <span class="math">\(x^x\)</span>, <span class="math">\(x^x^x\)</span> and so
-on. The function should take two parameters: an expression and a positive
+<li>Write a function that can compute nested powers, e.g. <span class="math">\(x^x\)</span>, <span class="math">\(x^{x^x}\)</span> and
+so on. The function should take two parameters: an expression and a positive
 integer <span class="math">\(n\)</span> that specifies the depth.</li>
 </ol>
 </div>
@@ -616,8 +616,6 @@ includes:</p>
 <span class="go">  /   k</span>
 <span class="go"> /__,</span>
 <span class="go">k = 1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Product</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
-<span class="go">Product(1/k, k, 1, n)</span>
 </pre></div>
 </div>
 </li>
@@ -645,6 +643,152 @@ an action assigned to to a &#8220;big&#8221; operator (it differentiates, integr
 etc.). Take advantage of <tt class="xref py py-func docutils literal"><span class="pre">doit()</span></tt> and write a function that generates
 integral tables for a few polynomials, rational functions and elementary
 functions.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="foreign-types-in-sympy">
+<h3>Foreign types in SymPy<a class="headerlink" href="#foreign-types-in-sympy" title="Permalink to this headline">¶</a></h3>
+<p>SymPy internally expects that all objects it works with are instances of
+subclasses of <tt class="xref py py-class docutils literal"><span class="pre">Basic</span></tt> class. So why <tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></tt> works without raising
+any exceptions? The number <tt class="docutils literal"><span class="pre">1</span></tt> is not a SymPy&#8217;s type, but:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">&lt;type &#39;int&#39;&gt;</span>
+</pre></div>
+</div>
+<p>it&#8217;s a built-in type. SymPy implements <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> function for the task
+of converting foreign types to SymPy&#8217;s types (yes, Python&#8217;s built-in types
+are also considered as foreign). All SymPy&#8217;s classes, methods and functions
+use <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> and this is the reason you can safely write <tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></tt>
+instead of more verbose and less convenient <tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">Integer(1)</span></tt>. Note that
+not all functions return instances of SymPy&#8217;s types. Usually, if a function
+is supposed to return a property of an expression, it will use built-in
+Python&#8217;s types, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Poly</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">degree</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;type &#39;int&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Now see what <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> can do. Let&#8217;s start with built-ins:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.One&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="mi">117</span><span class="p">)</span>
+<span class="go">117</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Integer&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="go">0.500000000000000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Float&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">fractions</span> <span class="kn">import</span> <span class="n">Fraction</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">1/2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Rational&#39;&gt;</span>
+</pre></div>
+</div>
+<p>SymPy implements explicit sympification rules, heuristics based on <tt class="docutils literal"><span class="pre">__int__</span></tt>,
+<tt class="docutils literal"><span class="pre">__float__</span></tt> and other attributes, and in the worst case scenario it falls
+back to parsing string representation of an object. This usually works fine,
+but sometimes <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> can be wrong:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gmpy</span> <span class="kn">import</span> <span class="n">mpz</span><span class="p">,</span> <span class="n">mpq</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">mpz</span><span class="p">(</span><span class="mi">117</span><span class="p">))</span>
+<span class="go">117.000000000000</span>
+<span class="go">&gt;&gt;&gt;&gt; type(_)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Float&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">mpq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">0.500000000000000</span>
+<span class="go">&gt;&gt;&gt;&gt; type(_)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Float&#39;&gt;</span>
+</pre></div>
+</div>
+<p>This happens because <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> doesn&#8217;t know about neither <tt class="docutils literal"><span class="pre">mpz</span></tt> nor
+<tt class="docutils literal"><span class="pre">mpq</span></tt>, and it first looks for <tt class="docutils literal"><span class="pre">__float__</span></tt> attribute, which is implemented
+by both those types. Getting float for exact value isn&#8217;t very useful so let&#8217;s
+extend <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> and add support for <tt class="docutils literal"><span class="pre">mpz</span></tt>. The way to achieve this
+is to add a new entry to <tt class="docutils literal"><span class="pre">converter</span></tt> dictionary. <tt class="docutils literal"><span class="pre">converter</span></tt> takes types
+as keys and sympification functions as values. Before we extend this <tt class="docutils literal"><span class="pre">dict</span></tt>,
+we have to resolve a little problem with <tt class="docutils literal"><span class="pre">mpz</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mpz</span>
+<span class="go">&lt;built-in function mpz&gt;</span>
+</pre></div>
+</div>
+<p>which isn&#8217;t a type but a function. We can use a little trick here and take
+the type of some <tt class="docutils literal"><span class="pre">mpz</span></tt> object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">mpz</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">&lt;type &#39;mpz&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Let&#8217;s now add an entry to <tt class="docutils literal"><span class="pre">converter</span></tt> for <tt class="docutils literal"><span class="pre">mpz</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy.core.sympify</span> <span class="kn">import</span> <span class="n">converter</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">mpz_to_Integer</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">Integer</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+<span class="gp">...</span>
+<span class="gp">...</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">mpz</span><span class="p">(</span><span class="mi">1</span><span class="p">))]</span> <span class="o">=</span> <span class="n">mpz_to_Integer</span>
+</pre></div>
+</div>
+<p>We could use <tt class="docutils literal"><span class="pre">lambda</span></tt> as well. Now we can sympify <tt class="docutils literal"><span class="pre">mpz</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">mpz</span><span class="p">(</span><span class="mi">117</span><span class="p">))</span>
+<span class="go">117</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Integer&#39;</span>
+</pre></div>
+</div>
+<p>Similar thing should be done for <tt class="docutils literal"><span class="pre">mpq</span></tt>. Let&#8217;s try one more type:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ar</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">ar</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">ar</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="nc">SympifyError: SympifyError</span>: <span class="n-Identifier">&quot;could not parse u&#39;[1 2 3]&#39;&quot;</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> isn&#8217;t aware of <tt class="docutils literal"><span class="pre">numpy.ndarray</span></tt> and heuristics didn&#8217;t work,
+so it computed string representation of <tt class="docutils literal"><span class="pre">ar</span></tt> using <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a> and tried
+to parse is, which failed because:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">ar</span><span class="p">)</span>
+<span class="go">[1 2 3]</span>
+</pre></div>
+</div>
+<p>We might be tempted to add support for <tt class="docutils literal"><span class="pre">numpy.ndarray</span></tt> to <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt>
+by treating NumPy&#8217;s arrays (at least a subset of) as SymPy&#8217;s matrices, but
+matrices aren&#8217;t sympifiable:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Matrix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">)</span>
+<span class="go">⎡0  1  2⎤</span>
+<span class="go">⎢       ⎥</span>
+<span class="go">⎢1  2  3⎥</span>
+<span class="go">⎢       ⎥</span>
+<span class="go">⎣2  3  4⎦</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="nc">SympifyError: SympifyError</span>: <span class="n-Identifier">&#39;Matrix cannot be sympified&#39;</span>
+</pre></div>
+</div>
+<p>We will explain this odd behavior later.</p>
+<div class="section" id="id2">
+<h4>Tasks<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li>Add support for <tt class="docutils literal"><span class="pre">mpq</span></tt> to <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt>.</li>
+<li>SymPy implements <tt class="xref py py-class docutils literal"><span class="pre">Tuple</span></tt> class, which provides functionality of
+Python&#8217;s built-in <tt class="docutils literal"><span class="pre">tuple</span></tt>, but is a subclass of <tt class="xref py py-class docutils literal"><span class="pre">Basic</span></tt>. Take
+advantage of this and make <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> work for 1D horizontal NumPy
+arrays, for which it should return instances of <tt class="xref py py-class docutils literal"><span class="pre">Tuple</span></tt>. Raise
+<tt class="xref py py-exc docutils literal"><span class="pre">SympifyError</span></tt> for other classes of arrays.</li>
 </ol>
 </div>
 </div>
@@ -783,8 +927,8 @@ generator:</p>
 <span class="go">[x₁, x₂, x₃, x₄, x₅]</span>
 </pre></div>
 </div>
-<div class="section" id="id2">
-<h4>Tasks<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id3">
+<h4>Tasks<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
 <li>Implement a function that would generate an expression for <span class="math">\(x_1^1 +
 x_2^2 + \ldots + x_n^n\)</span>. This function would take two arguments: base
@@ -897,13 +1041,11 @@ with this function. Let&#8217;s look at the following phenomenon:</p>
 <p><tt class="docutils literal"><span class="pre">117</span></tt> is an instance of Python&#8217;s built-in type <tt class="xref py py-class docutils literal"><span class="pre">int</span></tt>, but this type
 is not a subclass of <tt class="xref py py-class docutils literal"><span class="pre">Atom</span></tt>, so Python choses the other branch in
 <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> and this must fail. Before the last example we pass only
-instances of SymPy&#8217;s expression to <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt>. Even in the case of
-<tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></tt> where we added SymPy&#8217;s symbol with Python&#8217;s integer, because this
-was transformed in an instance of <tt class="xref py py-class docutils literal"><span class="pre">Add</span></tt>. If we want <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> to
+instances of SymPy&#8217;s expression to <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt>. If we want <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> to
 work also for non-SymPy types, we have to sympify <tt class="docutils literal"><span class="pre">expr</span></tt> with <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt>
 before using it.</p>
-<div class="section" id="id3">
-<h4>Tasks<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id4">
+<h4>Tasks<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
 <li>Change <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> so that it sympifies its input argument. Rewrite
 <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> so that is calls <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> only once.</li>
@@ -957,8 +1099,8 @@ left the original expression stored in variable <tt class="docutils literal"><sp
 </div>
 <p>For efficiency reason, any in-place operator used on elements of a matrix,
 modifies the matrix in-place and doesn&#8217;t waste memory for unnecessary copies.</p>
-<div class="section" id="id4">
-<h4>Tasks<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id5">
+<h4>Tasks<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
 <li>This is the first time we used <tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt>. This is a very important method
 and we will talk more about it later. However, we can also use <tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt>
@@ -1225,8 +1367,8 @@ user defined functions like <tt class="xref py py-func docutils literal"><span c
 <span class="nc">PicklingError: Can&#39;t pickle my_func</span>: <span class="n-Identifier">it&#39;s not found as __main__.my_func</span>
 </pre></div>
 </div>
-<div class="section" id="id5">
-<h4>Tasks<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id6">
+<h4>Tasks<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
 <li>Construct a polynomial of degree, let&#8217;s say, 1000. Use both techniques
 to save and restore this expression. Compare speed of those approaches.
@@ -1234,15 +1376,6 @@ Verify that the result is correct.</li>
 </ol>
 </div>
 </div>
-</div>
-<div class="section" id="advanced-manipulation-of-expressions">
-<h2>Advanced manipulation of expressions<a class="headerlink" href="#advanced-manipulation-of-expressions" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>manual and interactive traversal of subexpressions</li>
-<li>search and replace in expressions</li>
-<li>most common expression manipulation functions</li>
-<li>transforming expressions between different forms</li>
-</ul>
 </div>
 <div class="section" id="gotchas-and-pitfalls">
 <h2>Gotchas and pitfalls<a class="headerlink" href="#gotchas-and-pitfalls" title="Permalink to this headline">¶</a></h2>
@@ -1984,8 +2117,8 @@ C programming language and <tt class="docutils literal"><span class="pre">F95</s
 allows use to evaluate Chebyshev polynomial of first kind of degree 20. Almost
 the same way one can generate C code for this expression.</p>
 </div>
-<div class="section" id="id6">
-<h3>Tasks<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h3>Tasks<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Make Mathematica printer correctly print <span class="math">\(\pi\)</span>.</li>
 <li>Add support for <tt class="xref py py-class docutils literal"><span class="pre">Add</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">Mul</span></tt> to Mathematica printer. In
@@ -2033,27 +2166,30 @@ first ten Chebyshev polynomials of the first kind.</li>
 <li><a class="reference internal" href="#id1">Tasks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#the-role-of-symbols">The role of symbols</a><ul>
+<li><a class="reference internal" href="#foreign-types-in-sympy">Foreign types in SymPy</a><ul>
 <li><a class="reference internal" href="#id2">Tasks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#obtaining-parts-of-expressions">Obtaining parts of expressions</a><ul>
+<li><a class="reference internal" href="#the-role-of-symbols">The role of symbols</a><ul>
 <li><a class="reference internal" href="#id3">Tasks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#immutability-of-expressions">Immutability of expressions</a><ul>
+<li><a class="reference internal" href="#obtaining-parts-of-expressions">Obtaining parts of expressions</a><ul>
 <li><a class="reference internal" href="#id4">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#immutability-of-expressions">Immutability of expressions</a><ul>
+<li><a class="reference internal" href="#id5">Tasks</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#comparing-expressions-with">Comparing expressions with <tt class="docutils literal"><span class="pre">==</span></tt></a></li>
 <li><a class="reference internal" href="#the-meaning-of-expressions">The meaning of expressions</a></li>
 <li><a class="reference internal" href="#turning-strings-into-expressions">Turning strings into expressions</a><ul>
-<li><a class="reference internal" href="#id5">Tasks</a></li>
+<li><a class="reference internal" href="#id6">Tasks</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#advanced-manipulation-of-expressions">Advanced manipulation of expressions</a></li>
 <li><a class="reference internal" href="#gotchas-and-pitfalls">Gotchas and pitfalls</a><ul>
 <li><a class="reference internal" href="#is-not-a-rational-number"><tt class="docutils literal"><span class="pre">1/3</span></tt> is not a rational number</a></li>
 <li><a class="reference internal" href="#is-not-exponentiation-operator"><tt class="docutils literal"><span class="pre">^</span></tt> is not exponentiation operator</a></li>
@@ -2080,7 +2216,7 @@ first ten Chebyshev polynomials of the first kind.</li>
 <li><a class="reference internal" href="#customizing-built-in-printers">Customizing built-in printers</a></li>
 <li><a class="reference internal" href="#implementing-printers-from-scratch">Implementing printers from scratch</a></li>
 <li><a class="reference internal" href="#code-generation">Code generation</a></li>
-<li><a class="reference internal" href="#id6">Tasks</a></li>
+<li><a class="reference internal" href="#id7">Tasks</a></li>
 </ul>
 </li>
 </ul>
