@@ -1,0 +1,1482 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Mathematical problem solving with SymPy &mdash; Guide to symbolic mathematics with SymPy 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/extra.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
+    <link rel="top" title="Guide to symbolic mathematics with SymPy 1.0 documentation" href="index.html" />
+    <link rel="prev" title="Introduction to SymPy" href="introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction to SymPy"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Guide to symbolic mathematics with SymPy 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="mathematical-problem-solving-with-sympy">
+<h1>Mathematical problem solving with SymPy<a class="headerlink" href="#mathematical-problem-solving-with-sympy" title="Permalink to this headline">¶</a></h1>
+<p>Knowing the basics of SymPy, let&#8217;s now solve several mathematical problems
+with it. The level of difficulty of examples in this section varies from
+simple symbolic manipulation to theorem proving in algebraic geometry.</p>
+<p>Each section includes a short theoretical background, that explains all
+mathematical knowledge needed to understand a particular example. Code
+examples and size of problems were adjusted to make them unobtrusive to
+tutorial readers and make it possible to run them even on mobile devices.</p>
+<div class="section" id="partial-fraction-decomposition">
+<h2>Partial fraction decomposition<a class="headerlink" href="#partial-fraction-decomposition" title="Permalink to this headline">¶</a></h2>
+<p>The partial fraction decomposition of a univariate rational function:</p>
+<div class="math">
+\[f(x) = \frac{p(x)}{q(x)}\]</div>
+<p>where <span class="math">\(p\)</span> and <span class="math">\(q\)</span> are co-prime and <span class="math">\(\deg(p) &lt; \deg(q)\)</span>, is an expression
+of the form:</p>
+<div class="math">
+\[\sum_{i=1}^k \sum_{j=1}^{n_i} \frac{a_{ij}(x)}{q_i^j(x)}\]</div>
+<p>where <span class="math">\(q_i\)</span> for <span class="math">\(i=1 \ldots k\)</span> are factors (e.g. over rationals or Gaussian
+rationals) of <span class="math">\(q\)</span>:</p>
+<div class="math">
+\[q(x) = \prod_{i=1}^k q_i^{n_i}\]</div>
+<p>If <span class="math">\(p\)</span> and <span class="math">\(q\)</span> aren&#8217;t co-prime, we can use <tt class="xref py py-func docutils literal"><span class="pre">cancel()</span></tt> to remove common
+factors and if <span class="math">\(\deg(p) &gt;= \deg(q)\)</span>, then <tt class="xref py py-func docutils literal"><span class="pre">div()</span></tt> can be used to extract
+the polynomial part of partial fraction expansion of <span class="math">\(f\)</span> and reduce the degree
+of <span class="math">\(p\)</span>.</p>
+<p>Suppose we would like to compute partial fraction decomposition of:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span>
+<span class="go">     1</span>
+<span class="go">───────────</span>
+<span class="go"> 2 ⎛ 2    ⎞</span>
+<span class="go">x ⋅⎝x  + 1⎠</span>
+</pre></div>
+</div>
+<p>This can be achieved with SymPy&#8217;s built-in function <tt class="xref py py-func docutils literal"><span class="pre">apart()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">apart</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="go">    1      1</span>
+<span class="go">- ────── + ──</span>
+<span class="go">   2        2</span>
+<span class="go">  x  + 1   x</span>
+</pre></div>
+</div>
+<p>We can use <tt class="xref py py-func docutils literal"><span class="pre">together()</span></tt> to verify this result:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">together</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">     1</span>
+<span class="go">───────────</span>
+<span class="go"> 2 ⎛ 2    ⎞</span>
+<span class="go">x ⋅⎝x  + 1⎠</span>
+</pre></div>
+</div>
+<p>Now we would like to compute this decomposition step-by-step. The rational
+function <span class="math">\(f\)</span> is already in factored form and has two factors <span class="math">\(x^2\)</span> and
+<span class="math">\(x^2 + 1\)</span>. If <span class="math">\(f\)</span> was in expanded from, we could use <tt class="xref py py-func docutils literal"><span class="pre">factor()</span></tt> to
+obtain the desired factorization:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">numer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">/</span><span class="n">expand</span><span class="p">(</span><span class="n">denom</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+<span class="go">   1</span>
+<span class="go">───────</span>
+<span class="go"> 4    2</span>
+<span class="go">x  + x</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factor</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">     1</span>
+<span class="go">───────────</span>
+<span class="go"> 2 ⎛ 2    ⎞</span>
+<span class="go">x ⋅⎝x  + 1⎠</span>
+</pre></div>
+</div>
+<p>Based on the definition, the partial fraction expansion of <span class="math">\(f\)</span> will be of the
+following form:</p>
+<div class="math">
+\[\frac{A}{x} + \frac{B}{x^2} + \frac{C x + D}{x^2 + 1}\]</div>
+<p>Let&#8217;s do this with SymPy. We will use undetermined coefficients method to
+solve this problem. Let&#8217;s start by defining some symbols:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">(</span><span class="s">&#39;A:D&#39;</span><span class="p">)</span>
+<span class="go">(A, B, C, D)</span>
+</pre></div>
+</div>
+<p>We use here the lexicographic syntax of <tt class="xref py py-func docutils literal"><span class="pre">var()</span></tt>. Next we can define three
+rational functions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="o">=</span> <span class="n">A</span><span class="o">/</span><span class="n">x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span> <span class="o">=</span> <span class="n">B</span><span class="o">/</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p3</span> <span class="o">=</span> <span class="p">(</span><span class="n">C</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">D</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span>
+<span class="go">⎛A  B   C⋅x + D⎞</span>
+<span class="go">⎜─, ──, ───────⎟</span>
+<span class="go">⎜x   2    2    ⎟</span>
+<span class="go">⎝   x    x  + 1⎠</span>
+</pre></div>
+</div>
+<p>Let&#8217;s add them together to get the desired form:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span>
+<span class="go">A   B    C⋅x + D</span>
+<span class="go">─ + ── + ───────</span>
+<span class="go">x    2     2</span>
+<span class="go">    x     x  + 1</span>
+</pre></div>
+</div>
+<p>The next step is to rewrite this expression as rational function in <span class="math">\(x\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">together</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+<span class="go">    ⎛ 2    ⎞     ⎛ 2    ⎞    2</span>
+<span class="go">A⋅x⋅⎝x  + 1⎠ + B⋅⎝x  + 1⎠ + x ⋅(C⋅x + D)</span>
+<span class="go">────────────────────────────────────────</span>
+<span class="go">               2 ⎛ 2    ⎞</span>
+<span class="go">              x ⋅⎝x  + 1⎠</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factor</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="go">           3            2</span>
+<span class="go">A⋅x + B + x ⋅(A + C) + x ⋅(B + D)</span>
+<span class="go">─────────────────────────────────</span>
+<span class="go">            2 ⎛ 2    ⎞</span>
+<span class="go">           x ⋅⎝x  + 1⎠</span>
+</pre></div>
+</div>
+<p>Let&#8217;s now visually compare the last expression with <span class="math">\(f\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Eq</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="go">           3            2</span>
+<span class="go">a⋅x + b + x ⋅(a + c) + x ⋅(b + d)        1</span>
+<span class="go">───────────────────────────────── = ───────────</span>
+<span class="go">            2 ⎛ 2    ⎞               2 ⎛ 2    ⎞</span>
+<span class="go">           x ⋅⎝x  + 1⎠              x ⋅⎝x  + 1⎠</span>
+</pre></div>
+</div>
+<p>Our task boils down to finding <span class="math">\(A\)</span>, <span class="math">\(B\)</span>, <span class="math">\(C\)</span> and <span class="math">\(D\)</span>. We notice that
+denominators are equal so we will proceed only with numerators:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">eq</span> <span class="o">=</span> <span class="n">Eq</span><span class="p">(</span><span class="n">numer</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">lhs</span><span class="p">),</span> <span class="n">numer</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">rhs</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eq</span>
+<span class="go">           3            2</span>
+<span class="go">a⋅x + b + x ⋅(a + c) + x ⋅(b + d) = 1</span>
+</pre></div>
+</div>
+<p>To solve this equation, we use <tt class="xref py py-func docutils literal"><span class="pre">solve_undetermined_coeffs()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">solve_undetermined_coeffs</span><span class="p">(</span><span class="n">eq</span><span class="p">,</span> <span class="p">[</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="n">x</span><span class="p">)</span>
+<span class="go">{A: 0, B: 1, C: 0, D: -1}</span>
+</pre></div>
+</div>
+<p>This gave us values for our parameters, which now can be put into the initial
+expression:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">    1      1</span>
+<span class="go">- ────── + ──</span>
+<span class="go">   2        2</span>
+<span class="go">  x  + 1   x</span>
+</pre></div>
+</div>
+<p>This result is identical to the result we got from <tt class="docutils literal"><span class="pre">apart(f)</span></tt>. Suppose
+however, we would like to see how undetermined coefficients method works.
+First we have to extract coefficients of <span class="math">\(x\)</span> of both sides of the equation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span> <span class="o">=</span> <span class="n">Poly</span><span class="p">(</span><span class="n">eq</span><span class="o">.</span><span class="n">lhs</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">Poly</span><span class="p">(</span><span class="n">eq</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lhs</span>
+<span class="go">Poly((A + C)*x**3 + (B + D)*x**2 + A*x + B, x, domain=&#39;ZZ[A,B,C,D]&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rhs</span>
+<span class="go">Poly(1, x, domain=&#39;ZZ&#39;)</span>
+</pre></div>
+</div>
+<p>Now we can use <tt class="xref py py-func docutils literal"><span class="pre">Poly.nth()</span></tt> to obtain coefficients of <span class="math">\(x\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span> <span class="n">Eq</span><span class="p">(</span><span class="n">lhs</span><span class="o">.</span><span class="n">nth</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">rhs</span><span class="o">.</span><span class="n">nth</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="p">]</span>
+<span class="go">[b = 1, a = 0, b + d = 0, a + c = 0]</span>
+</pre></div>
+</div>
+<p>Solving this system of linear equations gives the same solution set as
+previously:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">solve</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">{a: 0, b: 1, c: 0, d: -1}</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">    1      1</span>
+<span class="go">- ────── + ──</span>
+<span class="go">   2        2</span>
+<span class="go">  x  + 1   x</span>
+</pre></div>
+</div>
+<p>There are several other ways we can approach undetermined coefficients
+method. For example we could use <tt class="xref py py-func docutils literal"><span class="pre">collect()</span></tt> for this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">collect</span><span class="p">(</span><span class="n">eq</span><span class="o">.</span><span class="n">lhs</span> <span class="o">-</span> <span class="n">eq</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">evaluate</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">⎧                 2          3       ⎫</span>
+<span class="go">⎨1: B - 1, x: A, x : B + D, x : A + C⎬</span>
+<span class="go">⎩                                    ⎭</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solve</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="go">{A: 0, B: 1, C: 0, D: -1}</span>
+</pre></div>
+</div>
+<p>Notice that even though the expressions were not <tt class="xref py py-func docutils literal"><span class="pre">Eq()</span></tt>&#8216;s, this still
+worked. This is because SymPy assumes by default that expressions are
+identically equal to 0, so <tt class="docutils literal"><span class="pre">solve(Eq(expr,</span> <span class="pre">0))</span></tt> is the same as
+<tt class="docutils literal"><span class="pre">solve(expr)</span></tt>.</p>
+<p>This approach is even simpler than using <tt class="xref py py-func docutils literal"><span class="pre">Poly.nth()</span></tt>. Finally we use a
+little trick with <tt class="xref py py-class docutils literal"><span class="pre">Symbol</span></tt> and visually present solution to partial
+fraction decomposition of <span class="math">\(f\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Eq</span><span class="p">(</span><span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;apart&#39;</span><span class="p">)(</span><span class="n">f</span><span class="p">),</span> <span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">_</span><span class="p">))</span>
+<span class="go">     ⎛     1     ⎞       1      1</span>
+<span class="go">apart⎜───────────⎟ = - ────── + ──</span>
+<span class="go">     ⎜ 2 ⎛ 2    ⎞⎟      2        2</span>
+<span class="go">     ⎝x ⋅⎝x  + 1⎠⎠     x  + 1   x</span>
+</pre></div>
+</div>
+<div class="section" id="tasks">
+<h3>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Compute partial fraction decomposition of:</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><span class="math">\(\frac{3 x + 5}{(2 x + 1)^2}\)</span></li>
+<li><span class="math">\(\frac{3 x + 5}{(u x + v)^2}\)</span></li>
+<li><span class="math">\(\frac{(3 x + 5)^2}{(2 x + 1)^2}\)</span></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>Can you use <tt class="xref py py-func docutils literal"><span class="pre">Expr.coeff()</span></tt> in place of <tt class="xref py py-func docutils literal"><span class="pre">Poly.nth()</span></tt>?</li>
+</ol>
+</div>
+</div>
+<div class="section" id="deriving-trigonometric-identities">
+<h2>Deriving trigonometric identities<a class="headerlink" href="#deriving-trigonometric-identities" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s assume that we need a formula for <span class="math">\(\sin(a + b)\)</span> in terms of <span class="math">\(\sin(a)\)</span>,
+<span class="math">\(\sin(b)\)</span>, <span class="math">\(\cos(a)\)</span> and <span class="math">\(\cos(b)\)</span>, but we don&#8217;t remember it, nor do we
+know how to get it easily with SymPy. We will derive this formula from
+scratch using Taylor series expansions and a little symbolic manipulation.</p>
+<p>Let&#8217;s start with definition of symbols and the expression in consideration:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">(</span><span class="s">&#39;a,b&#39;</span><span class="p">)</span>
+<span class="go">(a, b)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span>
+<span class="go">sin(a + b)</span>
+</pre></div>
+</div>
+<p>Now let&#8217;s expand <span class="math">\(f\)</span> as a power series with respect to <span class="math">\(b\)</span> around 0:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">                     2           3           4           5           6           7           8           9</span>
+<span class="go">                    b ⋅sin(a)   b ⋅cos(a)   b ⋅sin(a)   b ⋅cos(a)   b ⋅sin(a)   b ⋅cos(a)   b ⋅sin(a)   b ⋅cos(a)</span>
+<span class="go">sin(a) + b⋅cos(a) - ───────── - ───────── + ───────── + ───────── - ───────── - ───────── + ───────── + ───────── + O(b**10)</span>
+<span class="go">                        2           6           24         120         720         5040       40320       362880</span>
+</pre></div>
+</div>
+<p>This isn&#8217;t very readable but we can clearly see a pattern around <span class="math">\(\sin(a)\)</span>
+and <span class="math">\(\cos(a)\)</span>. Let&#8217;s collect terms with respect to those two expressions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">collect</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">[</span><span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">cos</span><span class="p">(</span><span class="n">a</span><span class="p">)])</span>
+<span class="go">⎛   9       7      5    3    ⎞          ⎛   8      6    4    2    ⎞</span>
+<span class="go">⎜  b       b      b    b     ⎟          ⎜  b      b    b    b     ⎟</span>
+<span class="go">⎜────── - ──── + ─── - ── + b⎟⋅cos(a) + ⎜───── - ─── + ── - ── + 1⎟⋅sin(a) + O(b**10)</span>
+<span class="go">⎝362880   5040   120   6     ⎠          ⎝40320   720   24   2     ⎠</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="o">.</span><span class="n">removeO</span><span class="p">()</span>
+<span class="go">⎛   8      6    4    2    ⎞          ⎛   9       7      5    3    ⎞</span>
+<span class="go">⎜  b      b    b    b     ⎟          ⎜  b       b      b    b     ⎟</span>
+<span class="go">⎜───── - ─── + ── - ── + 1⎟⋅sin(a) + ⎜────── - ──── + ─── - ── + b⎟⋅cos(a)</span>
+<span class="go">⎝40320   720   24   2     ⎠          ⎝362880   5040   120   6     ⎠</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">_</span>
+</pre></div>
+</div>
+<p>We got two subexpression that look very familiar. Let&#8217;s expand <span class="math">\(\sin(b)\)</span>
+in <span class="math">\(b\)</span> around 0 and remove the order term:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sin</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">     3     5     7       9</span>
+<span class="go">    b     b     b       b</span>
+<span class="go">b - ── + ─── - ──── + ────── + O(b**10)</span>
+<span class="go">    6    120   5040   362880</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="o">.</span><span class="n">removeO</span><span class="p">()</span>
+<span class="go">   9       7      5    3</span>
+<span class="go">  b       b      b    b</span>
+<span class="go">────── - ──── + ─── - ── + b</span>
+<span class="go">362880   5040   120   6</span>
+</pre></div>
+</div>
+<p>This is clearly the second subexpression, so let&#8217;s substitute it for
+<span class="math">\(\sin(b)\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">sin</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="go">⎛   8      6    4    2    ⎞</span>
+<span class="go">⎜  b      b    b    b     ⎟</span>
+<span class="go">⎜───── - ─── + ── - ── + 1⎟⋅sin(a) + sin(b)⋅cos(a)</span>
+<span class="go">⎝40320   720   24   2     ⎠</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">_</span>
+</pre></div>
+</div>
+<p>Now let&#8217;s repeat this procedure for <span class="math">\(\cos(b)\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">cos</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">     2    4     6      8</span>
+<span class="go">    b    b     b      b</span>
+<span class="go">1 - ── + ── - ─── + ───── + O(b**10)</span>
+<span class="go">    2    24   720   40320</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="o">.</span><span class="n">removeO</span><span class="p">()</span>
+<span class="go">   8      6    4    2</span>
+<span class="go">  b      b    b    b</span>
+<span class="go">───── - ─── + ── - ── + 1</span>
+<span class="go">40320   720   24   2</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">cos</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="go">sin(a)⋅cos(b) + sin(b)⋅cos(a)</span>
+</pre></div>
+</div>
+<p>This gave us a formula for <span class="math">\(\sin(a + b)\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Eq</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span>
+<span class="go">sin(a + b) = sin(a)⋅cos(b) + sin(b)⋅cos(a)</span>
+</pre></div>
+</div>
+<p>There is, however, a much simpler way to get the same result:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Eq</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sin</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">trig</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+<span class="go">sin(a + b) = sin(a)⋅cos(b) + sin(b)⋅cos(a)</span>
+</pre></div>
+</div>
+<div class="section" id="id1">
+<h3>Tasks<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Repeat this procedure but expand wrt <span class="math">\(a\)</span> in the first step.</li>
+<li>Use this procedure to derive a formula for <span class="math">\(\cos(a + b)\)</span>.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="not-only-symbolics-numerical-computing">
+<h2>Not only symbolics: numerical computing<a class="headerlink" href="#not-only-symbolics-numerical-computing" title="Permalink to this headline">¶</a></h2>
+<p>Symbolic mathematics can&#8217;t exist without numerical methods. Most &#8220;symbolic&#8221;
+modules in SymPy take at least some advantage of numerical computing. SymPy
+uses the mpmath library for this purpose.</p>
+<p>Let&#8217;s start from something simple and find numerical approximation to <span class="math">\(\pi\)</span>.
+Normally SymPy represents <span class="math">\(\pi\)</span> as a symbolic entity:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pi</span>
+<span class="go">π</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Pi&#39;&gt;</span>
+</pre></div>
+</div>
+<p>To obtain numerical approximation of <span class="math">\(\pi\)</span> we can use either the <tt class="xref py py-func docutils literal"><span class="pre">evalf()</span></tt>
+method or <tt class="xref py py-func docutils literal"><span class="pre">N()</span></tt>, which is a simple wrapper over the former method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pi</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">3.14159265358979</span>
+</pre></div>
+</div>
+<p>The default precision is 15 digits. We can change this using the <tt class="docutils literal"><span class="pre">n</span></tt> parameter:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pi</span><span class="o">.</span><span class="n">evalf</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="go">3.14159265358979323846264338328</span>
+</pre></div>
+</div>
+<p>The mpmath library implements arbitrary precision floating point arithmetics
+(limited only by available memory), so we can set <tt class="docutils literal"><span class="pre">n</span></tt> to a very big value,
+e.g. one million:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">million_digits</span> <span class="o">=</span> <span class="n">pi</span><span class="o">.</span><span class="n">evalf</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">million_digits</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">evalf()</span></tt> can handle much more complex expressions than <span class="math">\(\pi\)</span>, for
+example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">exp</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">E</span><span class="o">**</span><span class="n">pi</span> <span class="o">-</span> <span class="n">I</span><span class="p">)</span>
+<span class="go">           π</span>
+<span class="go"> sin(1) + ℯ  - ⅈ</span>
+<span class="go">ℯ</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">14059120207.1707 - 21895782412.4995⋅ⅈ</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">zeta</span><span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span><span class="o">/</span><span class="mi">17</span><span class="p">)</span>
+<span class="go"> ⎛14⎞</span>
+<span class="go">ζ⎜──⎟</span>
+<span class="go"> ⎝17⎠</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zeta</span><span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span><span class="o">/</span><span class="mi">17</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">-5.10244976858838</span>
+</pre></div>
+</div>
+<p>Symbolic entities are ignored:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pi</span><span class="o">*</span><span class="n">x</span>
+<span class="go">π⋅x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">3.14159265358979⋅x</span>
+</pre></div>
+</div>
+<p>Built-in functions <a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">float()</span></tt></a> and <a class="reference external" href="http://docs.python.org/library/functions.html#complex" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">complex()</span></tt></a> take advantage of
+<tt class="xref py py-func docutils literal"><span class="pre">evalf()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>
+<span class="go">3.14159265359</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;type &#39;float&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">pi</span><span class="o">*</span><span class="n">I</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="nc">ValueError</span>: <span class="n-Identifier">Symbolic value, can&#39;t compute</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">complex</span><span class="p">(</span><span class="n">pi</span><span class="o">*</span><span class="n">I</span><span class="p">)</span>
+<span class="go">3.14159265359j</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;type &#39;complex&#39;&gt;</span>
+</pre></div>
+</div>
+<p>The base type for computing with floating point numbers in SymPy is
+<tt class="xref py py-class docutils literal"><span class="pre">Float</span></tt>. It allows for several flavors of initialization and
+keeps track of precision:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mf">2.0</span>
+<span class="go">2.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;type &#39;float&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Float</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="go">2.00000000000000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Float&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="go">2.00000000000000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Float&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Float</span><span class="p">(</span><span class="s">&quot;3.14&quot;</span><span class="p">)</span>
+<span class="go">3.14000000000000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Float</span><span class="p">(</span><span class="s">&quot;3.14e-400&quot;</span><span class="p">)</span>
+<span class="go">3.14000000000000e-400</span>
+</pre></div>
+</div>
+<p>Notice that the last value is out of range for <tt class="docutils literal"><span class="pre">float</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mf">3.14e-400</span>
+<span class="go">0.0</span>
+</pre></div>
+</div>
+<p>We expected a very small value but not zero. This raises an important issue,
+because if we try to construct a <tt class="xref py py-class docutils literal"><span class="pre">Float</span></tt> this way, we will still get
+zero:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Float</span><span class="p">(</span><span class="mf">3.14e-400</span><span class="p">)</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>The only way to fix this is to pass a string argument to <tt class="xref py py-class docutils literal"><span class="pre">Float</span></tt>.</p>
+<div class="section" id="when-symbolic-mathematics-matter">
+<h3>When symbolic mathematics matter?<a class="headerlink" href="#when-symbolic-mathematics-matter" title="Permalink to this headline">¶</a></h3>
+<p>Consider a univariate function:</p>
+<div class="math">
+\[f(x) = x^{(1 - \log(\log(\log(\log(\frac{1}{x})))))}\]</div>
+<p>We would like to compute:</p>
+<div class="math">
+\[\lim_{x \to 0^{+}} f(x)\]</div>
+<p>Let&#8217;s define the function <span class="math">\(f\)</span> in SymPy:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">log</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">)))))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span>
+<span class="go">      ⎛   ⎛   ⎛   ⎛1⎞⎞⎞⎞</span>
+<span class="go"> - log⎜log⎜log⎜log⎜─⎟⎟⎟⎟ + 1</span>
+<span class="go">      ⎝   ⎝   ⎝   ⎝x⎠⎠⎠⎠</span>
+<span class="go">x</span>
+</pre></div>
+</div>
+<p>A very straight forward approach is to &#8220;see&#8221; how <span class="math">\(f\)</span> behaves on the right
+hand side of zero. We can try to read the solution from the graph of <span class="math">\(f\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sympy.mpmath</span> <span class="kn">import</span> <span class="n">plot</span><span class="p">,</span> <span class="n">log</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">r&quot;Plot of $f(x)$ in $[0, 0.01]$.&quot;</span><span class="p">)</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">log</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">)))))</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">axes</span><span class="o">=</span><span class="n">axes</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//mathematics-1.py">Source code</a>, <a class="reference external" href=".//mathematics-1.png">png</a>, <a class="reference external" href=".//mathematics-1.hires.png">hires.png</a>, <a class="reference external" href=".//mathematics-1.pdf">pdf</a>)</p>
+<div class="figure align-center">
+<img alt="_images/mathematics-1.png" src="_images/mathematics-1.png" />
+</div>
+<p>This gives us first hint that the limit might be zero. Of course reading
+a graph of a function isn&#8217;t a very precise method for computing limits.
+Instead of analyzing the graph of <span class="math">\(f\)</span>, we can improve this approach a
+little by evaluating <span class="math">\(f(x)\)</span> for sufficiently small arguments.</p>
+<p>Let&#8217;s start with arguments of the form <span class="math">\(x = 10^{-k}\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">0.00114216521536353 + 0.00159920801047526⋅ⅈ</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">0.000191087007486009</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">5.60274947776528e-5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">1.24646630615307e-5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">2.73214471781554e-6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">6.14631623897124e-7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">1.42980539541700e-7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">3.43858142726788e-8</span>
+</pre></div>
+</div>
+<p>We obtained a decreasing sequence values which suggests that the limit
+is zero. Let&#8217;s now try points of the form <span class="math">\(x = 10^{-10^k}\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">10</span><span class="o">**</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">2.17686941815359e-9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">10</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">4.87036575966825e-48</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">10</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">+inf</span>
+</pre></div>
+</div>
+<p>For <span class="math">\(x = 10^{-10^3}\)</span> we got a very peculiar value. This happened because:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mi">10</span><span class="o">**-</span><span class="mi">10</span><span class="o">**</span><span class="mi">3</span>
+<span class="go">0.0</span>
+</pre></div>
+</div>
+<p>and the reason for this is that we used Python&#8217;s floating point values.
+Instead we can use either exact numbers or SymPy&#8217;s floating point numbers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Integer</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">**-</span><span class="mi">10</span><span class="o">**</span><span class="mi">3</span> <span class="o">!=</span> <span class="mi">0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Float</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span><span class="o">**-</span><span class="mi">10</span><span class="o">**</span><span class="mi">3</span> <span class="o">!=</span> <span class="mi">0</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Let&#8217;s continue with SymPy&#8217;s floating point numbers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Float</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span><span class="o">**-</span><span class="mi">10</span><span class="o">**</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">2.17686941815359e-9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Float</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span><span class="o">**-</span><span class="mi">10</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">4.87036575966825e-48</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Float</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span><span class="o">**-</span><span class="mi">10</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">1.56972853078736e-284</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Float</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span><span class="o">**-</span><span class="mi">10</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">3.42160969045530e-1641</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Float</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span><span class="o">**-</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">1.06692865269193e-7836</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Float</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span><span class="o">**-</span><span class="mi">10</span><span class="o">**</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">4.40959214078817e-12540</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Float</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span><span class="o">**-</span><span class="mi">10</span><span class="o">**</span><span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">1.11148303902275e+404157</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Float</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span><span class="o">**-</span><span class="mi">10</span><span class="o">**</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">8.63427256445142e+8443082</span>
+</pre></div>
+</div>
+<p>This time the sequence of values is rapidly decreasing, but only until
+a sufficiently small numer where <span class="math">\(f\)</span> has an inflexion point. After that,
+values of <span class="math">\(f\)</span> increase very rapidly, which may suggest that the actual
+limit is <tt class="docutils literal"><span class="pre">+\inf</span></tt>. It seems that our initial guess is wrong. However, for
+now we still can&#8217;t draw any conclusions about behavior of <span class="math">\(f\)</span>, because
+if we take even smaller numbers we may reach other points of inflection.</p>
+<p>The mpmath library implements a function for computing numerical limits
+of function, we can try to take advantage of this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy.mpmath</span> <span class="kn">import</span> <span class="n">limit</span> <span class="k">as</span> <span class="n">nlimit</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="s">&#39;mpmath&#39;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nlimit</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">(2.23372778188847e-5 + 2.28936592344331e-8j)</span>
+</pre></div>
+</div>
+<p>This once again suggests that the limit is zero. Let&#8217;s use an exponential
+distribution of points in <tt class="xref py py-func docutils literal"><span class="pre">nlimit()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nlimit</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">exp</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">(3.43571317799366e-20 + 4.71360839667667e-23j)</span>
+</pre></div>
+</div>
+<p>This didn&#8217;t help much. Still zero. The only solution to this problem
+is to use analytic methods. For this we will use <tt class="xref py py-func docutils literal"><span class="pre">limit()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">limit</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">∞</span>
+</pre></div>
+</div>
+<p>which shows us that our initial guess was completely wrong. This nicely
+shows that solving ill conditioned problems may require assistance of
+symbolic mathematics system. More about this can be found in Dominic
+Gruntz&#8217;s PhD tesis (<a class="reference external" href="http://www.cybertester.com/data/gruntz.pdf">http://www.cybertester.com/data/gruntz.pdf</a>), where
+this problem is explained in detail and an algorithm shown, which can
+solve this problem and which is implemented in SymPy.</p>
+</div>
+<div class="section" id="id2">
+<h3>Tasks<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Compute first 55 digits of numerical approximation of <span class="math">\(f(\pi)\)</span>.</p>
+</li>
+<li><p class="first">Read this <a class="reference external" href="http://www.qwantz.com/index.php?comic=1013">webcomic</a>.
+What is the first digit of <span class="math">\(e\)</span> to contain <span class="math">\(999999\)</span>? What is the first
+digit of <span class="math">\(\pi\)</span> to contain <span class="math">\(789\)</span>?</p>
+</li>
+<li><p class="first">In addition to the above example, Gruntz gives another example of ill
+conditioned function in his thesis to show why symbolic computation of
+limits can be preferred to numerical computation:</p>
+<div class="math">
+\[\lim_{x \to \infty}{\left(\operatorname{erf}\left(x - {e^{-e^{x}}}\right) -
+    \operatorname{erf}\left(x\right)\right) e^{e^{x}}} e^{x^{2}}\]</div>
+<p>(in SymPy, <tt class="docutils literal"><span class="pre">(erf(x</span> <span class="pre">-</span> <span class="pre">exp(-exp(x)))</span> <span class="pre">-</span> <span class="pre">erf(x))*exp(exp(x))*exp(x**2)</span></tt>).
+Compute the above limit in SymPy using methods similar to the ones presented
+in this section. What are the drawbacks of computing this limit numerically?
+What is the limit, exactly?</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="summing-roots-of-polynomials">
+<h2>Summing roots of polynomials<a class="headerlink" href="#summing-roots-of-polynomials" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s suppose we are given a univariate polynomial <span class="math">\(f(z)\)</span> and a univariate
+rational function <span class="math">\(g(z)\)</span>, and we wish to compute:</p>
+<div class="math">
+\[g(r_1) + g(r_2) + \ldots + g(r_n)\]</div>
+<p>where <span class="math">\(r_i\)</span> for <span class="math">\(i = 1 \ldots n\)</span> are the roots of <span class="math">\(f\)</span> (i.e. <span class="math">\(f(r_i) = 0\)</span>).</p>
+<p>In theory this is a very simple task. We just have to compute roots of <span class="math">\(f\)</span>,
+using the <tt class="xref py py-func docutils literal"><span class="pre">roots()</span></tt> function, substitute those roots for <span class="math">\(z\)</span> in <span class="math">\(g\)</span> and add
+resulting values together.</p>
+<p>Let&#8217;s consider the following polynomial and rational function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">z</span><span class="o">**</span><span class="mi">5</span> <span class="o">+</span> <span class="n">z</span> <span class="o">+</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span>
+<span class="go"> 5</span>
+<span class="go">z  + z + 3</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">z</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span>
+<span class="go">1</span>
+<span class="go">─</span>
+<span class="go">z</span>
+</pre></div>
+</div>
+<p>Following the trivial approach, let&#8217;s compute the roots of <span class="math">\(f\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">roots</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="go">{}</span>
+</pre></div>
+</div>
+<p>We got a very unfortunate result: no roots! By the fundamental theorem
+of algebra we should get five, possibly complex, roots, including
+multiplicities. Unfortunately, there is no way to express roots in terms
+of radicals of some polynomials of degree five and higher. For certain
+instances of polynomials of this kind it may be possible to compute
+their roots (e.g. <tt class="xref py py-func docutils literal"><span class="pre">roots()</span></tt> recognizes cyclotomic polynomials of
+high degree), but in general we will most likely be unlucky.</p>
+<p>Instead, we could switch to numerical root finding algorithms and compute
+approximations of roots of <span class="math">\(f\)</span> and proceed with summation of roots. This
+can be done by using <tt class="xref py py-func docutils literal"><span class="pre">nroots()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">nroots</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">ri</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">numbered_symbols</span><span class="p">(</span><span class="s">&#39;r&#39;</span><span class="p">),</span> <span class="n">R</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">pprint</span><span class="p">(</span><span class="n">Eq</span><span class="p">(</span><span class="n">ri</span><span class="p">,</span> <span class="n">r</span><span class="p">))</span>
+<span class="gp">...</span>
+<span class="go">r₀ = -1.13299756588507</span>
+<span class="go">r₁ = -0.47538075666955 - 1.12970172509541⋅ⅈ</span>
+<span class="go">r₂ = -0.47538075666955 + 1.12970172509541⋅ⅈ</span>
+<span class="go">r₃ = 1.04187953961208 - 0.822870338109958⋅ⅈ</span>
+<span class="go">r₄ = 1.04187953961208 + 0.822870338109958⋅ⅈ</span>
+</pre></div>
+</div>
+<p>We can substitute those roots for <span class="math">\(z\)</span> in <span class="math">\(g\)</span> and add together:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">([</span> <span class="n">g</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">R</span> <span class="p">])</span><span class="o">.</span><span class="n">evalf</span><span class="p">(</span><span class="n">chop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">-0.333333333333332</span>
+</pre></div>
+</div>
+<p>It was necessary to evaluate this sum with <tt class="xref py py-func docutils literal"><span class="pre">evalf()</span></tt>, because otherwise
+we would get an unsimplified result. The additional parameter <tt class="docutils literal"><span class="pre">chop=True</span></tt> was
+necessary to remove a tiny and insignificant imaginary part. Next we can use
+<tt class="xref py py-func docutils literal"><span class="pre">nsimplify()</span></tt> to get an exact result from numerical approximation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nsimplify</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">-1/3</span>
+</pre></div>
+</div>
+<p>Is this result correct? The best way is to figure out a purely symbolic
+method that doesn&#8217;t require computing roots of <span class="math">\(f\)</span>. In SymPy it possible
+to represent a root of a univariate polynomial with rational coefficients
+using <tt class="xref py py-class docutils literal"><span class="pre">RootOf</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">RootOf</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">      ⎛ 5           ⎞</span>
+<span class="go">RootOf⎝z  + z + 3, 0⎠</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">-1.13299756588507</span>
+</pre></div>
+</div>
+<p>We can obtain all roots using list comprehensions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="p">[</span> <span class="n">RootOf</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">degree</span><span class="p">(</span><span class="n">f</span><span class="p">))</span> <span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">R</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">pprint</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">      ⎛ 5           ⎞</span>
+<span class="go">RootOf⎝z  + z + 3, 0⎠</span>
+<span class="go">      ⎛ 5           ⎞</span>
+<span class="go">RootOf⎝z  + z + 3, 1⎠</span>
+<span class="go">      ⎛ 5           ⎞</span>
+<span class="go">RootOf⎝z  + z + 3, 2⎠</span>
+<span class="go">      ⎛ 5           ⎞</span>
+<span class="go">RootOf⎝z  + z + 3, 3⎠</span>
+<span class="go">      ⎛ 5           ⎞</span>
+<span class="go">RootOf⎝z  + z + 3, 4⎠</span>
+</pre></div>
+</div>
+<p>Alternatively we can use <tt class="docutils literal"><span class="pre">Poly(f).all_roots()</span></tt> which gives the same
+result, but is much faster when <span class="math">\(f\)</span> is a composite polynomial, because
+the preprocessing step in <tt class="xref py py-class docutils literal"><span class="pre">RootOf</span></tt> is executed only once.</p>
+<p>Unfortunately we can&#8217;t get anywhere from here, because SymPy is not yet
+capable of simplifying expressions with <tt class="xref py py-class docutils literal"><span class="pre">RootOf</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span> <span class="n">g</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">R</span> <span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">Add</span><span class="p">)</span>
+<span class="go">True</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">simplify</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">Add</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>We can, however, evaluate sums of <tt class="xref py py-class docutils literal"><span class="pre">RootOf</span></tt>&#8216;s using <tt class="xref py py-func docutils literal"><span class="pre">evalf()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">-0.333333333333333</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nsimplify</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">-1/3</span>
+</pre></div>
+</div>
+<p>which gave us the same result as before. The difference is that now numerical
+approximations of roots of <span class="math">\(f\)</span> were computed using a hybrid symbolic&#8211;numeric
+method, where first disjoint isolating intervals (rectangles) where computed
+for all roots of <span class="math">\(f\)</span> and then a numerical root finding algorithm was used in
+each interval.</p>
+<p>Let&#8217;s approach this problem differently, using a purely symbolic
+approach. We know that a polynomial of degree <span class="math">\(n\)</span> has exactly <span class="math">\(n\)</span>
+complex roots, counting multiplicities. In our case <span class="math">\(f\)</span> has five roots:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="s">&#39;r:5&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R</span>
+<span class="go">(r₀, r₁, r₂, r₃, r₄)</span>
+</pre></div>
+</div>
+<p>Let&#8217;s now substitute those &#8220;roots&#8221; for <span class="math">\(z\)</span> in <span class="math">\(g\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span> <span class="n">g</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">R</span> <span class="p">]</span>
+<span class="go">⎡1   1   1   1   1 ⎤</span>
+<span class="go">⎢──, ──, ──, ──, ──⎥</span>
+<span class="go">⎣r₀  r₁  r₂  r₃  r₄⎦</span>
+</pre></div>
+</div>
+<p>and add those expressions together:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">1    1    1    1    1</span>
+<span class="go">── + ── + ── + ── + ──</span>
+<span class="go">r₄   r₃   r₂   r₁   r₀</span>
+</pre></div>
+</div>
+<p>We got a sum of simple rational functions. The next step is to put those
+rational functions over a common denominator:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">together</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span>
+<span class="go">r₀⋅r₁⋅r₂⋅r₃ + r₀⋅r₁⋅r₂⋅r₄ + r₀⋅r₁⋅r₃⋅r₄ + r₀⋅r₂⋅r₃⋅r₄ + r₁⋅r₂⋅r₃⋅r₄</span>
+<span class="go">───────────────────────────────────────────────────────────────────</span>
+<span class="go">                           r₀⋅r₁⋅r₂⋅r₃⋅r₄</span>
+</pre></div>
+</div>
+<p>We got very peculiar numerator and denominator, which are very specific
+functions of roots of <span class="math">\(f\)</span> (symmetric polynomials). Polynomials of this
+kind can be generated using <tt class="xref py py-func docutils literal"><span class="pre">viete()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">V</span> <span class="o">=</span> <span class="n">viete</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span> <span class="ow">in</span> <span class="n">V</span><span class="p">:</span>
+<span class="go">....     pprint(Eq(lhs, rhs))</span>
+<span class="go">....</span>
+<span class="go">r₀ + r₁ + r₂ + r₃ + r₄ = 0</span>
+<span class="go">r₀⋅r₁ + r₀⋅r₂ + r₀⋅r₃ + r₀⋅r₄ + r₁⋅r₂ + r₁⋅r₃ + r₁⋅r₄ + r₂⋅r₃ + r₂⋅r₄ + r₃⋅r₄ = 0</span>
+<span class="go">r₀⋅r₁⋅r₂ + r₀⋅r₁⋅r₃ + r₀⋅r₁⋅r₄ + r₀⋅r₂⋅r₃ + r₀⋅r₂⋅r₄ + r₀⋅r₃⋅r₄ + r₁⋅r₂⋅r₃ + r₁⋅r₂⋅r₄ + r₁⋅r₃⋅r₄ + r₂⋅r₃⋅r₄ = 0</span>
+<span class="go">r₀⋅r₁⋅r₂⋅r₃ + r₀⋅r₁⋅r₂⋅r₄ + r₀⋅r₁⋅r₃⋅r₄ + r₀⋅r₂⋅r₃⋅r₄ + r₁⋅r₂⋅r₃⋅r₄ = 1</span>
+<span class="go">r₀⋅r₁⋅r₂⋅r₃⋅r₄ = -3</span>
+</pre></div>
+</div>
+<p>Viete formulas show the relationship between roots of a polynomial and
+its coefficients:</p>
+<div class="math">
+\[V_{i-1} = (-1)^i \frac{a_{n-i}}{a_n}\]</div>
+<p>where <span class="math">\(f(z)=a_nz^n + a_{n-1}z^{n-1} + \ldots + a_1z + a_0\)</span> and <span class="math">\(i = 1 \ldots n\)</span>. To obtain the final
+result it sufficient to take <span class="math">\(V_3\)</span> and <span class="math">\(V_4\)</span> and substitute in <span class="math">\(G\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">numer</span><span class="p">(</span><span class="n">G</span><span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="o">*</span><span class="n">V</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="o">/</span><span class="n">denom</span><span class="p">(</span><span class="n">G</span><span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="o">*</span><span class="n">V</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+<span class="go">-1/3</span>
+</pre></div>
+</div>
+<p>Or we could simply use <tt class="docutils literal"><span class="pre">G.subs(V)</span></tt>, but due to a bug in SymPy (<a class="reference external" href="http://code.google.com/p/sympy/issues/detail?id=2552">#2552</a>) this
+doesn&#8217;t work as expected, leaving the denominator unchanged.</p>
+<p>We obtained the same result as before, just this time using purely symbolic
+techniques. This simple procedure can be extended to form an algorithm for
+solving the root summation problem in the general setup. SymPy implements this
+algorithm in <tt class="xref py py-class docutils literal"><span class="pre">RootSum</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">RootSum</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Lambda</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">g</span><span class="p">))</span>
+<span class="go">-1/3</span>
+</pre></div>
+</div>
+<p>The choice of <span class="math">\(g\)</span> allowed us to recognize Viete formulas very easily in
+<span class="math">\(G\)</span>, but is this the case also for more complicated rational functions?
+Let&#8217;s modify <span class="math">\(g\)</span> a little:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">z</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">  1</span>
+<span class="go">─────</span>
+<span class="go">z + 2</span>
+</pre></div>
+</div>
+<p>Now let&#8217;s repeat the procedure for the new <span class="math">\(g\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">together</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span> <span class="n">g</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">R</span> <span class="p">]))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">expand</span><span class="p">(</span><span class="n">numer</span><span class="p">(</span><span class="n">G</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">expand</span><span class="p">(</span><span class="n">denom</span><span class="p">(</span><span class="n">G</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span>
+<span class="go">r₀⋅r₁⋅r₂⋅r₃ + r₀⋅r₁⋅r₂⋅r₄ + 4⋅r₀⋅r₁⋅r₂ + r₀⋅r₁⋅r₃⋅r₄ + 4⋅r₀⋅r₁⋅r₃ + 4⋅r₀⋅r₁⋅r₄ + 12⋅r₀⋅r₁ + r₀⋅r₂⋅r₃⋅r₄ + \</span>
+<span class="go">4⋅r₀⋅r₂⋅r₃ + 4⋅r₀⋅r₂⋅r₄ + 12⋅r₀⋅r₂ + 4⋅r₀⋅r₃⋅r₄ + 12⋅r₀⋅r₃ + 12⋅r₀⋅r₄ + 32⋅r₀ + r₁⋅r₂⋅r₃⋅r₄ + 4⋅r₁⋅r₂⋅r₃ + \</span>
+<span class="go">4⋅r₁⋅r₂⋅r₄ + 12⋅r₁⋅r₂ + 4⋅r₁⋅r₃⋅r₄ + 12⋅r₁⋅r₃ + 12⋅r₁⋅r₄ + 32⋅r₁ + 4⋅r₂⋅r₃⋅r₄ + 12⋅r₂⋅r₃ + 12⋅r₂⋅r₄ + 32⋅r₂ + \</span>
+<span class="go">12⋅r₃⋅r₄ + 32⋅r₃ + 32⋅r₄ + 80</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span>
+<span class="go">r₀⋅r₁⋅r₂⋅r₃⋅r₄ + 2⋅r₀⋅r₁⋅r₂⋅r₃ + 2⋅r₀⋅r₁⋅r₂⋅r₄ + 4⋅r₀⋅r₁⋅r₂ + 2⋅r₀⋅r₁⋅r₃⋅r₄ + 4⋅r₀⋅r₁⋅r₃ + 4⋅r₀⋅r₁⋅r₄ + \</span>
+<span class="go">8⋅r₀⋅r₁ + 2⋅r₀⋅r₂⋅r₃⋅r₄ + 4⋅r₀⋅r₂⋅r₃ + 4⋅r₀⋅r₂⋅r₄ + 8⋅r₀⋅r₂ + 4⋅r₀⋅r₃⋅r₄ + 8⋅r₀⋅r₃ + 8⋅r₀⋅r₄ + 16⋅r₀ + \</span>
+<span class="go">2⋅r₁⋅r₂⋅r₃⋅r₄ + 4⋅r₁⋅r₂⋅r₃ + 4⋅r₁⋅r₂⋅r₄ + 8⋅r₁⋅r₂ + 4⋅r₁⋅r₃⋅r₄ + 8⋅r₁⋅r₃ + 8⋅r₁⋅r₄ + 16⋅r₁ + 4⋅r₂⋅r₃⋅r₄ + \</span>
+<span class="go">8⋅r₂⋅r₃ + 8⋅r₂⋅r₄ + 16⋅r₂ + 8⋅r₃⋅r₄ + 16⋅r₃ + 16⋅r₄ + 32</span>
+</pre></div>
+</div>
+<p>This doesn&#8217;t look that familiar anymore. Let&#8217;s try to apply Viete formulas
+to the numerator and denominator:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">V</span><span class="p">)</span><span class="o">.</span><span class="n">has</span><span class="p">(</span><span class="o">*</span><span class="n">R</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">V</span><span class="p">)</span><span class="o">.</span><span class="n">has</span><span class="p">(</span><span class="o">*</span><span class="n">R</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>We weren&#8217;t able to get rid of the symbolic roots of <span class="math">\(f\)</span>. We can, however, try
+to rewrite <span class="math">\(p\)</span> and <span class="math">\(q\)</span> as polynomials in elementary symmetric polynomials.
+This procedure is called symmetric reduction, and an algorithm for this is
+implemented in <tt class="xref py py-func docutils literal"><span class="pre">symmetrize()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">Q</span><span class="p">),</span> <span class="n">mapping</span> <span class="o">=</span> <span class="n">symmetrize</span><span class="p">((</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">),</span> <span class="n">R</span><span class="p">,</span> <span class="n">formal</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">P</span>
+<span class="go">(32⋅s₁ + 12⋅s₂ + 4⋅s₃ + s₄ + 80, 0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Q</span>
+<span class="go">(16⋅s₁ + 8⋅s₂ + 4⋅s₃ + 2⋅s₄ + s₅ + 32, 0)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">poly</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">pprint</span><span class="p">(</span><span class="n">Eq</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">poly</span><span class="p">))</span>
+<span class="gp">...</span>
+<span class="go">s₁ = r₀ + r₁ + r₂ + r₃ + r₄</span>
+<span class="go">s₂ = r₀⋅r₁ + r₀⋅r₂ + r₀⋅r₃ + r₀⋅r₄ + r₁⋅r₂ + r₁⋅r₃ + r₁⋅r₄ + r₂⋅r₃ + r₂⋅r₄ + r₃⋅r₄</span>
+<span class="go">s₃ = r₀⋅r₁⋅r₂ + r₀⋅r₁⋅r₃ + r₀⋅r₁⋅r₄ + r₀⋅r₂⋅r₃ + r₀⋅r₂⋅r₄ + r₀⋅r₃⋅r₄ + r₁⋅r₂⋅r₃ + r₁⋅r₂⋅r₄ + r₁⋅r₃⋅r₄ + r₂⋅r₃⋅r₄</span>
+<span class="go">s₄ = r₀⋅r₁⋅r₂⋅r₃ + r₀⋅r₁⋅r₂⋅r₄ + r₀⋅r₁⋅r₃⋅r₄ + r₀⋅r₂⋅r₃⋅r₄ + r₁⋅r₂⋅r₃⋅r₄</span>
+<span class="go">s₅ = r₀⋅r₁⋅r₂⋅r₃⋅r₄</span>
+</pre></div>
+</div>
+<p>Here we performed the formal simultaneous symmetric reduction of the polynomials <span class="math">\(p\)</span>
+and <span class="math">\(q\)</span>, obtaining their representation in terms of elementary symmetric
+polynomials, non-symmetric remainders, and elementary symmetric polynomials.
+Remainders are always zero for symmetric inputs.</p>
+<p>We can zip this mapping and Viete formulas together, obtaining:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">_</span><span class="p">),</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span> <span class="p">]</span>
+<span class="go">[(s₁, 0), (s₂, 0), (s₃, 0), (s₄, 1), (s₅, -3)]</span>
+</pre></div>
+</div>
+<p>Now we can take head of <tt class="docutils literal"><span class="pre">P</span></tt> and <tt class="docutils literal"><span class="pre">Q</span></tt> and perform substitution:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">P</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">/</span><span class="n">Q</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">81</span>
+<span class="go">──</span>
+<span class="go">31</span>
+</pre></div>
+</div>
+<p>Let&#8217;s verify this result using <tt class="xref py py-class docutils literal"><span class="pre">RootSum</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">RootSum</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Lambda</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">g</span><span class="p">))</span>
+<span class="go">81</span>
+<span class="go">──</span>
+<span class="go">31</span>
+</pre></div>
+</div>
+<p>The numerical approach also works in this case:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">([</span> <span class="n">g</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">Poly</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">all_roots</span><span class="p">()</span> <span class="p">])</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">2.61290322580645</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nsimplify</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">81</span>
+<span class="go">──</span>
+<span class="go">31</span>
+</pre></div>
+</div>
+<div class="section" id="id4">
+<h3>Tasks<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Repeat this procedure for:</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><span class="math">\(f = z^5 + z + a\)</span> and <span class="math">\(g = \frac{1}{z + 1}\)</span></li>
+<li><span class="math">\(f = z^5 + z + a\)</span> and <span class="math">\(g = \frac{1}{z + b}\)</span></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>Can this or a similar procedure be used with other classes of expressions
+than rational functions? If so, what kind of expressions can be used?</li>
+</ol>
+</div>
+</div>
+<div class="section" id="applications-of-groebner-bases">
+<span id="groebner-bases"></span><h2>Applications of Gröbner bases<a class="headerlink" href="#applications-of-groebner-bases" title="Permalink to this headline">¶</a></h2>
+<p>The Gröbner bases method is an attractive tool in computer algebra and
+symbolic mathematics because it is relatively simple to understand and it
+can be applied to a wide variety of problems in mathematics and engineering.</p>
+<p>Let&#8217;s consider a set <span class="math">\(F\)</span> of multivariate polynomial equations over a field:</p>
+<div class="math">
+\[F = \{ f \in \mathrm{K}[x_1, \ldots, x_n] \}\]</div>
+<p>A Gröbner basis <span class="math">\(G\)</span> of <span class="math">\(F\)</span> with respect to a fixed ordering of monomials
+is another set of polynomial equations with certain <em>nice</em> properties that
+depend on the choice of the order of monomials and variables. <span class="math">\(G\)</span> will be
+structurally different from <span class="math">\(F\)</span>, but has exactly the same set of solutions.</p>
+<p>The Gröbner bases theory tells us that:</p>
+<ol class="arabic simple">
+<li>problems that are difficult to solve using <span class="math">\(F\)</span> are <em>easier</em> to solve using <span class="math">\(G\)</span></li>
+<li>there exists an <em>algorithm</em> for computing <span class="math">\(G\)</span> for arbitrary <span class="math">\(F\)</span></li>
+</ol>
+<p>We will take advantage of this and in the following subsections we will solve
+two interesting problems in graph theory and algebraic geometry by formulating
+those problems as systems of polynomial equations, computing Gröbner bases,
+and reading solutions from them.</p>
+<div class="section" id="vertex-coloring-of-graphs">
+<h3>Vertex <span class="math">\(k\)</span>&#8211;coloring of graphs<a class="headerlink" href="#vertex-coloring-of-graphs" title="Permalink to this headline">¶</a></h3>
+<p>Given a graph <span class="math">\(\mathcal{G}(V, E)\)</span>, where <span class="math">\(V\)</span> is the set of vertices and <span class="math">\(E\)</span>
+is the set of edges of <span class="math">\(\mathcal{G}\)</span>, and a positive integer <span class="math">\(k\)</span>, we ask if
+it is possible to assign a color to every vertex from <span class="math">\(V\)</span>, such that adjacent
+vertices have different colors assigned. Moreover, if graph <span class="math">\(\mathcal{G}\)</span> is
+<span class="math">\(k\)</span>&#8211;colorable, we would like to enumerate all possible <span class="math">\(k\)</span>&#8211;colorings this
+graph.</p>
+<p>We will solve this problem using the Gröbner bases method. First of all, we
+have to transform this graph&#8211;theoretical definition of <span class="math">\(k\)</span>&#8211;coloring problem
+into a form that is understandable by the Gröbner bases machinery. This means
+we have to construct a system of polynomial equations that embeds the structure
+of a graph and constraints related to the <span class="math">\(k\)</span>&#8211;coloring problem.</p>
+<p>We start by assigning a variable to each vertex. Given that <span class="math">\(\mathcal{G}\)</span> has
+<span class="math">\(n\)</span> vertices, i.e. <span class="math">\(|V| = n\)</span>, then we will introduce variables <span class="math">\(x_1, \ldots,
+x_n\)</span>. Next we will write a set of equations describing the fact that we allow
+assignment of one of <span class="math">\(k\)</span> possible colors to each vertex. The best approach
+currently known is to map colors to the <span class="math">\(k\)</span>&#8211;th roots of unity, which are the
+solutions to the equation <span class="math">\(x^k - 1 = 0\)</span>.</p>
+<p>Let <span class="math">\(\zeta = \exp(\frac{2\pi\mathrm{i}}{k})\)</span> be a <span class="math">\(k\)</span>&#8211;th root of unity.
+We map the colors <span class="math">\(1, \ldots, k\)</span> to <span class="math">\(1, \zeta, \ldots, \zeta^{k-1}\)</span>.
+Then the statement that every vertex has to be assigned one of <span class="math">\(k\)</span>
+colors is equivalent to writing the following set of polynomial
+equations:</p>
+<div class="math">
+\[F_k = \{ x_i^k - 1 = 0 : i = 1, 2, \ldots, n \}\]</div>
+<p>We also require that two adjacent vertices <span class="math">\(x_i\)</span> and <span class="math">\(x_j\)</span> are assigned different
+colors. From the previous discussion we know that <span class="math">\(x_i^k = 1\)</span> and <span class="math">\(x_j^k = 1\)</span>, so
+<span class="math">\(x_i^k = x_j^k\)</span> or, equivalently, <span class="math">\(x_i^k - x_j^k = 0\)</span>. By factorization we obtain
+that:</p>
+<div class="math">
+\[x_i^k - x_j^k = (x_i - x_j) \cdot f(x_i, x_j) = 0\]</div>
+<p>where <span class="math">\(f(x_i, x_j)\)</span> is a bivariate polynomial of degree <span class="math">\(k-1\)</span> in both variables.
+Since we require that <span class="math">\(x_i \not= x_j\)</span> then <span class="math">\(x_i^k - x_j^k\)</span> can vanish only when
+<span class="math">\(f(x_i, x_j) = 0\)</span>. This allows us to write another set of polynomial equations:</p>
+<div class="math">
+\[F_{\mathcal{G}} = \{ f(x_i, x_j) = 0 : (i, j) \in E \}\]</div>
+<p>Next we combine <span class="math">\(F_k\)</span> and <span class="math">\(F_{\mathcal{G}}\)</span> into one system of equations <span class="math">\(F\)</span>. The
+graph <span class="math">\(\mathcal{G}(V, E)\)</span> is <span class="math">\(k\)</span>-colorable if the Gröbner basis <span class="math">\(G\)</span> of <span class="math">\(F\)</span> is
+non-trivial, i.e., <span class="math">\(G \not= \{1\}\)</span>. If this is not the case, then the graph isn&#8217;t
+<span class="math">\(k\)</span>&#8211;colorable. Otherwise the Gröbner basis gives us information about all
+possible <span class="math">\(k\)</span>&#8211;colorings of <span class="math">\(\mathcal{G}\)</span>.</p>
+<p>Let&#8217;s now focus on a particular <span class="math">\(k\)</span>&#8211;coloring where <span class="math">\(k = 3\)</span>. In this case:</p>
+<div class="math">
+\[F_3 = \{ x_i^3 - 1 : i = 1, \ldots, n \}\]</div>
+<p>Using SymPy&#8217;s built&#8211;in multivariate polynomial factorization routine:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">(</span><span class="s">&#39;xi, xj&#39;</span><span class="p">)</span>
+<span class="go">(xi, xj)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">factor</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">xj</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">          ⎛  2             2⎞</span>
+<span class="go">(xi - xj)⋅⎝xi  + xi⋅xj + xj ⎠</span>
+</pre></div>
+</div>
+<p>we derive the set of equations <span class="math">\(F_{\mathcal{G}}\)</span> describing an admissible
+<span class="math">\(3\)</span>&#8211;coloring of a graph:</p>
+<div class="math">
+\[F_{\mathcal{G}} = \{ x_i^2 + x_i x_j + x_j^2 : (i, j) \in E \}\]</div>
+<p>At this point it is sufficient to compute the Gröbner basis <span class="math">\(G\)</span> of
+<span class="math">\(F = F_3 \cup F_{\mathcal{G}}\)</span> to find out if a graph <span class="math">\(\mathcal{G}\)</span> is
+<span class="math">\(3\)</span>&#8211;colorable, or not.</p>
+<p>Let&#8217;s see how this procedure works for a particular graph:</p>
+<div class="figure align-center" id="fig-graph-nocolor">
+<img alt="_images/graph-nocolor.png" src="_images/graph-nocolor.png" />
+<p class="caption">The graph <span class="math">\(\mathcal{G}(V, E)\)</span>.</p>
+</div>
+<p><span class="math">\(\mathcal{G}(V, E)\)</span> has 12 vertices and 23 edges. We ask if the graph is
+<span class="math">\(3\)</span>&#8211;colorable. Let&#8217;s first encode <span class="math">\(V\)</span> and <span class="math">\(E\)</span> using Python&#8217;s built&#8211;in
+data structures:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">V</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">E</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">),(</span><span class="mi">4</span><span class="p">,</span><span class="mi">11</span><span class="p">),(</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">),(</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">),(</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">),(</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">),(</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">),(</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">12</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">),(</span><span class="mi">6</span><span class="p">,</span><span class="mi">10</span><span class="p">),(</span><span class="mi">7</span><span class="p">,</span><span class="mi">11</span><span class="p">),(</span><span class="mi">8</span><span class="p">,</span><span class="mi">12</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>We encoded the set of vertices as a list of consecutive integers and the
+set of edges as a list of tuples of adjacent vertex indices. Next we will
+transform the graph into an algebraic form by mapping vertices to variables
+and tuples of indices in tuples of variables:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">V</span> <span class="o">=</span> <span class="p">[</span> <span class="n">var</span><span class="p">(</span><span class="s">&#39;x</span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">V</span> <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">E</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">V</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">E</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>As the last step of this construction we write equations for <span class="math">\(F_3\)</span> and
+<span class="math">\(F_{\mathcal{G}}\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">F3</span> <span class="o">=</span> <span class="p">[</span> <span class="n">xi</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="n">V</span> <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Fg</span> <span class="o">=</span> <span class="p">[</span> <span class="n">xi</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">xi</span><span class="o">*</span><span class="n">xj</span> <span class="o">+</span> <span class="n">xj</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">xi</span><span class="p">,</span> <span class="n">xj</span> <span class="ow">in</span> <span class="n">E</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>Everything is set following the theoretical introduction, so now we can
+compute the Gröbner basis of <span class="math">\(F_3 \cup F_{\mathcal{G}}\)</span> with respect
+to <em>lexicographic</em> ordering of terms:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">groebner</span><span class="p">(</span><span class="n">F3</span> <span class="o">+</span> <span class="n">Fg</span><span class="p">,</span> <span class="o">*</span><span class="n">V</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s">&#39;lex&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We know that if the constructed system of polynomial equations has a solution
+then <span class="math">\(G\)</span> should be non&#8211;trivial, which can be easily verified:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">!=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>The answer is that the graph <span class="math">\(\mathcal{G}\)</span> is <span class="math">\(3\)</span>&#8211;colorable. A sample coloring
+is shown on the following figure:</p>
+<div class="figure align-center" id="fig-graph-color">
+<img alt="_images/graph-color.png" src="_images/graph-color.png" />
+<p class="caption">A sample <span class="math">\(3\)</span>&#8211;coloring of the graph <span class="math">\(\mathcal{G}(V, E)\)</span>.</p>
+</div>
+<p>Suppose we add an edge between vertices <span class="math">\(i = 3\)</span> and <span class="math">\(j = 4\)</span>. Is the new graph
+still <span class="math">\(3\)</span>&#8211;colorable? To check this it is sufficient to construct <span class="math">\(F_{\mathcal{G'}}\)</span>
+by extending <span class="math">\(F_{\mathcal{G}}\)</span> with <span class="math">\(x_3^2 + x_3 x_4 + x_4^2\)</span> and recomputing the
+Gröbner basis:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">groebner</span><span class="p">(</span><span class="n">F3</span> <span class="o">+</span> <span class="n">Fg</span> <span class="o">+</span> <span class="p">[</span><span class="n">x3</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">x3</span><span class="o">*</span><span class="n">x4</span> <span class="o">+</span> <span class="n">x4</span><span class="o">**</span><span class="mi">2</span><span class="p">],</span> <span class="o">*</span><span class="n">V</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s">&#39;lex&#39;</span><span class="p">)</span>
+<span class="go">[1]</span>
+</pre></div>
+</div>
+<p>We got the trivial Gröbner basis as the result, so the graph <span class="math">\(\mathcal{G'}\)</span>
+isn&#8217;t <span class="math">\(3\)</span>&#8211;colorable. We could continue this discussion and ask, for example,
+if the original graph <span class="math">\(\mathcal{G}\)</span> can be colored with only two colors. To
+achieve this, we would have to construct <span class="math">\(F_2\)</span> and <span class="math">\(F_{\mathcal{G}}\)</span>
+and recompute the basis.</p>
+<p>Let&#8217;s return to the original graph. We already know that it is <span class="math">\(3\)</span>&#8211;colorable,
+but now we would like to enumerate all colorings. We will start from revising
+properties of roots of unity. Let&#8217;s construct the <span class="math">\(k\)</span>&#8211;th root of unity, where
+<span class="math">\(k = 3\)</span>, in algebraic number form:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">zeta</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="o">*</span><span class="n">I</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="nb">complex</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zeta</span>
+<span class="go">        ⎽⎽⎽</span>
+<span class="go">  1   ╲╱ 3 ⋅ⅈ</span>
+<span class="go">- ─ + ───────</span>
+<span class="go">  2      2</span>
+</pre></div>
+</div>
+<p>Altogether we consider three roots of unity in this example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">zeta</span><span class="o">**</span><span class="mi">0</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zeta</span><span class="o">**</span><span class="mi">1</span>
+<span class="go">        ⎽⎽⎽</span>
+<span class="go">  1   ╲╱ 3 ⋅ⅈ</span>
+<span class="go">- ─ + ───────</span>
+<span class="go">  2      2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">(</span><span class="n">zeta</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">        ⎽⎽⎽</span>
+<span class="go">  1   ╲╱ 3 ⋅ⅈ</span>
+<span class="go">- ─ - ───────</span>
+<span class="go">  2      2</span>
+</pre></div>
+</div>
+<p>Just to be extra cautious, let&#8217;s check if <span class="math">\(\zeta^3\)</span> gives <span class="math">\(1\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">(</span><span class="n">zeta</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>Alternatively, we could obtain all <span class="math">\(k\)</span>&#8211;th roots of unity by factorization
+of <span class="math">\(x^3 - 1\)</span> over an algebraic number field or by computing its roots via
+radicals:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">factor</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="n">zeta</span><span class="p">)</span>
+<span class="go">        ⎛          ⎽⎽⎽  ⎞ ⎛          ⎽⎽⎽  ⎞</span>
+<span class="go">        ⎜    1   ╲╱ 3 ⋅ⅈ⎟ ⎜    1   ╲╱ 3 ⋅ⅈ⎟</span>
+<span class="go">(x - 1)⋅⎜x + ─ - ───────⎟⋅⎜x + ─ + ───────⎟</span>
+<span class="go">        ⎝    2      2   ⎠ ⎝    2      2   ⎠</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">roots</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">multiple</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">⎡           ⎽⎽⎽            ⎽⎽⎽  ⎤</span>
+<span class="go">⎢     1   ╲╱ 3 ⋅ⅈ    1   ╲╱ 3 ⋅ⅈ⎥</span>
+<span class="go">⎢1, - ─ - ───────, - ─ + ───────⎥</span>
+<span class="go">⎣     2      2       2      2   ⎦</span>
+</pre></div>
+</div>
+<p>We can visualize roots of <span class="math">\(x^3 - 1\)</span> with a little help from mpmath and matplotlib:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sympy.mpmath</span> <span class="kn">import</span> <span class="n">cplot</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">r&quot;Density plot of $z^3 - 1$ in the complex plane.&quot;</span><span class="p">)</span>
+
+<span class="n">cplot</span><span class="p">(</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="n">z</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">re</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">im</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">axes</span><span class="o">=</span><span class="n">axes</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//mathematics-2.py">Source code</a>, <a class="reference external" href=".//mathematics-2.png">png</a>, <a class="reference external" href=".//mathematics-2.hires.png">hires.png</a>, <a class="reference external" href=".//mathematics-2.pdf">pdf</a>)</p>
+<div class="figure align-center">
+<img alt="_images/mathematics-2.png" src="_images/mathematics-2.png" />
+</div>
+<p>Going one step ahead, let&#8217;s declare three variables which will nicely represent
+colors in the <span class="math">\(3\)</span>&#8211;coloring problem and let&#8217;s put together, in an arbitrary but
+fixed order, those variables and the previously computed roots of unity:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">(</span><span class="s">&#39;red,green,blue&#39;</span><span class="p">)</span>
+<span class="go">(red, green, blue)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">colors</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">__</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">colors</span>
+
+<span class="go">⎡          ⎛        ⎽⎽⎽         ⎞  ⎛        ⎽⎽⎽        ⎞⎤</span>
+<span class="go">⎢          ⎜  1   ╲╱ 3 ⋅ⅈ       ⎟  ⎜  1   ╲╱ 3 ⋅ⅈ      ⎟⎥</span>
+<span class="go">⎢(1, red), ⎜- ─ - ───────, green⎟, ⎜- ─ + ───────, blue⎟⎥</span>
+<span class="go">⎣          ⎝  2      2          ⎠  ⎝  2      2         ⎠⎦</span>
+</pre></div>
+</div>
+<p>This gives as a mapping between algebra of <span class="math">\(3\)</span>&#8211;coloring problem and a nice
+visual representation, which we will take advantage of later.</p>
+<p>Let&#8217;s look at <span class="math">\(G\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="p">(</span><span class="n">degree</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">args</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">sift</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">pprint</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">⎡   3    ⎤</span>
+<span class="go">⎣x₁₂  - 1⎦</span>
+<span class="go">⎡   2                2⎤</span>
+<span class="go">⎣x₁₁  + x₁₁⋅x₁₂ + x₁₂ ⎦</span>
+<span class="go">[x₁ + x₁₁ + x₁₂, x₁₁ + x₁₂ + x₅, x₁₁ + x₁₂ + x₈, x₁₀ + x₁₁ + x₁₂]</span>
+<span class="go">[-x₁₁ + x₂, -x₁₂ + x₃, -x₁₂ + x₄, -x₁₁ + x₆, -x₁₂ + x₇, -x₁₁ + x₉]</span>
+</pre></div>
+</div>
+<p>Here we split the basis into four groups with respect to the total degree
+and length of polynomials. Treating all those polynomials as equations of
+the form <span class="math">\(f = 0\)</span>, we can solve them one&#8211;by&#8211;one, to obtain all colorings
+of <span class="math">\(\mathcal{G}\)</span>.</p>
+<p>From the previous discussion we know that <span class="math">\(x_{12}^3 - 1 = 0\)</span> has three solutions
+in terms of roots of unity:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">x12</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x12</span><span class="p">,</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x12</span><span class="p">,</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x12</span><span class="p">,</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>This also tells us that <span class="math">\(x_{12}\)</span> can have any of the three colors assigned.
+Next, the equation <span class="math">\(x_{11}^2 + x_{11} x_{12} + x_{12}^2 = 0\)</span> relates colors
+of <span class="math">\(x_{11}\)</span> and <span class="math">\(x_{12}\)</span>, and vanishes only when <span class="math">\(x_{11} \not= x_{12}\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">x11</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">x11</span><span class="o">*</span><span class="n">x12</span> <span class="o">+</span> <span class="n">x12</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">({</span><span class="n">x11</span><span class="p">:</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">0</span><span class="p">,</span> <span class="n">x12</span><span class="p">:</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">1</span><span class="p">})</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">({</span><span class="n">x11</span><span class="p">:</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">0</span><span class="p">,</span> <span class="n">x12</span><span class="p">:</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">2</span><span class="p">})</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">({</span><span class="n">x11</span><span class="p">:</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">1</span><span class="p">,</span> <span class="n">x12</span><span class="p">:</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">2</span><span class="p">})</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>but:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">({</span><span class="n">x11</span><span class="p">:</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">0</span><span class="p">,</span> <span class="n">x12</span><span class="p">:</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">0</span><span class="p">})</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">({</span><span class="n">x11</span><span class="p">:</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">1</span><span class="p">,</span> <span class="n">x12</span><span class="p">:</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">1</span><span class="p">})</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">subs</span><span class="p">({</span><span class="n">x11</span><span class="p">:</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x12</span><span class="p">:</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">2</span><span class="p">})</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>This means that, when <span class="math">\(x_{12}\)</span> is assigned a color, there are two possible
+color assignments to <span class="math">\(x_{11}\)</span>. Equations in the third group vanish only when
+all three vertices of that particular equation have different colors assigned. This
+follows from the fact that the sum of roots of unity vanishes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">(</span><span class="n">zeta</span><span class="o">**</span><span class="mi">0</span> <span class="o">+</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">1</span> <span class="o">+</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>but (for example):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">(</span><span class="n">zeta</span><span class="o">**</span><span class="mi">1</span> <span class="o">+</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">1</span> <span class="o">+</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Finally, equations in the last group are trivial and vanish when vertices of
+each particular equation have the same color assigned. This gives us <span class="math">\(3 \cdot 2
+\cdot 1 \cdot 1 = 6\)</span> combinations of color assignments, i.e. there are six
+solutions to <span class="math">\(3\)</span>&#8211;coloring problem of graph <span class="math">\(\mathcal{G}\)</span>.</p>
+<p>Based on this analysis it is straightforward to enumerate all six color
+assignments, however we can make this process fully automatic. Let&#8217;s solve
+the Gröbner basis <span class="math">\(G\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">colorings</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="o">*</span><span class="n">V</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">colorings</span><span class="p">)</span>
+<span class="go">6</span>
+</pre></div>
+</div>
+<p>This confirms that there are six solutions. At this point we could simply
+print the computed solutions to see what are the admissible <span class="math">\(3\)</span>&#8211;colorings.
+This is, however, not a good idea, because we use algebraic numbers (roots
+of unity) for representing colors and <tt class="xref py py-func docutils literal"><span class="pre">solve()</span></tt> returned solutions in
+terms of those algebraic numbers, possibly even in a non&#8211;simplified form.</p>
+<p>To overcome this difficulty we will use previously defined mapping between
+roots of unity and literal colors and substitute symbols for numbers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">coloring</span> <span class="ow">in</span> <span class="n">colorings</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="p">[</span> <span class="n">color</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="nb">complex</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span> <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">coloring</span> <span class="p">]</span>
+<span class="gp">...</span>
+<span class="go">[blue, green, red, red, blue, green, red, blue, green, blue, green, red]</span>
+<span class="go">[green, blue, red, red, green, blue, red, green, blue, green, blue, red]</span>
+<span class="go">[green, red, blue, blue, green, red, blue, green, red, green, red, blue]</span>
+<span class="go">[blue, red, green, green, blue, red, green, blue, red, blue, red, green]</span>
+<span class="go">[red, blue, green, green, red, blue, green, red, blue, red, blue, green]</span>
+<span class="go">[red, green, blue, blue, red, green, blue, red, green, red, green, blue]</span>
+</pre></div>
+</div>
+<p>This is the result we were looking for, but a few words of explanation
+are needed. <tt class="xref py py-func docutils literal"><span class="pre">solve()</span></tt> may return unsimplified results so we may need
+to simplify any algebraic numbers that don&#8217;t match structurally the
+precomputed roots of unity. Taking advantage of the domain of
+computation, we use the complex expansion algorithm for this purpose
+(<tt class="docutils literal"><span class="pre">expand(complex=True)</span></tt>). Once we have the solutions in this canonical
+form, to get this nice <em>visual</em> form with literal colors it is
+sufficient to substitute color variables for roots of unity.</p>
+</div>
+<div class="section" id="algebraic-geometry">
+<h3>Algebraic geometry<a class="headerlink" href="#algebraic-geometry" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s consider a geometric entity (e.g. line, square), whose properties can
+be described using a system of <span class="math">\(m\)</span> polynomials:</p>
+<div class="math">
+\[\mathcal{H} = \{h_1, \ldots, h_m\}\]</div>
+<p>We will call <span class="math">\(\mathcal{H}\)</span> a hypothesis. Given a theorem concerning this
+geometric entity, the algebraic formulation is as follows:</p>
+<div class="math">
+\[\forall_{x_1, \ldots, x_n, y_1, \ldots, y_n} (h_1 = 0 \vee \ldots \vee h_m = 0) \Rightarrow g = 0\]</div>
+<p>where <span class="math">\(g\)</span> is the conclusion of the theorem and <span class="math">\(h_1, \ldots h_m\)</span> and <span class="math">\(g\)</span>
+are polynomials in <span class="math">\(\mathrm{K}[x_1, \ldots, x_n, y_1, \ldots, y_n]\)</span>. It
+follows from the Gröbner bases theory that the above statement is true
+when <span class="math">\(g\)</span> belongs to the ideal generated by <span class="math">\(\mathcal{H}\)</span>. To check this,
+i.e. to prove the theorem, it is sufficient to compute a Gröbner basis
+of <span class="math">\(\mathcal{H}\)</span> with respect to any admissible monomial ordering and
+reduce <span class="math">\(g\)</span> with respect to this basis. If the theorem is true then the
+remainder from the reduction will vanish. In this example, for the sake
+of simplicity, we assume that the geometric entity is non&#8211;degenerate,
+i.e. it does not collapse into a line or a point.</p>
+<p>Let&#8217;s consider the following rhombus:</p>
+<div class="figure align-center" id="fig-geometry-rhombus">
+<img alt="_images/geometry-rhombus.png" src="_images/geometry-rhombus.png" />
+<p class="caption">A rhombus in a fixed coordinate system.</p>
+</div>
+<p>This geometric entity consists of four points <span class="math">\(A\)</span>, <span class="math">\(B\)</span>, <span class="math">\(C\)</span> and <span class="math">\(D\)</span>. To
+setup a fixed coordinate system, without loss of generality, we can assume
+that <span class="math">\(A = (0, 0)\)</span>, <span class="math">\(B = (x_B, 0)\)</span>, <span class="math">\(C = (x_C, y_C)\)</span> and <span class="math">\(D = (x_D, y_D)\)</span>.
+This is possible by taking rotational invariance of the geometric entity.
+We will prove that the diagonals of this rhombus, i.e. <span class="math">\(AD\)</span> and <span class="math">\(BC\)</span> are
+mutually perpendicular. We have the following conditions describing <span class="math">\(ABCD\)</span>:</p>
+<ol class="arabic simple">
+<li>Line <span class="math">\(AD\)</span> is parallel to <span class="math">\(BC\)</span>, i.e. <span class="math">\(AD \parallel BC\)</span>.</li>
+<li>Sides of <span class="math">\(ABCD\)</span> are of the equal length, i.e. <span class="math">\(AB = BC\)</span>.</li>
+<li>The rhombus is non&#8211;degenerate, i.e. is not a line or a point.</li>
+</ol>
+<p>Our conclusion is that <span class="math">\(AC \bot BD\)</span>. To prove this theorem, first we need to
+transform the above conditions and the conclusion into a set of polynomials.
+How we can achieve this? Let&#8217;s focus on the first condition. In general, we
+are given two lines <span class="math">\(A_1A_2\)</span> and <span class="math">\(B_1B_2\)</span>. To express the relation between
+those two lines, i.e. that <span class="math">\(A_1A_2\)</span> is parallel <span class="math">\(B_1B_2\)</span>, we can relate
+slopes of those lines:</p>
+<div class="math">
+\[\frac{y_{A_2} - y_{A_1}}{x_{A_2} - x_{A_1}} = \frac{y_{B_2} - y_{B_1}}{x_{B_2} - x_{B_1}}\]</div>
+<p>Clearing denominators in the above expression and putting all terms on the
+left hand side of the equation, we derive a general polynomial describing the
+first condition. This can be literally translated into Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">parallel</span><span class="p">(</span><span class="n">A1</span><span class="p">,</span> <span class="n">A2</span><span class="p">,</span> <span class="n">B1</span><span class="p">,</span> <span class="n">B2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Line [A1, A2] is parallel to line [B1, B2]. &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">A2</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">A1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">B2</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">B1</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">B2</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">B1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">A2</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">A1</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>assuming that <tt class="docutils literal"><span class="pre">A1</span></tt>, <tt class="docutils literal"><span class="pre">A2</span></tt>, <tt class="docutils literal"><span class="pre">B1</span></tt> and <tt class="docutils literal"><span class="pre">B2</span></tt> are instances of <tt class="xref py py-class docutils literal"><span class="pre">Point</span></tt>
+class. In the case of our rhombus, we will take advantage of the fixed coordinate
+system and simplify the resulting polynomials as much as possible. The same
+approach can be used to derive polynomial representation of the other conditions
+and the conclusion. To construct <span class="math">\(\mathcal{H}\)</span> and <span class="math">\(g\)</span> we will use the following
+functions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">A1</span><span class="p">,</span> <span class="n">A2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The squared distance between points A1 and A2. &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">A2</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">A1</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">A2</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">A1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="n">A1</span><span class="p">,</span> <span class="n">A2</span><span class="p">,</span> <span class="n">B1</span><span class="p">,</span> <span class="n">B2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Lines [A1, A2] and [B1, B2] are of the same width. &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">distance</span><span class="p">(</span><span class="n">A1</span><span class="p">,</span> <span class="n">A2</span><span class="p">)</span> <span class="o">-</span> <span class="n">distance</span><span class="p">(</span><span class="n">B1</span><span class="p">,</span> <span class="n">B2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">perpendicular</span><span class="p">(</span><span class="n">A1</span><span class="p">,</span> <span class="n">A2</span><span class="p">,</span> <span class="n">B1</span><span class="p">,</span> <span class="n">B2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Line [A1, A2] is perpendicular to line [B1, B2]. &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">A2</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">A1</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">B2</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">B1</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">A2</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">A1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">B2</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">B1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The non&#8211;degeneracy statement requires a few words of comment. Many theorems
+in geometry are true only in the non&#8211;degenerative case and false or undefined
+otherwise. In our approach to theorem proving in algebraic geometry, we must
+supply sufficient non&#8211;degeneracy conditions manually. In the case of our
+rhombus this is <span class="math">\(x_B &gt; 0\)</span> and <span class="math">\(y_C &gt; 0\)</span> (we don&#8217;t need to take <span class="math">\(x_C\)</span> into
+account because <span class="math">\(AB = BC\)</span>). At first, this seems to be a show stopper, as
+Gröbner bases don&#8217;t support inequalities. However, we can use Rabinovich&#8217;s
+trick and transform those inequalities into a single polynomial condition by
+introducing an additional variable, e.g. <span class="math">\(a\)</span>, about which we will assume that
+is positive. This gives us a non&#8211;degeneracy condition <span class="math">\(x_B y_C - a\)</span>.</p>
+<p>With all this knowledge we are ready to prove the main theorem. First, let&#8217;s
+declare variables:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">(</span><span class="s">&#39;x_B, x_C, y_C, x_D, a&#39;</span><span class="p">)</span>
+<span class="go">(x_B, x_C, y_C, x_D, a)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">V</span> <span class="o">=</span> <span class="n">_</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>We declared the additional variable <span class="math">\(a\)</span>, but we don&#8217;t consider it a variable
+of our problem. Let&#8217;s now define the four points <span class="math">\(A\)</span>, <span class="math">\(B\)</span>, <span class="math">\(C\)</span> and <span class="math">\(D\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">B</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="n">x_B</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="n">x_C</span><span class="p">,</span> <span class="n">y_C</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="n">x_D</span><span class="p">,</span> <span class="n">y_C</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using the previously defined functions we can formulate the hypothesis:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">h1</span> <span class="o">=</span> <span class="n">parallel</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h2</span> <span class="o">=</span> <span class="n">equal</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h3</span> <span class="o">=</span> <span class="n">x_B</span><span class="o">*</span><span class="n">y_C</span> <span class="o">-</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>and compute its Gröbner basis:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">groebner</span><span class="p">([</span><span class="n">f1</span><span class="p">,</span> <span class="n">h2</span><span class="p">,</span> <span class="n">h3</span><span class="p">],</span> <span class="o">*</span><span class="n">V</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s">&#39;grlex&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We had to specify the variables of the problem explicitly in
+<tt class="xref py py-func docutils literal"><span class="pre">groebner()</span></tt>, because otherwise it would treat <span class="math">\(a\)</span> also as a
+variable, which we don&#8217;t want. Now we can verify the theorem:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">reduced</span><span class="p">(</span><span class="n">perpendicular</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">D</span><span class="p">),</span> <span class="n">G</span><span class="p">,</span> <span class="o">*</span><span class="n">V</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s">&#39;grlex&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>The remainder vanished, which proves that <span class="math">\(AC \bot BD\)</span>. Although, the theorem
+we described and proved here is a simple one, one can handle much more advanced
+problems as well using Gröbner bases techniques. One should refer to Franz
+Winkler&#8217;s papers for more advanced examples.</p>
+</div>
+<div class="section" id="id5">
+<h3>Tasks<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>The Gröbner bases method is a generalization of Gaussian elimination
+and Euclid&#8217;s algorithms. Try to solve a linear system and compute GCD
+of polynomials using <tt class="xref py py-func docutils literal"><span class="pre">groebner()</span></tt>. Compare the results and speed of
+computations with <tt class="xref py py-func docutils literal"><span class="pre">solve()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">gcd()</span></tt>.</li>
+<li>Check if the graph with 12 vertices and 23 edges is <span class="math">\(2\)</span>&#8211;colorable.</li>
+<li>In the graph coloring example solve <span class="math">\(F\)</span> instead of computing its Gröbner
+basis. Can you enumerate color assignments this way? If so, why?</li>
+<li>Recompute Gröbner bases from this section using different
+orderings of monomials (e.g. <tt class="docutils literal"><span class="pre">grlex</span></tt> instead of <tt class="docutils literal"><span class="pre">lex</span></tt>) and check
+if the resulting bases are still useful in the context they were
+used. If they are, compare the time to compute the bases in the
+different orderings.</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/sympy-logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Mathematical problem solving with SymPy</a><ul>
+<li><a class="reference internal" href="#partial-fraction-decomposition">Partial fraction decomposition</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#deriving-trigonometric-identities">Deriving trigonometric identities</a><ul>
+<li><a class="reference internal" href="#id1">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#not-only-symbolics-numerical-computing">Not only symbolics: numerical computing</a><ul>
+<li><a class="reference internal" href="#when-symbolic-mathematics-matter">When symbolic mathematics matter?</a></li>
+<li><a class="reference internal" href="#id2">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#summing-roots-of-polynomials">Summing roots of polynomials</a><ul>
+<li><a class="reference internal" href="#id4">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#applications-of-groebner-bases">Applications of Gröbner bases</a><ul>
+<li><a class="reference internal" href="#vertex-coloring-of-graphs">Vertex <span class="math">\(k\)</span>&#8211;coloring of graphs</a></li>
+<li><a class="reference internal" href="#algebraic-geometry">Algebraic geometry</a></li>
+<li><a class="reference internal" href="#id5">Tasks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="previous chapter">Introduction to SymPy</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/mathematics.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction to SymPy"
+             >previous</a> |</li>
+        <li><a href="index.html">Guide to symbolic mathematics with SymPy 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Mateusz Paprocki, Aaron Meurer.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1pre.
+    </div>
+  </body>
+</html>
