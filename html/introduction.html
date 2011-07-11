@@ -518,10 +518,10 @@ SymPy&#8217;s classes:</p>
 <div class="section" id="tasks">
 <h4>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
-<li>Construct an expression for <span class="math">\(1 + x + x^2 + \ldots + x^10\)</span>. Can you construct
-this expression in a different way? Write a function that could generate an
-expression for <span class="math">\(1 + x + x^2 + \ldots + x^n\)</span> for any integer <span class="math">\(n &gt;= 0\)</span>. Extend
-this function to allow <span class="math">\(n &lt; 0\)</span>.</li>
+<li>Construct an expression for <span class="math">\(1 + x + x^2 + \ldots + x^{10}\)</span>. Can you
+construct this expression in a different way? Write a function that
+could generate an expression for <span class="math">\(1 + x + x^2 + \ldots + x^n\)</span> for any
+integer <span class="math">\(n &gt;= 0\)</span>. Extend this function to allow <span class="math">\(n &lt; 0\)</span>.</li>
 <li>Write a function that can compute nested powers, e.g. <span class="math">\(x^x\)</span>, <span class="math">\(x^{x^x}\)</span> and
 so on. The function should take two parameters: an expression and a positive
 integer <span class="math">\(n\)</span> that specifies the depth.</li>
@@ -596,7 +596,7 @@ includes:</p>
 </pre></div>
 </div>
 </li>
-<li><p class="first">&#8220;big&#8221; operators:</p>
+<li><p class="first">unevaluated operators:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Derivative</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
 <span class="go">d ⎛1⎞</span>
 <span class="go">──⎜─⎟</span>
@@ -637,12 +637,12 @@ or as utilities for expression building blocks.</p>
 <div class="section" id="id1">
 <h4>Tasks<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
-<li>Expressions implement <tt class="xref py py-func docutils literal"><span class="pre">doit()</span></tt> method. For most types expressions it
-doesn&#8217;t do anything useful, but in case of &#8220;big&#8221; operators, it executes
-an action assigned to to a &#8220;big&#8221; operator (it differentiates, integrates,
-etc.). Take advantage of <tt class="xref py py-func docutils literal"><span class="pre">doit()</span></tt> and write a function that generates
-integral tables for a few polynomials, rational functions and elementary
-functions.</li>
+<li>Expressions implement a <tt class="xref py py-func docutils literal"><span class="pre">doit()</span></tt> method. For most types expressions
+it doesn&#8217;t do anything useful, but in the case of unevaluated operators,
+it executes an action assigned to to an unevaluated operator (it
+differentiates, integrates, etc.). Take advantage of <tt class="xref py py-func docutils literal"><span class="pre">doit()</span></tt> and
+write a function that generates integral tables for a few polynomials,
+rational functions and elementary functions.</li>
 </ol>
 </div>
 </div>
@@ -650,7 +650,7 @@ functions.</li>
 <h3>Foreign types in SymPy<a class="headerlink" href="#foreign-types-in-sympy" title="Permalink to this headline">¶</a></h3>
 <p>SymPy internally expects that all objects it works with are instances of
 subclasses of <tt class="xref py py-class docutils literal"><span class="pre">Basic</span></tt> class. So why <tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></tt> works without raising
-any exceptions? The number <tt class="docutils literal"><span class="pre">1</span></tt> is not a SymPy&#8217;s type, but:</p>
+an exception? The number <tt class="docutils literal"><span class="pre">1</span></tt> is not a SymPy&#8217;s type, but:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">&lt;type &#39;int&#39;&gt;</span>
 </pre></div>
@@ -658,7 +658,7 @@ any exceptions? The number <tt class="docutils literal"><span class="pre">1</spa
 <p>it&#8217;s a built-in type. SymPy implements <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> function for the task
 of converting foreign types to SymPy&#8217;s types (yes, Python&#8217;s built-in types
 are also considered as foreign). All SymPy&#8217;s classes, methods and functions
-use <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> and this is the reason you can safely write <tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></tt>
+use <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> and this is the reason why you can safely write <tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></tt>
 instead of more verbose and less convenient <tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">Integer(1)</span></tt>. Note that
 not all functions return instances of SymPy&#8217;s types. Usually, if a function
 is supposed to return a property of an expression, it will use built-in
@@ -710,7 +710,7 @@ but sometimes <tt class="xref py py-func docutils literal"><span class="pre">sym
 <span class="go">&lt;class &#39;sympy.core.numbers.Float&#39;&gt;</span>
 </pre></div>
 </div>
-<p>This happens because <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> doesn&#8217;t know about neither <tt class="docutils literal"><span class="pre">mpz</span></tt> nor
+<p>This happens because <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> doesn&#8217;t know about either <tt class="docutils literal"><span class="pre">mpz</span></tt> or
 <tt class="docutils literal"><span class="pre">mpq</span></tt>, and it first looks for <tt class="docutils literal"><span class="pre">__float__</span></tt> attribute, which is implemented
 by both those types. Getting float for exact value isn&#8217;t very useful so let&#8217;s
 extend <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> and add support for <tt class="docutils literal"><span class="pre">mpz</span></tt>. The way to achieve this
@@ -745,7 +745,7 @@ the type of some <tt class="docutils literal"><span class="pre">mpz</span></tt> 
 <span class="go">&lt;class &#39;sympy.core.numbers.Integer&#39;</span>
 </pre></div>
 </div>
-<p>Similar thing should be done for <tt class="docutils literal"><span class="pre">mpq</span></tt>. Let&#8217;s try one more type:</p>
+<p>Similar things should be done for <tt class="docutils literal"><span class="pre">mpq</span></tt>. Let&#8217;s try one more type:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ar</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
@@ -1791,14 +1791,14 @@ foreign types.</p>
 </div>
 <p>Note that <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a> is by design not aware of global configuration,
 so if you for example run <tt class="docutils literal"><span class="pre">bin/isympy</span> <span class="pre">-o</span> <span class="pre">grlex</span></tt>, <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a> will
-ignore this. There is another function <tt class="xref py py-func docutils literal"><span class="pre">sstr()</span></tt> that take global
+ignore this. There is another function <tt class="xref py py-func docutils literal"><span class="pre">sstr()</span></tt> that takes global
 configuration into account.</p>
 </div>
 <div class="section" id="low-level">
 <h4>Low-level<a class="headerlink" href="#low-level" title="Permalink to this headline">¶</a></h4>
 <p>Due to internal implementation of Python, SymPy can&#8217;t use <a class="reference external" href="http://docs.python.org/library/functions.html#repr" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">repr()</span></tt></a>
 for generating low-level textual representation of expressions. To get
-this kind of representation, <tt class="xref py py-func docutils literal"><span class="pre">srepr()</span></tt> was invented:</p>
+this kind of representation you have to use:func:<span class="math">\(srepr\)</span></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">srepr</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">Pow(Symbol(&#39;x&#39;), Integer(2))</span>
 
@@ -1836,7 +1836,7 @@ this kind of representation, <tt class="xref py py-func docutils literal"><span 
 </pre></div>
 </div>
 <p>It also has support for Unicode character set, which makes shapes look
-much more natural than in ASCII case:</p>
+much more natural than in ASCII-art case:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">use_unicode</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="go">⌠</span>
 <span class="go">⎮  2</span>
@@ -1845,8 +1845,8 @@ much more natural than in ASCII case:</p>
 </pre></div>
 </div>
 <p>By default <tt class="xref py py-func docutils literal"><span class="pre">pprint()</span></tt> tries to figure out the best of Unicode and
-ASCII art for generating output. If Unicode is supported, then this will
-be the default. Otherwise it falls back to ASCII art. User can select
+ASCII-art for generating output. If Unicode is supported, then this will
+be the default. Otherwise it falls back to ASCII art. User can select the
 desired character set by setting <tt class="docutils literal"><span class="pre">use_unicode</span></tt> option in <tt class="xref py py-func docutils literal"><span class="pre">pprint()</span></tt>.</p>
 </div>
 <div class="section" id="python-printing">
@@ -1877,7 +1877,6 @@ desired character set by setting <tt class="docutils literal"><span class="pre">
 <span class="go">\frac{1}{x}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">latex</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
 <span class="go">\int x^{2}\,dx</span>
-<span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -1978,6 +1977,17 @@ looks like this:</p>
 </div>
 <p>We can use techniques from previous section to make this new pretty printer
 the default for all inputs.</p>
+<div class="section" id="id7">
+<h4>Tasks<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li>Due to regression in SymPy 0.7.0, <tt class="xref py py-class docutils literal"><span class="pre">Lambda</span></tt> doesn&#8217;t pretty print
+anymore. Following implementation of <tt class="xref py py-class docutils literal"><span class="pre">PolyPrettyPrinter</span></tt> and
+<tt class="docutils literal"><span class="pre">_print_Poly</span></tt>, create another printer for <tt class="xref py py-class docutils literal"><span class="pre">Lambda</span></tt>, or
+just extend the printer from this section.</li>
+<li>Following the way how <tt class="xref py py-class docutils literal"><span class="pre">Poly</span></tt> is printed by <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a> printer,
+make <tt class="xref py py-class docutils literal"><span class="pre">PolyPrettyPrinter</span></tt> print domain including <tt class="docutils literal"><span class="pre">domain=</span></tt> string.</li>
+</ol>
+</div>
 </div>
 <div class="section" id="implementing-printers-from-scratch">
 <h3>Implementing printers from scratch<a class="headerlink" href="#implementing-printers-from-scratch" title="Permalink to this headline">¶</a></h3>
@@ -2006,9 +2016,7 @@ support. In this particular example we would like to be able to translate:</p>
     <span class="sd">&quot;&quot;&quot;Print SymPy&#39;s expressions using Mathematica syntax. &quot;&quot;&quot;</span>
     <span class="n">printmethod</span> <span class="o">=</span> <span class="s">&quot;_mathematica&quot;</span>
 
-    <span class="n">_default_settings</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">&quot;order&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
-    <span class="p">}</span>
+    <span class="n">_default_settings</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="n">_translation_table</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s">&#39;asin&#39;</span><span class="p">:</span> <span class="s">&#39;ArcSin&#39;</span><span class="p">,</span>
@@ -2083,8 +2091,18 @@ support. In this particular example we would like to be able to translate:</p>
 </div>
 <p>and very many other classes of expressions are printed improperly. If we
 need support for a particular class, we have to add another <tt class="docutils literal"><span class="pre">_print_*</span></tt>
-method to <tt class="xref py py-class docutils literal"><span class="pre">MathematicaPrinter`</span></tt>. For example, to make the above
+method to <tt class="xref py py-class docutils literal"><span class="pre">MathematicaPrinter</span></tt>. For example, to make the above
 example work, we have to implement <tt class="docutils literal"><span class="pre">_print_Add</span></tt>.</p>
+<div class="section" id="id8">
+<h4>Tasks<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li>Make Mathematica printer correctly print <span class="math">\(\pi\)</span>.</li>
+<li>Add support for <tt class="xref py py-class docutils literal"><span class="pre">Add</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">Mul</span></tt> to Mathematica printer. In
+the case of products, allow both explicit and implied multiplication, and
+allow users to choose desired behavior by parametrization of Mathematica
+printer.</li>
+</ol>
+</div>
 </div>
 <div class="section" id="code-generation">
 <h3>Code generation<a class="headerlink" href="#code-generation" title="Permalink to this headline">¶</a></h3>
@@ -2114,22 +2132,17 @@ C programming language and <tt class="docutils literal"><span class="pre">F95</s
 </pre></div>
 </div>
 <p>In this example we generated Fortran code for function <tt class="docutils literal"><span class="pre">chebyshevt_20</span></tt> which
-allows use to evaluate Chebyshev polynomial of first kind of degree 20. Almost
-the same way one can generate C code for this expression.</p>
-</div>
-<div class="section" id="id7">
-<h3>Tasks<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+allows use to evaluate Chebyshev polynomial of the first kind of degree 20.
+Almost the same way one can generate C code for this expression.</p>
+<div class="section" id="id9">
+<h4>Tasks<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
-<li>Make Mathematica printer correctly print <span class="math">\(\pi\)</span>.</li>
-<li>Add support for <tt class="xref py py-class docutils literal"><span class="pre">Add</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">Mul</span></tt> to Mathematica printer. In
-the case of products, allow both explicit and implied multiplication, and
-allow users to choose desired behavior by parametrization of Mathematica
-printer.</li>
 <li>Generate C code for <tt class="docutils literal"><span class="pre">chebyshevt(20,</span> <span class="pre">x)</span></tt>.</li>
-<li>Make SymPy generate one file of Fortran or/and C code that contains
-definitions of functions that would allow us to evaluate each of the
-first ten Chebyshev polynomials of the first kind.</li>
+<li>Make SymPy generate one file of Fortran or/and C code that would contain
+definitions of functions that would allow us to evaluate each of the first
+ten Chebyshev polynomials of the first kind.</li>
 </ol>
+</div>
 </div>
 </div>
 </div>
@@ -2213,10 +2226,18 @@ first ten Chebyshev polynomials of the first kind.</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#setting-up-printers">Setting up printers</a></li>
-<li><a class="reference internal" href="#customizing-built-in-printers">Customizing built-in printers</a></li>
-<li><a class="reference internal" href="#implementing-printers-from-scratch">Implementing printers from scratch</a></li>
-<li><a class="reference internal" href="#code-generation">Code generation</a></li>
+<li><a class="reference internal" href="#customizing-built-in-printers">Customizing built-in printers</a><ul>
 <li><a class="reference internal" href="#id7">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#implementing-printers-from-scratch">Implementing printers from scratch</a><ul>
+<li><a class="reference internal" href="#id8">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#code-generation">Code generation</a><ul>
+<li><a class="reference internal" href="#id9">Tasks</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

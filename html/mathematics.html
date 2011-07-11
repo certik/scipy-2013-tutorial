@@ -362,7 +362,7 @@ in <span class="math">\(b\)</span> around 0 and remove the order term:</p>
 <div class="section" id="id1">
 <h3>Tasks<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
-<li>Repeat this procedure but expand wrt <span class="math">\(a\)</span> in the first step.</li>
+<li>Repeat this procedure but expand with respect to <span class="math">\(a\)</span> in the first step.</li>
 <li>Use this procedure to derive a formula for <span class="math">\(\cos(a + b)\)</span>.</li>
 </ol>
 </div>
@@ -927,7 +927,7 @@ Remainders are always zero for symmetric inputs.</p>
 </div></blockquote>
 <ol class="arabic simple" start="2">
 <li>Can this or a similar procedure be used with other classes of expressions
-than rational functions? If so, what kind of expressions can be used?</li>
+than rational functions? If so, what kind of expressions can be allowed?</li>
 </ol>
 </div>
 </div>
@@ -1258,6 +1258,18 @@ computation, we use the complex expansion algorithm for this purpose
 (<tt class="docutils literal"><span class="pre">expand(complex=True)</span></tt>). Once we have the solutions in this canonical
 form, to get this nice <em>visual</em> form with literal colors it is
 sufficient to substitute color variables for roots of unity.</p>
+<div class="section" id="id5">
+<h4>Tasks<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li>Instead of computing Gröbner basis of <span class="math">\(F\)</span>, simply solve it using
+<tt class="xref py py-func docutils literal"><span class="pre">solve()</span></tt>. Can you enumerate color assignments this way? If so, why?</li>
+<li>Use this procedure to check if:<ul>
+<li>the graph with 12 vertices and 23 edges is <span class="math">\(2\)</span>&#8211;colorable.</li>
+<li>the graph with 12 vertices and 24 edges is <span class="math">\(4\)</span>&#8211;colorable.</li>
+</ul>
+</li>
+</ol>
+</div>
 </div>
 <div class="section" id="algebraic-geometry">
 <h3>Algebraic geometry<a class="headerlink" href="#algebraic-geometry" title="Permalink to this headline">¶</a></h3>
@@ -1377,23 +1389,15 @@ variable, which we don&#8217;t want. Now we can verify the theorem:</p>
 we described and proved here is a simple one, one can handle much more advanced
 problems as well using Gröbner bases techniques. One should refer to Franz
 Winkler&#8217;s papers for more advanced examples.</p>
-</div>
-<div class="section" id="id5">
-<h3>Tasks<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h4>Tasks<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
 <li>The Gröbner bases method is a generalization of Gaussian elimination
 and Euclid&#8217;s algorithms. Try to solve a linear system and compute GCD
 of polynomials using <tt class="xref py py-func docutils literal"><span class="pre">groebner()</span></tt>. Compare the results and speed of
 computations with <tt class="xref py py-func docutils literal"><span class="pre">solve()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">gcd()</span></tt>.</li>
-<li>Check if the graph with 12 vertices and 23 edges is <span class="math">\(2\)</span>&#8211;colorable.</li>
-<li>In the graph coloring example solve <span class="math">\(F\)</span> instead of computing its Gröbner
-basis. Can you enumerate color assignments this way? If so, why?</li>
-<li>Recompute Gröbner bases from this section using different
-orderings of monomials (e.g. <tt class="docutils literal"><span class="pre">grlex</span></tt> instead of <tt class="docutils literal"><span class="pre">lex</span></tt>) and check
-if the resulting bases are still useful in the context they were
-used. If they are, compare the time to compute the bases in the
-different orderings.</li>
 </ol>
+</div>
 </div>
 </div>
 </div>
@@ -1428,9 +1432,14 @@ different orderings.</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#applications-of-groebner-bases">Applications of Gröbner bases</a><ul>
-<li><a class="reference internal" href="#vertex-coloring-of-graphs">Vertex <span class="math">\(k\)</span>&#8211;coloring of graphs</a></li>
-<li><a class="reference internal" href="#algebraic-geometry">Algebraic geometry</a></li>
+<li><a class="reference internal" href="#vertex-coloring-of-graphs">Vertex <span class="math">\(k\)</span>&#8211;coloring of graphs</a><ul>
 <li><a class="reference internal" href="#id5">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#algebraic-geometry">Algebraic geometry</a><ul>
+<li><a class="reference internal" href="#id6">Tasks</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
