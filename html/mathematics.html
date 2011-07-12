@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Mathematical problem solving with SymPy &mdash; Guide to symbolic mathematics with SymPy 1.0 documentation</title>
+    <title>Mathematical problem solving with SymPy &mdash; SymPy tutorial at SciPy conference 2011</title>
     
     <link rel="stylesheet" href="_static/extra.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,7 +27,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
-    <link rel="top" title="Guide to symbolic mathematics with SymPy 1.0 documentation" href="index.html" />
+    <link rel="top" title="SymPy tutorial at SciPy conference 2011" href="index.html" />
+    <link rel="next" title="Extras" href="extras.html" />
     <link rel="prev" title="Introduction to SymPy" href="introduction.html" /> 
   </head>
   <body>
@@ -38,9 +39,12 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="extras.html" title="Extras"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
           <a href="introduction.html" title="Introduction to SymPy"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Guide to symbolic mathematics with SymPy 1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">SymPy tutorial at SciPy conference 2011</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -71,7 +75,7 @@ of the form:</p>
 rationals) of <span class="math">\(q\)</span>:</p>
 <div class="math">
 \[q(x) = \prod_{i=1}^k q_i^{n_i}\]</div>
-<p>If <span class="math">\(p\)</span> and <span class="math">\(q\)</span> aren&#8217;t co-prime, we can use <tt class="xref py py-func docutils literal"><span class="pre">cancel()</span></tt> to remove common
+<p>If <span class="math">\(p\)</span> and <span class="math">\(q\)</span> aren&#8217;t co-prime, we can use <a class="reference external" href="http://docs.sympy.org/0.7.0/modules/galgebra/GA/GAsympy.html#cancel" title="(in SymPy v0.7.0)"><tt class="xref py py-func docutils literal"><span class="pre">cancel()</span></tt></a> to remove common
 factors and if <span class="math">\(\deg(p) &gt;= \deg(q)\)</span>, then <tt class="xref py py-func docutils literal"><span class="pre">div()</span></tt> can be used to extract
 the polynomial part of <span class="math">\(f\)</span> and reduce the degree of <span class="math">\(p\)</span>.</p>
 <p>Suppose we would like to compute partial fraction decomposition of:</p>
@@ -225,7 +229,7 @@ previously:</p>
 </pre></div>
 </div>
 <p>There are several other ways we can approach undetermined coefficients
-method. For example we could use <tt class="xref py py-func docutils literal"><span class="pre">collect()</span></tt> for this:</p>
+method. For example we could use <a class="reference external" href="http://docs.sympy.org/0.7.0/modules/galgebra/GA/GAsympy.html#collect" title="(in SymPy v0.7.0)"><tt class="xref py py-func docutils literal"><span class="pre">collect()</span></tt></a> for this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">collect</span><span class="p">(</span><span class="n">eq</span><span class="o">.</span><span class="n">lhs</span> <span class="o">-</span> <span class="n">eq</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">evaluate</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="go">⎧                 2          3       ⎫</span>
 <span class="go">⎨1: B - 1, x: A, x : B + D, x : A + C⎬</span>
@@ -260,9 +264,13 @@ fraction decomposition of <span class="math">\(f\)</span>:</p>
 <li><span class="math">\(\frac{3 x + 5}{(u x + v)^2}\)</span></li>
 <li><span class="math">\(\frac{(3 x + 5)^2}{(2 x + 1)^2}\)</span></li>
 </ul>
+<blockquote>
+<div>(<a class="reference internal" href="extras.html#solution-partfrac-1"><em>solution</em></a>)</div></blockquote>
 </div></blockquote>
-<ol class="arabic simple" start="2">
-<li>Can you use <tt class="xref py py-func docutils literal"><span class="pre">Expr.coeff()</span></tt> in place of <tt class="xref py py-func docutils literal"><span class="pre">Poly.nth()</span></tt>?</li>
+<ol class="arabic" start="2">
+<li><p class="first">Can you use <tt class="xref py py-func docutils literal"><span class="pre">Expr.coeff()</span></tt> in place of <tt class="xref py py-func docutils literal"><span class="pre">Poly.nth()</span></tt>?</p>
+<p>(<a class="reference internal" href="extras.html#solution-partfrac-2"><em>solution</em></a>)</p>
+</li>
 </ol>
 </div>
 </div>
@@ -361,9 +369,13 @@ in <span class="math">\(b\)</span> around 0 and remove the order term:</p>
 </div>
 <div class="section" id="id1">
 <h3>Tasks<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<ol class="arabic simple">
-<li>Repeat this procedure but expand with respect to <span class="math">\(a\)</span> in the first step.</li>
-<li>Use this procedure to derive a formula for <span class="math">\(\cos(a + b)\)</span>.</li>
+<ol class="arabic">
+<li><p class="first">Repeat this procedure but expand with respect to <span class="math">\(a\)</span> in the first step.</p>
+<p>(<a class="reference internal" href="extras.html#solution-trig-1"><em>solution</em></a>)</p>
+</li>
+<li><p class="first">Use this procedure to derive a formula for <span class="math">\(\cos(a + b)\)</span>.</p>
+<p>(<a class="reference internal" href="extras.html#solution-trig-2"><em>solution</em></a>)</p>
+</li>
 </ol>
 </div>
 </div>
@@ -418,6 +430,11 @@ example:</p>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">zeta</span><span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span><span class="o">/</span><span class="mi">17</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
 <span class="go">-5.10244976858838</span>
+</pre></div>
+</div>
+<p>Note that in SymPy, <tt class="docutils literal"><span class="pre">exp(1)</span></tt> is denoted by capital :exp:<tt class="docutils literal"><span class="pre">E</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">E</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
+<span class="go">2.71828182845905</span>
 </pre></div>
 </div>
 <p>Symbolic entities are ignored:</p>
@@ -619,10 +636,12 @@ solve this problem and which is implemented in SymPy.</p>
 <h3>Tasks<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic">
 <li><p class="first">Compute first 55 digits of numerical approximation of <span class="math">\(f(\pi)\)</span>.</p>
+<p>(<a class="reference internal" href="extras.html#solution-numerics-1"><em>solution</em></a>)</p>
 </li>
 <li><p class="first">Read this <a class="reference external" href="http://www.qwantz.com/index.php?comic=1013">webcomic</a>.
 What is the first digit of <span class="math">\(e\)</span> to contain <span class="math">\(999999\)</span>? What is the first
 digit of <span class="math">\(\pi\)</span> to contain <span class="math">\(789\)</span>?</p>
+<p>(<a class="reference internal" href="extras.html#solution-numerics-2"><em>solution</em></a>)</p>
 </li>
 <li><p class="first">In addition to the above example, Gruntz gives another example of ill
 conditioned function in his thesis to show why symbolic computation of
@@ -634,6 +653,7 @@ limits can be preferred to numerical computation:</p>
 Compute the above limit in SymPy using methods similar to the ones presented
 in this section. What are the drawbacks of computing this limit numerically?
 What is the limit, exactly?</p>
+<p>(<a class="reference internal" href="extras.html#solution-numerics-3"><em>solution</em></a>)</p>
 </li>
 </ol>
 </div>
@@ -924,11 +944,14 @@ Remainders are always zero for symmetric inputs.</p>
 <li><span class="math">\(f = z^5 + z + a\)</span> and <span class="math">\(g = \frac{1}{z + 1}\)</span></li>
 <li><span class="math">\(f = z^5 + z + a\)</span> and <span class="math">\(g = \frac{1}{z + b}\)</span></li>
 </ul>
+<p>(<a class="reference internal" href="extras.html#solution-rootsum-1"><em>solution</em></a>)</p>
 </div></blockquote>
 <ol class="arabic simple" start="2">
 <li>Can this or a similar procedure be used with other classes of expressions
 than rational functions? If so, what kind of expressions can be allowed?</li>
 </ol>
+<blockquote>
+<div>(<a class="reference internal" href="extras.html#solution-rootsum-2"><em>solution</em></a>)</div></blockquote>
 </div>
 </div>
 <div class="section" id="applications-of-groebner-bases">
@@ -1260,13 +1283,17 @@ form, to get this nice <em>visual</em> form with literal colors it is
 sufficient to substitute color variables for roots of unity.</p>
 <div class="section" id="id5">
 <h4>Tasks<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
-<ol class="arabic simple">
-<li>Instead of computing Gröbner basis of <span class="math">\(F\)</span>, simply solve it using
-<tt class="xref py py-func docutils literal"><span class="pre">solve()</span></tt>. Can you enumerate color assignments this way? If so, why?</li>
-<li>Use this procedure to check if:<ul>
+<ol class="arabic">
+<li><p class="first">Instead of computing Gröbner basis of <span class="math">\(F\)</span>, simply solve it using
+<tt class="xref py py-func docutils literal"><span class="pre">solve()</span></tt>. Can you enumerate color assignments this way? If so, why?</p>
+<p>(<a class="reference internal" href="extras.html#solution-colorings-1"><em>solution</em></a>)</p>
+</li>
+<li><p class="first">Use this procedure to check if:</p>
+<ul class="simple">
 <li>the graph with 12 vertices and 23 edges is <span class="math">\(2\)</span>&#8211;colorable.</li>
 <li>the graph with 12 vertices and 24 edges is <span class="math">\(4\)</span>&#8211;colorable.</li>
 </ul>
+<p>(<a class="reference internal" href="extras.html#solution-colorings-2"><em>solution</em></a>)</p>
 </li>
 </ol>
 </div>
@@ -1391,11 +1418,13 @@ problems as well using Gröbner bases techniques. One should refer to Franz
 Winkler&#8217;s papers for more advanced examples.</p>
 <div class="section" id="id6">
 <h4>Tasks<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
-<ol class="arabic simple">
-<li>The Gröbner bases method is a generalization of Gaussian elimination
+<ol class="arabic">
+<li><p class="first">The Gröbner bases method is a generalization of Gaussian elimination
 and Euclid&#8217;s algorithms. Try to solve a linear system and compute GCD
 of polynomials using <tt class="xref py py-func docutils literal"><span class="pre">groebner()</span></tt>. Compare the results and speed of
-computations with <tt class="xref py py-func docutils literal"><span class="pre">solve()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">gcd()</span></tt>.</li>
+computations with <tt class="xref py py-func docutils literal"><span class="pre">solve()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">gcd()</span></tt>.</p>
+<p>(<a class="reference internal" href="extras.html#solution-geometric-1"><em>solution</em></a>)</p>
+</li>
 </ol>
 </div>
 </div>
@@ -1449,6 +1478,9 @@ computations with <tt class="xref py py-func docutils literal"><span class="pre"
   <h4>Previous topic</h4>
   <p class="topless"><a href="introduction.html"
                         title="previous chapter">Introduction to SymPy</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="extras.html"
+                        title="next chapter">Extras</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/mathematics.txt"
@@ -1478,9 +1510,12 @@ computations with <tt class="xref py py-func docutils literal"><span class="pre"
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="extras.html" title="Extras"
+             >next</a> |</li>
+        <li class="right" >
           <a href="introduction.html" title="Introduction to SymPy"
              >previous</a> |</li>
-        <li><a href="index.html">Guide to symbolic mathematics with SymPy 1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">SymPy tutorial at SciPy conference 2011</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Introduction to SymPy &mdash; Guide to symbolic mathematics with SymPy 1.0 documentation</title>
+    <title>Introduction to SymPy &mdash; SymPy tutorial at SciPy conference 2011</title>
     
     <link rel="stylesheet" href="_static/extra.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
-    <link rel="top" title="Guide to symbolic mathematics with SymPy 1.0 documentation" href="index.html" />
+    <link rel="top" title="SymPy tutorial at SciPy conference 2011" href="index.html" />
     <link rel="next" title="Mathematical problem solving with SymPy" href="mathematics.html" />
     <link rel="prev" title="Guide to symbolic mathematics with SymPy" href="index.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="index.html" title="Guide to symbolic mathematics with SymPy"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Guide to symbolic mathematics with SymPy 1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">SymPy tutorial at SciPy conference 2011</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -67,9 +67,12 @@ end we will discuss SymPy&#8217;s capabilities of printing expressions and show 
 modify exisiting printers and implement new ones.</p>
 <div class="section" id="installing-configuring-and-running-sympy">
 <h2>Installing, configuring and running SymPy<a class="headerlink" href="#installing-configuring-and-running-sympy" title="Permalink to this headline">¶</a></h2>
-<p>The easiest way to get SymPy is to visit <a class="reference external" href="http://code.google.com/p/sympy">this</a>
-page and download the latest tarball from <em>Featured Downloads</em> section,
-or use the following direct link:</p>
+<p>The easiest way to get SymPy is to type <tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">sympy</span></tt>,
+which will download the latest version of the package from PyPI and
+install it.  If you want to get the source and install it manually,
+visit <a class="reference external" href="http://code.google.com/p/sympy">this</a> page and download the
+latest tarball from <em>Featured Downloads</em> section, or use the following
+direct link:</p>
 <div class="highlight-python"><pre>$ wget http://sympy.googlecode.com/files/sympy-0.7.0.tar.gz
 $ tar -xz -C sympy --strip-components 1 -f sympy-0.7.0.tar.gz</pre>
 </div>
@@ -306,7 +309,7 @@ of entering an expression for <span class="math">\(x + 1\)</span>. We could also
 </div>
 <p>In this case SymPy automatically rewrote the input expression and gave its
 canonical form, which is <tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></tt> once again. This is a very important
-behaviour: all expressions are subject to automatic evaluation, during which
+behavior: all expressions are subject to automatic evaluation, during which
 SymPy tries to find a canonical form for expressions, but it doesn&#8217;t apply
 &#8220;heroic&#8221; measures to achieve this goal. For example the following expression:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
@@ -318,7 +321,7 @@ SymPy tries to find a canonical form for expressions, but it doesn&#8217;t apply
 </div>
 <p>is left unsimplified. This is because automatic canonicalization would
 lose important information about this expression (<span class="math">\(x \not= 1\)</span>). We can
-use <tt class="xref py py-func docutils literal"><span class="pre">cancel()</span></tt> remove common factors from the numerator and the
+use <a class="reference external" href="http://docs.sympy.org/0.7.0/modules/galgebra/GA/GAsympy.html#cancel" title="(in SymPy v0.7.0)"><tt class="xref py py-func docutils literal"><span class="pre">cancel()</span></tt></a> remove common factors from the numerator and the
 denominator:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">cancel</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
 <span class="go">x + 1</span>
@@ -332,7 +335,7 @@ almost everywhere. Consider the following expression:</p>
 </pre></div>
 </div>
 <p>We know that <span class="math">\(\log(x y)\)</span> is equivalent to <span class="math">\(\log x + \log y\)</span> and there
-is <tt class="xref py py-func docutils literal"><span class="pre">expand()</span></tt> that is supposed be able to do this:</p>
+is <a class="reference external" href="http://docs.sympy.org/0.7.0/modules/galgebra/GA/GAsympy.html#expand" title="(in SymPy v0.7.0)"><tt class="xref py py-func docutils literal"><span class="pre">expand()</span></tt></a> that is supposed be able to do this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
 <span class="go">log(x⋅y)</span>
 </pre></div>
@@ -363,7 +366,7 @@ Usually a better way is to assign additional knowledge with an expression:</p>
 </pre></div>
 </div>
 <p>In this case <tt class="docutils literal"><span class="pre">force=True</span></tt> wasn&#8217;t necessary, because we gave sufficient
-information to <tt class="xref py py-func docutils literal"><span class="pre">expand()</span></tt> so that it was able to decide that the
+information to <a class="reference external" href="http://docs.sympy.org/0.7.0/modules/galgebra/GA/GAsympy.html#expand" title="(in SymPy v0.7.0)"><tt class="xref py py-func docutils literal"><span class="pre">expand()</span></tt></a> so that it was able to decide that the
 expansion rule is valid universally for this expression.</p>
 <div class="section" id="arithmetic-operators">
 <h3>Arithmetic operators<a class="headerlink" href="#arithmetic-operators" title="Permalink to this headline">¶</a></h3>
@@ -515,14 +518,18 @@ SymPy&#8217;s classes:</p>
 </div>
 <div class="section" id="tasks">
 <h4>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h4>
-<ol class="arabic simple">
-<li>Construct an expression for <span class="math">\(1 + x + x^2 + \ldots + x^{10}\)</span>. Can you
+<ol class="arabic">
+<li><p class="first">Construct an expression for <span class="math">\(1 + x + x^2 + \ldots + x^{10}\)</span>. Can you
 construct this expression in a different way? Write a function that
 could generate an expression for <span class="math">\(1 + x + x^2 + \ldots + x^n\)</span> for any
-integer <span class="math">\(n &gt;= 0\)</span>. Extend this function to allow <span class="math">\(n &lt; 0\)</span>.</li>
-<li>Write a function that can compute nested powers, e.g. <span class="math">\(x^x\)</span>, <span class="math">\(x^{x^x}\)</span> and
+integer <span class="math">\(n &gt;= 0\)</span>. Extend this function to allow <span class="math">\(n &lt; 0\)</span>.</p>
+<p>(<a class="reference internal" href="extras.html#solution-arith-op-1"><em>solution</em></a>)</p>
+</li>
+<li><p class="first">Write a function that can compute nested powers, e.g. <span class="math">\(x^x\)</span>, <span class="math">\(x^{x^x}\)</span> and
 so on. The function should take two parameters: an expression and a positive
-integer <span class="math">\(n\)</span> that specifies the depth.</li>
+integer <span class="math">\(n\)</span> that specifies the depth.</p>
+<p>(<a class="reference internal" href="extras.html#solution-arith-op-2"><em>solution</em></a>)</p>
+</li>
 </ol>
 </div>
 </div>
@@ -634,13 +641,15 @@ for constructing expressions, but can be useful as containers of expressions
 or as utilities for expression building blocks.</p>
 <div class="section" id="id1">
 <h4>Tasks<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
-<ol class="arabic simple">
-<li>Expressions implement a <tt class="xref py py-func docutils literal"><span class="pre">doit()</span></tt> method. For most types expressions
+<ol class="arabic">
+<li><p class="first">Expressions implement a <tt class="xref py py-func docutils literal"><span class="pre">doit()</span></tt> method. For most types expressions
 it doesn&#8217;t do anything useful, but in the case of unevaluated operators,
 it executes an action assigned to to an unevaluated operator (it
 differentiates, integrates, etc.). Take advantage of <tt class="xref py py-func docutils literal"><span class="pre">doit()</span></tt> and
 write a function that generates integral tables for a few polynomials,
-rational functions and elementary functions.</li>
+rational functions and elementary functions.</p>
+<p>(<a class="reference internal" href="extras.html#solution-blocks-1"><em>solution</em></a>)</p>
+</li>
 </ol>
 </div>
 </div>
@@ -740,7 +749,7 @@ the type of some <tt class="docutils literal"><span class="pre">mpz</span></tt> 
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">mpz</span><span class="p">(</span><span class="mi">117</span><span class="p">))</span>
 <span class="go">117</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
-<span class="go">&lt;class &#39;sympy.core.numbers.Integer&#39;</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Integer&#39;&gt;</span>
 </pre></div>
 </div>
 <p>Similar things should be done for <tt class="docutils literal"><span class="pre">mpq</span></tt>. Let&#8217;s try one more type:</p>
@@ -780,13 +789,17 @@ matrices aren&#8217;t sympifiable:</p>
 <p>We will explain this odd behavior later.</p>
 <div class="section" id="id2">
 <h4>Tasks<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
-<ol class="arabic simple">
-<li>Add support for <tt class="docutils literal"><span class="pre">mpq</span></tt> to <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt>.</li>
-<li>SymPy implements <tt class="xref py py-class docutils literal"><span class="pre">Tuple</span></tt> class, which provides functionality of
+<ol class="arabic">
+<li><p class="first">Add support for <tt class="docutils literal"><span class="pre">mpq</span></tt> to <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt>.</p>
+<p>(<a class="reference internal" href="extras.html#solution-foreign-1"><em>solution</em></a>)</p>
+</li>
+<li><p class="first">SymPy implements <tt class="xref py py-class docutils literal"><span class="pre">Tuple</span></tt> class, which provides functionality of
 Python&#8217;s built-in <tt class="docutils literal"><span class="pre">tuple</span></tt>, but is a subclass of <tt class="xref py py-class docutils literal"><span class="pre">Basic</span></tt>. Take
-advantage of this and make <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> work for 1D horizontal NumPy
-arrays, for which it should return instances of <tt class="xref py py-class docutils literal"><span class="pre">Tuple</span></tt>. Raise
-<tt class="xref py py-exc docutils literal"><span class="pre">SympifyError</span></tt> for other classes of arrays.</li>
+advantage of this and make <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> work for row NumPy arrays,
+for which it should return instances of <tt class="xref py py-class docutils literal"><span class="pre">Tuple</span></tt>. Raise
+<tt class="xref py py-exc docutils literal"><span class="pre">SympifyError</span></tt> for other classes of arrays.</p>
+<p>(<a class="reference internal" href="extras.html#solution-foreign-2"><em>solution</em></a>)</p>
+</li>
 </ol>
 </div>
 </div>
@@ -927,11 +940,13 @@ generator:</p>
 </div>
 <div class="section" id="id3">
 <h4>Tasks<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
-<ol class="arabic simple">
-<li>Implement a function that would generate an expression for <span class="math">\(x_1^1 +
+<ol class="arabic">
+<li><p class="first">Implement a function that would generate an expression for <span class="math">\(x_1^1 +
 x_2^2 + \ldots + x_n^n\)</span>. This function would take two arguments: base
 name for indexed symbols and integer exponent <span class="math">\(n &gt;= 1\)</span>. What&#8217;s the
-best approach among the four presented above?</li>
+best approach among the four presented above?</p>
+<p>(<a class="reference internal" href="extras.html#solution-symbols-1"><em>solution</em></a>)</p>
+</li>
 </ol>
 </div>
 </div>
@@ -1008,7 +1023,7 @@ branch.</p>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">Atom</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">1</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">max</span><span class="p">([</span> <span class="n">depth</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">expr</span><span class="o">.</span><span class="n">args</span><span class="p">])</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">max</span><span class="p">([</span> <span class="n">depth</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">expr</span><span class="o">.</span><span class="n">args</span> <span class="p">])</span>
 </pre></div>
 </div>
 <p>The implementation is straightforward. First we check if the input
@@ -1044,11 +1059,15 @@ work also for non-SymPy types, we have to sympify <tt class="docutils literal"><
 before using it.</p>
 <div class="section" id="id4">
 <h4>Tasks<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
-<ol class="arabic simple">
-<li>Change <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> so that it sympifies its input argument. Rewrite
-<tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> so that is calls <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> only once.</li>
-<li>Add support for iterable containers to <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt>. Containers should
-be treated as branches and have depth defined the same way.</li>
+<ol class="arabic">
+<li><p class="first">Change <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> so that it sympifies its input argument. Rewrite
+<tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> so that is calls <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> only once.</p>
+<p>(<a class="reference internal" href="extras.html#solution-parts-1"><em>solution</em></a>)</p>
+</li>
+<li><p class="first">Add support for iterable containers to <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt>. Containers should
+be treated as branches and have depth defined the same way.</p>
+<p>(<a class="reference internal" href="extras.html#solution-parts-2"><em>solution</em></a>)</p>
+</li>
 </ol>
 </div>
 </div>
@@ -1070,9 +1089,9 @@ code:</p>
 <span class="go">3*a + 4*b</span>
 </pre></div>
 </div>
-<p>The output shows that the <tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt> method gave a new expression with
+<p>The output shows that the <a class="reference external" href="http://docs.sympy.org/0.7.0/modules/galgebra/GA/GAsympy.html#subs" title="(in SymPy v0.7.0)"><tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt></a> method gave a new expression with
 symbol <tt class="docutils literal"><span class="pre">x</span></tt> replaced with symbol <tt class="docutils literal"><span class="pre">a</span></tt> and symbol <tt class="docutils literal"><span class="pre">y</span></tt> replaced with
-symbol <tt class="docutils literal"><span class="pre">b</span></tt>. The original expression wasn&#8217;t modified. This behaviour
+symbol <tt class="docutils literal"><span class="pre">b</span></tt>. The original expression wasn&#8217;t modified. This behavior
 applies to all classes that are subclasses of <tt class="xref py py-class docutils literal"><span class="pre">Basic</span></tt>. An exception
 to immutability rule is <tt class="xref py py-class docutils literal"><span class="pre">Matrix</span></tt>, which allows in-place modifications,
 but it is not a subclass of <tt class="xref py py-class docutils literal"><span class="pre">Basic</span></tt>:</p>
@@ -1099,12 +1118,14 @@ left the original expression stored in variable <tt class="docutils literal"><sp
 modifies the matrix in-place and doesn&#8217;t waste memory for unnecessary copies.</p>
 <div class="section" id="id5">
 <h4>Tasks<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
-<ol class="arabic simple">
-<li>This is the first time we used <tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt>. This is a very important method
-and we will talk more about it later. However, we can also use <tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt>
+<ol class="arabic">
+<li><p class="first">This is the first time we used <a class="reference external" href="http://docs.sympy.org/0.7.0/modules/galgebra/GA/GAsympy.html#subs" title="(in SymPy v0.7.0)"><tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt></a>. This is a very important method
+and we will talk more about it later. However, we can also use <a class="reference external" href="http://docs.sympy.org/0.7.0/modules/galgebra/GA/GAsympy.html#subs" title="(in SymPy v0.7.0)"><tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt></a>
 to generate some cool looking expressions. Start with <tt class="docutils literal"><span class="pre">x**x</span></tt> expression
 and substitute in it <tt class="docutils literal"><span class="pre">x**x</span></tt> for <tt class="docutils literal"><span class="pre">x</span></tt>. What do you get? (make sure you
-use pretty printer) Can you achieve the same effect without <tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt>?</li>
+use pretty printer) Can you achieve the same effect without <a class="reference external" href="http://docs.sympy.org/0.7.0/modules/galgebra/GA/GAsympy.html#subs" title="(in SymPy v0.7.0)"><tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt></a>?</p>
+<p>(<a class="reference internal" href="extras.html#solution-immutability-1"><em>solution</em></a>)</p>
+</li>
 </ol>
 </div>
 </div>
@@ -1300,7 +1321,7 @@ doesn&#8217;t do anything for all other classes of arguments:</p>
 <span class="go">my_func(x) + 1</span>
 </pre></div>
 </div>
-<p>We can use <tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt> method to quickly verify the expression is correct:</p>
+<p>We can use <a class="reference external" href="http://docs.sympy.org/0.7.0/modules/galgebra/GA/GAsympy.html#subs" title="(in SymPy v0.7.0)"><tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt></a> method to quickly verify the expression is correct:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sympified</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">my_func(1) + 1</span>
 </pre></div>
@@ -1367,10 +1388,12 @@ user defined functions like <tt class="xref py py-func docutils literal"><span c
 </div>
 <div class="section" id="id6">
 <h4>Tasks<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
-<ol class="arabic simple">
-<li>Construct a polynomial of degree, let&#8217;s say, 1000. Use both techniques
+<ol class="arabic">
+<li><p class="first">Construct a polynomial of degree, let&#8217;s say, 1000. Use both techniques
 to save and restore this expression. Compare speed of those approaches.
-Verify that the result is correct.</li>
+Verify that the result is correct.</p>
+<p>(<a class="reference internal" href="extras.html#solution-sympify-1"><em>solution</em></a>)</p>
+</li>
 </ol>
 </div>
 </div>
@@ -1491,7 +1514,7 @@ expression is perfectly valid:</p>
 <span class="go">&lt;class &#39;sympy.core.power.Pow&#39;&gt;</span>
 </pre></div>
 </div>
-<p>People who what pure Python behaviour of <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> can disable this
+<p>People who what pure Python behavior of <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> can disable this
 automatic conversion by passing <tt class="docutils literal"><span class="pre">convert_xor=False</span></tt> to it.</p>
 </div>
 <div class="section" id="is-not-comparison-operator">
@@ -1824,7 +1847,7 @@ this kind of representation you have to use:func:<span class="math">\(srepr\)</s
 <span class="go">1</span>
 <span class="go">-</span>
 <span class="go">x</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">use_unicde</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">use_unicode</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="go">  /</span>
 <span class="go"> |</span>
 <span class="go"> |  2</span>
@@ -1977,13 +2000,17 @@ looks like this:</p>
 the default for all inputs.</p>
 <div class="section" id="id7">
 <h4>Tasks<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
-<ol class="arabic simple">
-<li>Due to regression in SymPy 0.7.0, <tt class="xref py py-class docutils literal"><span class="pre">Lambda</span></tt> doesn&#8217;t pretty print
+<ol class="arabic">
+<li><p class="first">Due to regression in SymPy 0.7.0, <tt class="xref py py-class docutils literal"><span class="pre">Lambda</span></tt> doesn&#8217;t pretty print
 anymore. Following implementation of <tt class="xref py py-class docutils literal"><span class="pre">PolyPrettyPrinter</span></tt> and
 <tt class="docutils literal"><span class="pre">_print_Poly</span></tt>, create another printer for <tt class="xref py py-class docutils literal"><span class="pre">Lambda</span></tt>, or
-just extend the printer from this section.</li>
-<li>Following the way how <tt class="xref py py-class docutils literal"><span class="pre">Poly</span></tt> is printed by <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a> printer,
-make <tt class="xref py py-class docutils literal"><span class="pre">PolyPrettyPrinter</span></tt> print domain including <tt class="docutils literal"><span class="pre">domain=</span></tt> string.</li>
+just extend the printer from this section.</p>
+<p>(<a class="reference internal" href="extras.html#solution-custom-printers-1"><em>solution</em></a>)</p>
+</li>
+<li><p class="first">Following the way how <tt class="xref py py-class docutils literal"><span class="pre">Poly</span></tt> is printed by <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a> printer,
+make <tt class="xref py py-class docutils literal"><span class="pre">PolyPrettyPrinter</span></tt> print domain including <tt class="docutils literal"><span class="pre">domain=</span></tt> string.</p>
+<p>(<a class="reference internal" href="extras.html#solution-custom-printers-2"><em>solution</em></a>)</p>
+</li>
 </ol>
 </div>
 </div>
@@ -2093,12 +2120,16 @@ method to <tt class="xref py py-class docutils literal"><span class="pre">Mathem
 example work, we have to implement <tt class="docutils literal"><span class="pre">_print_Add</span></tt>.</p>
 <div class="section" id="id8">
 <h4>Tasks<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
-<ol class="arabic simple">
-<li>Make Mathematica printer correctly print <span class="math">\(\pi\)</span>.</li>
-<li>Add support for <tt class="xref py py-class docutils literal"><span class="pre">Add</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">Mul</span></tt> to Mathematica printer. In
+<ol class="arabic">
+<li><p class="first">Make Mathematica printer correctly print <span class="math">\(\pi\)</span>.</p>
+<p>(<a class="reference internal" href="extras.html#solution-new-printers-1"><em>solution</em></a>)</p>
+</li>
+<li><p class="first">Add support for <tt class="xref py py-class docutils literal"><span class="pre">Add</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">Mul</span></tt> to Mathematica printer. In
 the case of products, allow both explicit and implied multiplication, and
 allow users to choose desired behavior by parametrization of Mathematica
-printer.</li>
+printer.</p>
+<p>(<a class="reference internal" href="extras.html#solution-new-printers-2"><em>solution</em></a>)</p>
+</li>
 </ol>
 </div>
 </div>
@@ -2109,7 +2140,9 @@ and C code generation. The simplest way to proceed is to use <tt class="xref py 
 which takes a tuple consisting of function name and an expression, or a list
 of tuples of this kind, language in which it will generate code (<tt class="docutils literal"><span class="pre">C</span></tt> for
 C programming language and <tt class="docutils literal"><span class="pre">F95</span></tt> for Fortran, and file name:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">codegen</span><span class="p">((</span><span class="s">&quot;chebyshevt_20&quot;</span><span class="p">,</span> <span class="n">chebyshevt</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">x</span><span class="p">)),</span> <span class="s">&quot;F95&quot;</span><span class="p">,</span> <span class="s">&quot;file&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy.utilities.codegen</span> <span class="kn">import</span> <span class="n">codegen</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">codegen</span><span class="p">((</span><span class="s">&quot;chebyshevt_20&quot;</span><span class="p">,</span> <span class="n">chebyshevt</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">x</span><span class="p">)),</span> <span class="s">&quot;F95&quot;</span><span class="p">,</span> <span class="s">&quot;file&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 <span class="go">!******************************************************************************</span>
 <span class="go">!*                      Code generated with sympy 0.7.0                       *</span>
 <span class="go">!*                                                                            *</span>
@@ -2282,7 +2315,7 @@ ten Chebyshev polynomials of the first kind.</li>
         <li class="right" >
           <a href="index.html" title="Guide to symbolic mathematics with SymPy"
              >previous</a> |</li>
-        <li><a href="index.html">Guide to symbolic mathematics with SymPy 1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">SymPy tutorial at SciPy conference 2011</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
