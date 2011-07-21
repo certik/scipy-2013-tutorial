@@ -12,6 +12,8 @@
     
     <link rel="stylesheet" href="_static/extra.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="http://live.sympy.org/static/live-core.css" type="text/css" />
+    <link rel="stylesheet" href="http://live.sympy.org/static/live-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -26,6 +28,9 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
+    <script type="text/javascript" src="http://live.sympy.org/static/external/ext-core.js"></script>
+    <script type="text/javascript" src="http://live.sympy.org/static/live-core.js"></script>
+    <script type="text/javascript" src="http://live.sympy.org/static/live-sphinx.js"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
     <link rel="top" title="SymPy tutorial at SciPy conference 2011" href="index.html" />
     <link rel="next" title="Mathematical problem solving with SymPy" href="mathematics.html" />
@@ -761,7 +766,7 @@ the type of some <tt class="docutils literal"><span class="pre">mpz</span></tt> 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">ar</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
-<span class="nc">SympifyError: SympifyError</span>: <span class="n-Identifier">&quot;could not parse u&#39;[1 2 3]&#39;&quot;</span>
+<span class="gr">SympifyError: SympifyError</span>: <span class="n">&quot;could not parse u&#39;[1 2 3]&#39;&quot;</span>
 </pre></div>
 </div>
 <p><tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> isn&#8217;t aware of <tt class="docutils literal"><span class="pre">numpy.ndarray</span></tt> and heuristics didn&#8217;t work,
@@ -783,7 +788,7 @@ matrices aren&#8217;t sympifiable:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
-<span class="nc">SympifyError: SympifyError</span>: <span class="n-Identifier">&#39;Matrix cannot be sympified&#39;</span>
+<span class="gr">SympifyError: SympifyError</span>: <span class="n">&#39;Matrix cannot be sympified&#39;</span>
 </pre></div>
 </div>
 <p>We will explain this odd behavior later.</p>
@@ -819,7 +824,7 @@ may be tempted to simply write:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
-<span class="nc">NameError</span>: <span class="n-Identifier">name &#39;x&#39; is not defined</span>
+<span class="gr">NameError</span>: <span class="n">name &#39;x&#39; is not defined</span>
 </pre></div>
 </div>
 <p>For users that come from other symbolic mathematics systems, this behavior
@@ -896,12 +901,12 @@ lexicographic syntax is inclusive, because it makes more sense in this case.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
-<span class="nc">NameError</span>: <span class="n-Identifier">name &#39;u&#39; is not defined</span>
+<span class="gr">NameError</span>: <span class="n">name &#39;u&#39; is not defined</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">v</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
-<span class="nc">NameError</span>: <span class="n-Identifier">name &#39;v&#39; is not defined</span>
+<span class="gr">NameError</span>: <span class="n">name &#39;v&#39; is not defined</span>
 </pre></div>
 </div>
 <p>We got <tt class="xref py py-exc docutils literal"><span class="pre">NameError</span></tt>, because we constructed those symbols, but we didn&#8217;t
@@ -1013,7 +1018,7 @@ constants):</p>
 </div>
 <p>Atoms can be also recognized by the fact that their <tt class="docutils literal"><span class="pre">args</span></tt> are empty.
 Note, however, that this is an implementation detail, and one should use
-either <a class="reference external" href="http://docs.python.org/library/functions.html#isinstance" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">isinstance()</span></tt></a> built-in function or <span class="math">\(is_Atom\)</span> property to
+either <a class="reference external" href="http://docs.python.org/library/functions.html#isinstance" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">isinstance()</span></tt></a> built-in function or <tt class="docutils literal"><span class="pre">is_Atom</span></tt> property to
 recognize atoms properly. Everything else than an <tt class="xref py py-class docutils literal"><span class="pre">Atom</span></tt> is a
 branch.</p>
 <p>Let&#8217;s implement <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> function:</p>
@@ -1048,7 +1053,7 @@ with this function. Let&#8217;s look at the following phenomenon:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">depth</span><span class="p">(</span><span class="mi">117</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
-<span class="nc">AttributeError</span>: <span class="n-Identifier">&#39;int&#39; object has no attribute &#39;args&#39;</span>
+<span class="gr">AttributeError</span>: <span class="n">&#39;int&#39; object has no attribute &#39;args&#39;</span>
 </pre></div>
 </div>
 <p><tt class="docutils literal"><span class="pre">117</span></tt> is an instance of Python&#8217;s built-in type <tt class="xref py py-class docutils literal"><span class="pre">int</span></tt>, but this type
@@ -1209,7 +1214,7 @@ telling it explicitly what to do:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">roots</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
-<span class="nc">PolynomialError</span>: <span class="n-Identifier">multivariate polynomials are not supported</span>
+<span class="gr">PolynomialError</span>: <span class="n">multivariate polynomials are not supported</span>
 </pre></div>
 </div>
 <p>Here we have to tell <tt class="xref py py-func docutils literal"><span class="pre">roots()</span></tt> in which variable roots should be computed:</p>
@@ -1383,7 +1388,7 @@ user defined functions like <tt class="xref py py-func docutils literal"><span c
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">my_func</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
-<span class="nc">PicklingError: Can&#39;t pickle my_func</span>: <span class="n-Identifier">it&#39;s not found as __main__.my_func</span>
+<span class="gr">PicklingError: Can&#39;t pickle my_func</span>: <span class="n">it&#39;s not found as __main__.my_func</span>
 </pre></div>
 </div>
 <div class="section" id="id6">
@@ -1475,12 +1480,12 @@ users may be accustomed:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span><span class="n">x</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
-<span class="nc">SyntaxError</span>: <span class="n-Identifier">invalid syntax</span>
+<span class="gr">SyntaxError</span>: <span class="n">invalid syntax</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span> <span class="n">x</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
-<span class="nc">SyntaxError</span>: <span class="n-Identifier">invalid syntax</span>
+<span class="gr">SyntaxError</span>: <span class="n">invalid syntax</span>
 </pre></div>
 </div>
 <p>More importantly, Python uses <tt class="docutils literal"><span class="pre">**</span></tt> to denote exponentiation, whereas
@@ -1501,7 +1506,7 @@ expression is perfectly valid:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
-<span class="nc">TypeError: unsupported operand type(s) for ^</span>: <span class="n-Identifier">&#39;Add&#39; and &#39;int&#39;</span>
+<span class="gr">TypeError: unsupported operand type(s) for ^</span>: <span class="n">&#39;Add&#39; and &#39;int&#39;</span>
 </pre></div>
 </div>
 <p>gives use <tt class="xref py py-exc docutils literal"><span class="pre">TypeError</span></tt>. For users&#8217; convenience, <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> converts
@@ -1597,7 +1602,7 @@ up when using floating point coefficients:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">solve</span><span class="p">([</span><span class="mf">2.0</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="p">],</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
-<span class="nc">DomainError</span>: <span class="n-Identifier">can&#39;t compute a Groebner basis over RR</span>
+<span class="gr">DomainError</span>: <span class="n">can&#39;t compute a Groebner basis over RR</span>
 </pre></div>
 </div>
 <p>Here, the algorithm for solving systems of polynomial equations relies
@@ -1634,14 +1639,14 @@ contain <tt class="docutils literal"><span class="pre">f</span></tt>, we get the
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
-<span class="nc">RuntimeError</span>: <span class="n-Identifier">maximum recursion depth exceeded while calling a Python object</span>
+<span class="gr">RuntimeError</span>: <span class="n">maximum recursion depth exceeded while calling a Python object</span>
 </pre></div>
 </div>
 <p>The same happens when we try to print <tt class="docutils literal"><span class="pre">u</span></tt>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">([</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s">&#39;f&#39;</span> <span class="p">])</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
-<span class="nc">RuntimeError</span>: <span class="n-Identifier">maximum recursion depth exceeded while calling a Python object</span>
+<span class="gr">RuntimeError</span>: <span class="n">maximum recursion depth exceeded while calling a Python object</span>
 </pre></div>
 </div>
 <p>Python provides, at least partially, a solution to this problem by
@@ -1657,7 +1662,7 @@ allowing the user to relax the limit on recursion depth:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">([</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s">&#39;f&#39;</span> <span class="p">])</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
-<span class="nc">RuntimeError</span>: <span class="n-Identifier">maximum recursion depth exceeded while calling a Python object</span>
+<span class="gr">RuntimeError</span>: <span class="n">maximum recursion depth exceeded while calling a Python object</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">setrecursionlimit</span><span class="p">(</span><span class="mi">5500</span><span class="p">)</span>
 
@@ -2320,7 +2325,7 @@ ten Chebyshev polynomials of the first kind.</li>
     </div>
     <div class="footer">
         &copy; Copyright 2011, Mateusz Paprocki, Aaron Meurer.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1pre.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1pre/91b4fc984b32.
     </div>
   </body>
 </html>
