@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installing, configuring and running SymPy &mdash; SymPy tutorial at SciPy 2011 conferences</title>
+    
+    <link rel="stylesheet" href="_static/extra.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost:8080/static/live-core.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost:8080/static/live-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/external/ext-core.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/live-core.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/live-sphinx.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="top" title="SymPy tutorial at SciPy 2011 conferences" href="index.html" />
+    <link rel="up" title="Introduction to SymPy" href="introduction.html" />
+    <link rel="next" title="Basics of expressions in SymPy" href="basics.html" />
+    <link rel="prev" title="Introduction to SymPy" href="introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="basics.html" title="Basics of expressions in SymPy"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction to SymPy"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li>
+          <li><a href="introduction.html" accesskey="U">Introduction to SymPy</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installing-configuring-and-running-sympy">
+<h1>Installing, configuring and running SymPy<a class="headerlink" href="#installing-configuring-and-running-sympy" title="Permalink to this headline">¶</a></h1>
+<p>The easiest way to get SymPy is to type <tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">sympy</span></tt>,
+which will download the latest version of the package from PyPI and
+install it.  If you want to get the source and install it manually,
+visit <a class="reference external" href="http://code.google.com/p/sympy">this</a> page and download the
+latest tarball from <em>Featured Downloads</em> section, or use the following
+direct link:</p>
+<pre class="literal-block">
+$ <strong class="input">wget http://sympy.googlecode.com/files/sympy-0.7.1.tar.gz</strong>
+$ <strong class="input">tar -xz -C sympy --strip-components 1 -f sympy-0.7.1.tar.gz</strong>
+</pre>
+<p>You will also find an installer for Windows there. An alternative way is
+to clone SymPy&#8217;s <a class="reference external" href="http://www.git-scm.org">git</a> repository from
+<a class="reference external" href="http://github.com/sympy/sympy">GitHub</a>:</p>
+<pre class="literal-block">
+$ <strong class="input">git clone git://github.com/sympy/sympy.git</strong>
+</pre>
+<p>To use it, issue:</p>
+<pre class="literal-block">
+$ <strong class="input">cd sympy</strong>
+$ <strong class="input">python</strong>
+Python 2.7.2+ (default, Oct  4 2011, 20:06:09)
+[GCC 4.6.1] on linux2
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; from sympy import *
+&gt;&gt;&gt; var('x')
+x
+&gt;&gt;&gt; diff(sin(x), x)
+cos(x)
+</pre>
+<p>If you want SymPy to be available globally, you can install it using
+<tt class="docutils literal"><span class="pre">./setup.py</span> <span class="pre">install</span></tt>. SymPy is available in major Linux distributions,
+so you can install it also using package manager of your distribution
+(for example in Ubuntu install <tt class="docutils literal"><span class="pre">python-sympy</span></tt> and in Gentoo install
+<tt class="docutils literal"><span class="pre">dev-python/sympy</span></tt>). Note that distributions often contain very outdated
+versions of packages, so make sure you don&#8217;t install some ancient version
+of SymPy on your system.</p>
+<p>By default, SymPy doesn&#8217;t have any dependencies besides Python. The following
+version of Python are supported: 2.5, 2.6, 2.7. Version 2.4 was originally
+supported but was dropped in SymPy 0.7.1. Support for Python 3.2+ will be
+added in version 0.7.2 (use git version for now). Version 0.7.2 will also
+support PyPy 1.6+. If you use Jython, IronPython or other interpreter, you
+may find out SymPy not working properly (Jython) or not importing at all
+(IronPython).</p>
+<p>Certain SymPy&#8217;s modules may require additional dependencies to provide more
+features or improve speed of computations. For example, <tt class="xref py py-mod docutils literal"><span class="pre">sympy.polys</span></tt>
+and <tt class="xref py py-mod docutils literal"><span class="pre">sympy.mpmath</span></tt> can take advantage of gmpy library to radically
+improve speed of otherwise pure Python library. If gmpy is not available,
+those modules fall back automatically to pure Python implementation of
+arithmetic routines. Other optional dependencies are IPython, Matplotlib,
+NumPy, SciPy, Cython, Pyglet, LaTeX distribution and more.</p>
+<div class="section" id="sympy-in-python-ipython">
+<h2>SymPy in Python/IPython<a class="headerlink" href="#sympy-in-python-ipython" title="Permalink to this headline">¶</a></h2>
+<p>Sessions in standard Python&#8217;s interpreter and IPython look very similar,
+just the banner and prompt look differently, for example:</p>
+<pre class="literal-block">
+$ <strong class="input">python</strong>
+Python 2.7.2+ (default, Oct  4 2011, 20:06:09)
+[GCC 4.6.1] on linux2
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; import sympy
+&gt;&gt;&gt; x = sympy.Symbol('x')
+&gt;&gt;&gt; sympy.integrate(3*x**2)
+x**3
+&gt;&gt;&gt; sympy.init_printing()
+&gt;&gt;&gt; sympy.integrate(3*x**2)
+ 3
+x
+</pre>
+</div>
+<div class="section" id="interactive-sympy-isympy">
+<h2>Interactive SymPy (<tt class="docutils literal"><span class="pre">isympy</span></tt>)<a class="headerlink" href="#interactive-sympy-isympy" title="Permalink to this headline">¶</a></h2>
+<p>For users&#8217; convenience, SymPy&#8217;s distribution includes a simple script called
+isympy (see <tt class="docutils literal"><span class="pre">bin/isympy</span></tt>). isympy uses either IPython (if available) or
+standard Python&#8217;s interpreter with readline support. On startup isympy sets
+up the environment to make interaction with SymPy more pleasant. It enables
+new division, imports everything from <tt class="xref py py-mod docutils literal"><span class="pre">sympy</span></tt>, injects a few commonly
+used symbols into the global namespace, and initializes the pretty printer.</p>
+<p>Here is an example session with isympy:</p>
+<pre class="literal-block">
+$ <strong class="input">bin/isympy</strong>
+IPython console for SymPy 0.7.1 (Python 2.7.1-64-bit) (ground types: gmpy)
+
+These commands were executed:
+&gt;&gt;&gt; from __future__ import division
+&gt;&gt;&gt; from sympy import *
+&gt;&gt;&gt; x, y, z, t = symbols('x y z t')
+&gt;&gt;&gt; k, m, n = symbols('k m n', integer=True)
+&gt;&gt;&gt; f, g, h = symbols('f g h', cls=Function)
+
+Documentation can be found at <a class="reference external" href="http://www.sympy.org">http://www.sympy.org</a>
+
+In [1]: integrate(3*x**2, x)
+Out[1]:
+ 3
+x
+
+In [2]: %quit
+Do you really want to exit ([y]/n)? y
+Exiting ...
+</pre>
+<div class="section" id="command-line-arguments">
+<h3>Command-line arguments<a class="headerlink" href="#command-line-arguments" title="Permalink to this headline">¶</a></h3>
+<p>There are a variety of command-line options supported by isympy:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">-h</span></tt>, <tt class="docutils literal"><span class="pre">--help</span></tt></dt>
+<dd>show help</dd>
+<dt><tt class="docutils literal"><span class="pre">-c</span> <span class="pre">CONSOLE</span></tt>, <tt class="docutils literal"><span class="pre">--console=CONSOLE</span></tt></dt>
+<dd>select type of interactive session: <tt class="docutils literal"><span class="pre">ipython</span></tt>, <tt class="docutils literal"><span class="pre">python</span></tt>. Default is
+<tt class="docutils literal"><span class="pre">ipython</span></tt> if IPython is installed, otherwise, <tt class="docutils literal"><span class="pre">python</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">-p</span> <span class="pre">PRETTY</span></tt>, <tt class="docutils literal"><span class="pre">--pretty=PRETTY</span></tt></dt>
+<dd>setup pretty printing: <tt class="docutils literal"><span class="pre">unicode</span></tt>, <tt class="docutils literal"><span class="pre">ascii</span></tt> or <tt class="docutils literal"><span class="pre">no</span></tt>. Default is <tt class="docutils literal"><span class="pre">unicode</span></tt>
+if the terminal supports it, otherwise, <tt class="docutils literal"><span class="pre">ascii</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">-t</span> <span class="pre">TYPES</span></tt>, <tt class="docutils literal"><span class="pre">--types=TYPES</span></tt></dt>
+<dd>setup ground types: <tt class="docutils literal"><span class="pre">gmpy</span></tt>, <tt class="docutils literal"><span class="pre">python</span></tt> or <tt class="docutils literal"><span class="pre">sympy</span></tt>. Default is <tt class="docutils literal"><span class="pre">gmpy</span></tt> if
+it&#8217;s installed, otherwise <tt class="docutils literal"><span class="pre">python</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">-o</span> <span class="pre">ORDER</span></tt>, <tt class="docutils literal"><span class="pre">--order=ORDER</span></tt></dt>
+<dd>setup ordering of terms: <tt class="docutils literal"><span class="pre">[rev-]lex</span></tt>, <tt class="docutils literal"><span class="pre">[rev-]grlex</span></tt>, <tt class="docutils literal"><span class="pre">[rev-]grevlex</span></tt> or
+<tt class="docutils literal"><span class="pre">old</span></tt>. Default is <tt class="docutils literal"><span class="pre">lex</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">-q</span></tt>, <tt class="docutils literal"><span class="pre">--quiet</span></tt></dt>
+<dd>print only version information at startup</dd>
+<dt><tt class="docutils literal"><span class="pre">-C</span></tt>, <tt class="docutils literal"><span class="pre">--no-cache</span></tt></dt>
+<dd>disable caching</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="environment-variables">
+<h2>Environment variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">SYMPY_USE_CACHE</span></tt></dt>
+<dd>By default SymPy caches all computations. If this is undesirable, for
+example due to limited amount of memory, set this variable to <tt class="docutils literal"><span class="pre">no</span></tt>
+to disable caching. Note that some operations will run much slower with
+the cache off. Setting this variable to <tt class="docutils literal"><span class="pre">no</span></tt> is equivalent to running
+isympy with <tt class="docutils literal"><span class="pre">-C</span></tt> option.</dd>
+<dt><tt class="docutils literal"><span class="pre">SYMPY_GROUND_TYPES</span></tt></dt>
+<dd>SymPy is a pure Python library, however to improve the speed of computations
+it can take advantage of gmpy library to speedup coefficient arithmetics
+(also known as ground domain arithmetics). Ground types are set automatically,
+so if gmpy is not available, it simply won&#8217;t be used. However, if gmpy is
+available but for some reason it is undesirable to use it, set this variable
+to <tt class="docutils literal"><span class="pre">python</span></tt>, to disable usage of gmpy. Use <tt class="docutils literal"><span class="pre">-t</span></tt> or <tt class="docutils literal"><span class="pre">--type</span></tt> option to
+achieve the same in isympy.</dd>
+</dl>
+</div>
+<div class="section" id="running-the-test-suite">
+<h2>Running the test suite<a class="headerlink" href="#running-the-test-suite" title="Permalink to this headline">¶</a></h2>
+<p>To verify that SymPy works properly on your computer, you can run SymPy&#8217;s
+test suite. This is done either with <tt class="docutils literal"><span class="pre">bin/test</span></tt> command or <tt class="xref py py-func docutils literal"><span class="pre">test()</span></tt>
+in an interactive session. For example, to test <tt class="xref py py-mod docutils literal"><span class="pre">sympy.core</span></tt> issue:</p>
+<pre class="literal-block">
+$ <strong class="input">bin/test sympy/core</strong>
+============================= test process starts ==============================
+executable:   /usr/bin/python  (2.7.2-final-0)
+architecture: 64-bit
+ground types: gmpy
+random seed:  65858271
+
+sympy/core/tests/test_arit.py[48] ...f..........................................
+..                                                                          [OK]
+sympy/core/tests/test_assumptions.py[28] ............................       [OK]
+sympy/core/tests/test_basic.py[10] ..........                               [OK]
+sympy/core/tests/test_cache.py[1] .                                         [OK]
+sympy/core/tests/test_complex.py[13] .............                          [OK]
+sympy/core/tests/test_containers.py[5] .....                                [OK]
+sympy/core/tests/test_count_ops.py[2] ..                                    [OK]
+sympy/core/tests/test_diff.py[6] ......                                     [OK]
+sympy/core/tests/test_equal.py[6] ......                                    [OK]
+sympy/core/tests/test_eval.py[8] .....f..                                   [OK]
+sympy/core/tests/test_eval_power.py[13] .............                       [OK]
+sympy/core/tests/test_evalf.py[24] ........................                 [OK]
+sympy/core/tests/test_expand.py[6] ......                                   [OK]
+sympy/core/tests/test_expr.py[59] ..............................................
+.............                                                               [OK]
+sympy/core/tests/test_exprtools.py[4] ....                                  [OK]
+sympy/core/tests/test_facts.py[11] ...........                              [OK]
+sympy/core/tests/test_functions.py[27] .....fff...................          [OK]
+sympy/core/tests/test_logic.py[11] ...........                              [OK]
+sympy/core/tests/test_match.py[26] ...f......................               [OK]
+sympy/core/tests/test_numbers.py[46] ...........................................
+...                                                                         [OK]
+sympy/core/tests/test_operations.py[4] ....                                 [OK]
+sympy/core/tests/test_priority.py[5] .....                                  [OK]
+sympy/core/tests/test_relational.py[7] .......                              [OK]
+sympy/core/tests/test_sets.py[18] ..................                        [OK]
+sympy/core/tests/test_subs.py[30] ..............................            [OK]
+sympy/core/tests/test_symbol.py[9] ....X....                                [OK]
+sympy/core/tests/test_sympify.py[26] ...f......................             [OK]
+sympy/core/tests/test_truediv.py[3] ...                                     [OK]
+sympy/core/tests/test_var.py[5] .....                                       [OK]
+
+________________________________ xpassed tests _________________________________
+sympy/core/tests/test_symbol.py:
+
+tests finished: 453 passed, 7 expected to fail, 1 expected to fail but passed,
+in 6.30 seconds
+</pre>
+<p>This tells us that all standard tests in <tt class="xref py py-mod docutils literal"><span class="pre">sympy.core</span></tt>&#8216;s  pass (dots).
+In case of failure, <tt class="docutils literal"><span class="pre">.</span></tt> would change to <tt class="docutils literal"><span class="pre">F</span></tt> and <tt class="docutils literal"><span class="pre">OK</span></tt> to <tt class="docutils literal"><span class="pre">FAIL</span></tt>
+(additionally all failures would be colored in red and listed at the end of
+output from SymPy&#8217;s test utility). Non-standard tests are those marked with
+<tt class="docutils literal"><span class="pre">f</span></tt> and <tt class="docutils literal"><span class="pre">X</span></tt> characters. The former means that the test was supposed to
+fail and failed (XFAIL), whereas the later means that the test was supposed
+to fail but passed (XPASS).</p>
+<p>To run the whole test suite issue <tt class="docutils literal"><span class="pre">bin/test</span></tt> or <tt class="xref py py-func docutils literal"><span class="pre">test()</span></tt> without any
+arguments. Running the whole test suite takes more than ten minutes on
+Pentium-M 1.6 GHz and less than 5 minutes on Xeon 3.0 GHz (one core).</p>
+<p>There is another test utility in SymPy, <tt class="docutils literal"><span class="pre">bin/doctest</span></tt>, which verifies
+examples in docstrings and documentation. If you are going to contribute
+to SymPy, make sure you run both <tt class="docutils literal"><span class="pre">bin/test</span></tt> and <tt class="docutils literal"><span class="pre">bin/doctest</span></tt> before
+submitting a <a class="reference external" href="http://help.github.com/send-pull-requests">pull request</a>.</p>
+</div>
+<div class="section" id="sympy-in-web-browsers">
+<h2>SymPy in web browsers<a class="headerlink" href="#sympy-in-web-browsers" title="Permalink to this headline">¶</a></h2>
+<p>SymPy is available in the following web applications:</p>
+<ul class="simple">
+<li>SymPy Live (<a class="reference external" href="http://live.sympy.org">http://live.sympy.org</a>)</li>
+<li>Sage Notebook (<a class="reference external" href="http://www.sagenb.org">http://www.sagenb.org</a>)</li>
+</ul>
+<p>SymPy Live was developed specifically for SymPy. It is a simple web shell
+that looks similar to isympy under standard Python&#8217;s interpreter. SymPy
+Live uses Google App Engine as computational backend.</p>
+<p>Upcoming IPython Notebook (IPython 0.12+) will have native support for SymPy.
+If you use IPython from git, you can test this feature now by starting IPython
+with <tt class="docutils literal"><span class="pre">ipython</span> <span class="pre">notebook</span></tt> and run <tt class="docutils literal"><span class="pre">%load_ext</span> <span class="pre">sympy</span></tt> in an input cell. This
+will setup pretty printing among other things.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/sympy-logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installing, configuring and running SymPy</a><ul>
+<li><a class="reference internal" href="#sympy-in-python-ipython">SymPy in Python/IPython</a></li>
+<li><a class="reference internal" href="#interactive-sympy-isympy">Interactive SymPy (<tt class="docutils literal"><span class="pre">isympy</span></tt>)</a><ul>
+<li><a class="reference internal" href="#command-line-arguments">Command-line arguments</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#environment-variables">Environment variables</a></li>
+<li><a class="reference internal" href="#running-the-test-suite">Running the test suite</a></li>
+<li><a class="reference internal" href="#sympy-in-web-browsers">SymPy in web browsers</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="previous chapter">Introduction to SymPy</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="basics.html"
+                        title="next chapter">Basics of expressions in SymPy</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/installing.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="basics.html" title="Basics of expressions in SymPy"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction to SymPy"
+             >previous</a> |</li>
+        <li><a href="index.html">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li>
+          <li><a href="introduction.html" >Introduction to SymPy</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Mateusz Paprocki, Aaron Meurer.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,539 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Setting up and using printers &mdash; SymPy tutorial at SciPy 2011 conferences</title>
+    
+    <link rel="stylesheet" href="_static/extra.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost:8080/static/live-core.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost:8080/static/live-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/external/ext-core.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/live-core.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/live-sphinx.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="top" title="SymPy tutorial at SciPy 2011 conferences" href="index.html" />
+    <link rel="up" title="Introduction to SymPy" href="introduction.html" />
+    <link rel="next" title="Mathematical problem solving with SymPy" href="mathematics.html" />
+    <link rel="prev" title="Gotchas and pitfalls" href="gotchas.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="mathematics.html" title="Mathematical problem solving with SymPy"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="gotchas.html" title="Gotchas and pitfalls"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li>
+          <li><a href="introduction.html" accesskey="U">Introduction to SymPy</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="setting-up-and-using-printers">
+<h1>Setting up and using printers<a class="headerlink" href="#setting-up-and-using-printers" title="Permalink to this headline">¶</a></h1>
+<p>Computations are at the heart of symbolic mathematics systems, but very
+often presentation and visualization of results or intermediate steps
+is also very important, for example for sharing results. SymPy implements
+a very generic and flexible framework for implementing printers of
+mathematical expressions, Python&#8217;s data types and date structures, and
+foreign types.</p>
+<div class="section" id="built-in-printers">
+<h2>Built-in printers<a class="headerlink" href="#built-in-printers" title="Permalink to this headline">¶</a></h2>
+<p>There are many ways how expressions can be printed in Sympy.</p>
+<div class="section" id="standard">
+<h3>Standard<a class="headerlink" href="#standard" title="Permalink to this headline">¶</a></h3>
+<p>This is what <tt class="docutils literal"><span class="pre">str(expression)</span></tt> returns and it looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="go">x**2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="mi">1</span><span class="o">/</span><span class="n">x</span>
+<span class="go">1/x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="go">Integral(x**2, x)</span>
+</pre></div>
+</div>
+<p>Note that <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a> is by design not aware of global configuration,
+so if you for example run <tt class="docutils literal"><span class="pre">bin/isympy</span> <span class="pre">-o</span> <span class="pre">grlex</span></tt>, <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a> will
+ignore this. There is another function <tt class="xref py py-func docutils literal"><span class="pre">sstr()</span></tt> that takes global
+configuration into account.</p>
+</div>
+<div class="section" id="low-level">
+<h3>Low-level<a class="headerlink" href="#low-level" title="Permalink to this headline">¶</a></h3>
+<p>Due to internal implementation of Python, SymPy can&#8217;t use <a class="reference external" href="http://docs.python.org/library/functions.html#repr" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">repr()</span></tt></a>
+for generating low-level textual representation of expressions. To get
+this kind of representation you have to use:func:<span class="math">\(srepr\)</span></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">srepr</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">Pow(Symbol(&#39;x&#39;), Integer(2))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">srepr</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">)</span>
+<span class="go">Pow(Symbol(&#39;x&#39;), Integer(-1))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">srepr</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+<span class="go">Integral(Pow(Symbol(&#39;x&#39;), Integer(2)), Tuple(Symbol(&#39;x&#39;)))</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="http://docs.python.org/library/functions.html#repr" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">repr()</span></tt></a> gives the same result as <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">repr</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">x**2</span>
+</pre></div>
+</div>
+<p>Note that <a class="reference external" href="http://docs.python.org/library/functions.html#repr" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">repr()</span></tt></a> is also not aware of global configuration.</p>
+</div>
+<div class="section" id="pretty-printing">
+<h3>Pretty printing<a class="headerlink" href="#pretty-printing" title="Permalink to this headline">¶</a></h3>
+<p>This is a nice 2D ASCII-art printing produced by <tt class="xref py py-func docutils literal"><span class="pre">pprint()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">use_unicode</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go"> 2</span>
+<span class="go">x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">,</span> <span class="n">use_unicode</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="go">-</span>
+<span class="go">x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">use_unicode</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">  /</span>
+<span class="go"> |</span>
+<span class="go"> |  2</span>
+<span class="go"> | x  dx</span>
+<span class="go"> |</span>
+<span class="go">/</span>
+</pre></div>
+</div>
+<p>It also has support for Unicode character set, which makes shapes look
+much more natural than in ASCII-art case:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">use_unicode</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">⌠</span>
+<span class="go">⎮  2</span>
+<span class="go">⎮ x  dx</span>
+<span class="go">⌡</span>
+</pre></div>
+</div>
+<p>By default <tt class="xref py py-func docutils literal"><span class="pre">pprint()</span></tt> tries to figure out the best of Unicode and
+ASCII-art for generating output. If Unicode is supported, then this will
+be the default. Otherwise it falls back to ASCII art. User can select the
+desired character set by setting <tt class="docutils literal"><span class="pre">use_unicode</span></tt> option in <tt class="xref py py-func docutils literal"><span class="pre">pprint()</span></tt>.</p>
+</div>
+<div class="section" id="python-printing">
+<h3>Python printing<a class="headerlink" href="#python-printing" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">python</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">x = Symbol(&#39;x&#39;)</span>
+<span class="go">e = x**2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">python</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">)</span>
+<span class="go">x = Symbol(&#39;x&#39;)</span>
+<span class="go">e = 1/x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">python</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+<span class="go">x = Symbol(&#39;x&#39;)</span>
+<span class="go">e = Integral(x**2, x)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="latex-printing">
+<h3>LaTeX printing<a class="headerlink" href="#latex-printing" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">latex</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">x^{2}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">latex</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;inline&#39;</span><span class="p">)</span>
+<span class="go">$x^{2}$</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">latex</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;equation&#39;</span><span class="p">)</span>
+<span class="go">\begin{equation}x^{2}\end{equation}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">latex</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;equation*&#39;</span><span class="p">)</span>
+<span class="go">\begin{equation*}x^{2}\end{equation*}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">latex</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">)</span>
+<span class="go">\frac{1}{x}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">latex</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+<span class="go">\int x^{2}\,dx</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mathml-printing">
+<h3>MathML printing<a class="headerlink" href="#mathml-printing" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy.printing.mathml</span> <span class="kn">import</span> <span class="n">mathml</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Integral</span><span class="p">,</span> <span class="n">latex</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy.abc</span> <span class="kn">import</span> <span class="n">x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">mathml</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">&lt;apply&gt;&lt;power/&gt;&lt;ci&gt;x&lt;/ci&gt;&lt;cn&gt;2&lt;/cn&gt;&lt;/apply&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">mathml</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">)</span>
+<span class="go">&lt;apply&gt;&lt;power/&gt;&lt;ci&gt;x&lt;/ci&gt;&lt;cn&gt;-1&lt;/cn&gt;&lt;/apply&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="printing-with-pyglet">
+<h3>Printing with Pyglet<a class="headerlink" href="#printing-with-pyglet" title="Permalink to this headline">¶</a></h3>
+<p>This allows for printing expressions in a separate GUI window. Issue:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">preview</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and a Pyglet window with the LaTeX rendered expression will popup:</p>
+<img alt="_images/preview-pyglet.png" src="_images/preview-pyglet.png" />
+</div>
+</div>
+<div class="section" id="setting-up-printers">
+<h2>Setting up printers<a class="headerlink" href="#setting-up-printers" title="Permalink to this headline">¶</a></h2>
+<p>By default SymPy uses <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a>/<tt class="xref py py-func docutils literal"><span class="pre">sstr()</span></tt> printer. Other printers can
+be used explicitly as in examples in subsections above. This is efficient
+only when printing at most a few times with a non-standard printer. To make
+Python use a different printer than the default one, the typical approach
+is to modify <tt class="docutils literal"><span class="pre">sys.displayhook</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span><span class="o">/</span><span class="n">x</span>
+<span class="go">1/x</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">oldhook</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">displayhook</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">displayhook</span> <span class="o">=</span> <span class="n">pprint</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span><span class="o">/</span><span class="n">x</span>
+<span class="go">1</span>
+<span class="go">─</span>
+<span class="go">x</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">displayhook</span> <span class="o">=</span> <span class="n">oldhook</span>
+</pre></div>
+</div>
+<p>Alternatively one can use SymPy&#8217;s function <tt class="xref py py-func docutils literal"><span class="pre">init_printing()</span></tt>. This works
+only for pretty printer, but is the fastest way to setup this type of printer.</p>
+</div>
+<div class="section" id="customizing-built-in-printers">
+<h2>Customizing built-in printers<a class="headerlink" href="#customizing-built-in-printers" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we dislike how certain classes of expressions are printed. One such
+issue may be pretty printing of polynomials (instances of <tt class="xref py py-class docutils literal"><span class="pre">Poly</span></tt> class),
+in which case <tt class="xref py py-class docutils literal"><span class="pre">PrettyPrinter</span></tt> simply doesn&#8217;t have support for printing
+polynomials and falls back to <tt class="xref py py-class docutils literal"><span class="pre">StrPrinter</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Poly</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">Poly(x**2 + 1, x, domain=&#39;ZZ&#39;)</span>
+</pre></div>
+</div>
+<p>One way to add support for pretty printing polynomials is to extend pretty
+printer&#8217;s class and implement <tt class="docutils literal"><span class="pre">_print_Poly</span></tt> method. We would choose this
+approach if we wanted this to be a permanent change in SymPy. We will choose
+a different way and subclass <tt class="xref py py-class docutils literal"><span class="pre">PrettyPrinter</span></tt> and implement <tt class="docutils literal"><span class="pre">_print_Poly</span></tt>
+in the new class.</p>
+<p>Let&#8217;s call the new pretty printer <tt class="xref py py-class docutils literal"><span class="pre">PolyPrettyPrinter</span></tt>. It&#8217;s implementation
+looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy.printing.pretty.pretty</span> <span class="kn">import</span> <span class="n">PrettyPrinter</span>
+<span class="kn">from</span> <span class="nn">sympy.printing.pretty.stringpict</span> <span class="kn">import</span> <span class="n">prettyForm</span>
+
+<span class="k">class</span> <span class="nc">PolyPrettyPrinter</span><span class="p">(</span><span class="n">PrettyPrinter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This printer prints polynomials nicely. &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_print_Poly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">poly</span><span class="p">):</span>
+        <span class="n">expr</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">as_expr</span><span class="p">()</span>
+        <span class="n">gens</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">poly</span><span class="o">.</span><span class="n">gens</span><span class="p">)</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">get_domain</span><span class="p">()</span>
+
+        <span class="n">pform_head</span> <span class="o">=</span> <span class="n">prettyForm</span><span class="p">(</span><span class="s">&#39;Poly&#39;</span><span class="p">)</span>
+        <span class="n">pform_tail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_print_seq</span><span class="p">([</span><span class="n">expr</span><span class="p">]</span> <span class="o">+</span> <span class="n">gens</span> <span class="o">+</span> <span class="p">[</span><span class="n">domain</span><span class="p">],</span> <span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="s">&#39;)&#39;</span><span class="p">)</span>
+
+        <span class="n">pform</span> <span class="o">=</span> <span class="n">prettyForm</span><span class="p">(</span><span class="o">*</span><span class="n">pform_head</span><span class="o">.</span><span class="n">right</span><span class="p">(</span><span class="n">pform_tail</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">pform</span>
+
+<span class="k">def</span> <span class="nf">pretty_poly</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="o">**</span><span class="n">settings</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Pretty-print polynomials nicely. &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">PolyPrettyPrinter</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">doprint</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">s</span>
+</pre></div>
+</div>
+<p>Using <tt class="xref py py-func docutils literal"><span class="pre">pretty_poly()</span></tt> allows us to print polynomials in 2D and Unicode:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pretty_poly</span><span class="p">(</span><span class="n">Poly</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<span class="go">    ⎛ 2          ⎞</span>
+<span class="go">Poly⎝x  + 1, x, ℤ⎠</span>
+</pre></div>
+</div>
+<p>We can use techniques from previous section to make this new pretty printer
+the default for all inputs.</p>
+<div class="section" id="tasks">
+<h3>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Following implementation of <tt class="xref py py-class docutils literal"><span class="pre">PolyPrettyPrinter</span></tt>, add a printer
+for <tt class="xref py py-class docutils literal"><span class="pre">Lambda</span></tt> which would use <em>mapping</em> notation (arrow) instead
+of lambda calculus-like notation.</p>
+<p>(<a class="reference internal" href="extras.html#solution-custom-printers-1"><em>solution</em></a>)</p>
+</li>
+<li><p class="first">Following the way how <tt class="xref py py-class docutils literal"><span class="pre">Poly</span></tt> is printed by <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a> printer,
+make <tt class="xref py py-class docutils literal"><span class="pre">PolyPrettyPrinter</span></tt> print domain including <tt class="docutils literal"><span class="pre">domain=</span></tt> string.</p>
+<p>(<a class="reference internal" href="extras.html#solution-custom-printers-2"><em>solution</em></a>)</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="implementing-printers-from-scratch">
+<h2>Implementing printers from scratch<a class="headerlink" href="#implementing-printers-from-scratch" title="Permalink to this headline">¶</a></h2>
+<p>SymPy implements a variety of printers and often extending those existent
+may be sufficient, to optimize them for certain problem domain or specific
+mathematical notation. However, we can also add completely new ones, for
+example to allow printing SymPy&#8217;s expression with other symbolic mathematics
+systems&#8217; syntax.</p>
+<p>Suppose we would like to translate SymPy&#8217;s expressions to Mathematica syntax.
+As of version 0.7.1, SymPy doesn&#8217;t implement such a printer, so we get do it
+right now. Adding a new printer basically boils down to adding a new class,
+let&#8217;s say <tt class="xref py py-class docutils literal"><span class="pre">MathematicaPrinter</span></tt>, which derives from <tt class="xref py py-class docutils literal"><span class="pre">Printer</span></tt>
+and implements <tt class="docutils literal"><span class="pre">_print_*</span></tt> methods for all kinds of expressions we want to
+support. In this particular example we would like to be able to translate:</p>
+<ul class="simple">
+<li>numbers</li>
+<li>symbols</li>
+<li>functions</li>
+<li>exponentiation</li>
+</ul>
+<p>and compositions of all of those. A prototype implementation is as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy.printing.printer</span> <span class="kn">import</span> <span class="n">Printer</span>
+<span class="kn">from</span> <span class="nn">sympy.printing.precedence</span> <span class="kn">import</span> <span class="n">precedence</span>
+
+<span class="k">class</span> <span class="nc">MathematicaPrinter</span><span class="p">(</span><span class="n">Printer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Print SymPy&#39;s expressions using Mathematica syntax. &quot;&quot;&quot;</span>
+    <span class="n">printmethod</span> <span class="o">=</span> <span class="s">&quot;_mathematica&quot;</span>
+
+    <span class="n">_default_settings</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">_translation_table</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&#39;asin&#39;</span><span class="p">:</span> <span class="s">&#39;ArcSin&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">parenthesize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+        <span class="n">printed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">precedence</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">level</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;(</span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="n">printed</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">printed</span>
+
+    <span class="k">def</span> <span class="nf">emptyPrinter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_print_Pow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="p">):</span>
+        <span class="n">prec</span> <span class="o">=</span> <span class="n">precedence</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">expr</span><span class="o">.</span><span class="n">exp</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&#39;1/</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parenthesize</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">base</span><span class="p">,</span> <span class="n">prec</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">^</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parenthesize</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">base</span><span class="p">,</span> <span class="n">prec</span><span class="p">),</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">parenthesize</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">exp</span><span class="p">,</span> <span class="n">prec</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_print_Function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">_print</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">expr</span><span class="o">.</span><span class="n">args</span> <span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">expr</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">nargs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_translation_table</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">[</span><span class="si">%s</span><span class="s">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">mathematica</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="o">**</span><span class="n">settings</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transform an expression to a string with Mathematica syntax. &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MathematicaPrinter</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">doprint</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">s</span>
+</pre></div>
+</div>
+<p>Before we explain this code, let&#8217;s see what it can do:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mathematica</span><span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">1/2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mathematica</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">x</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mathematica</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">x^2</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mathematica</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="go">f[x]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mathematica</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="go">Sin[x]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mathematica</span><span class="p">(</span><span class="n">asin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="go">ArcSin[x]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mathematica</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="go">Sin[x^2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mathematica</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)))</span>
+<span class="go">Sin[x^(1/2)]</span>
+</pre></div>
+</div>
+<p>However, as we didn&#8217;t include support for <tt class="xref py py-class docutils literal"><span class="pre">Add</span></tt>, this doesn&#8217;t work:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mathematica</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">x**2 + 1</span>
+</pre></div>
+</div>
+<p>and very many other classes of expressions are printed improperly. If we
+need support for a particular class, we have to add another <tt class="docutils literal"><span class="pre">_print_*</span></tt>
+method to <tt class="xref py py-class docutils literal"><span class="pre">MathematicaPrinter</span></tt>. For example, to make the above
+example work, we have to implement <tt class="docutils literal"><span class="pre">_print_Add</span></tt>.</p>
+<div class="section" id="id1">
+<h3>Tasks<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Make Mathematica printer correctly print <span class="math">\(\pi\)</span>.</p>
+<p>(<a class="reference internal" href="extras.html#solution-new-printers-1"><em>solution</em></a>)</p>
+</li>
+<li><p class="first">Add support for <tt class="xref py py-class docutils literal"><span class="pre">Add</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">Mul</span></tt> to Mathematica printer. In
+the case of products, allow both explicit and implied multiplication, and
+allow users to choose desired behavior by parametrization of Mathematica
+printer.</p>
+<p>(<a class="reference internal" href="extras.html#solution-new-printers-2"><em>solution</em></a>)</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="code-generation">
+<h2>Code generation<a class="headerlink" href="#code-generation" title="Permalink to this headline">¶</a></h2>
+<p>Besides printing of mathematical expressions, SymPy also implements Fortran
+and C code generation. The simplest way to proceed is to use <tt class="xref py py-func docutils literal"><span class="pre">codegen()</span></tt>
+which takes a tuple consisting of function name and an expression, or a list
+of tuples of this kind, language in which it will generate code (<tt class="docutils literal"><span class="pre">C</span></tt> for
+C programming language and <tt class="docutils literal"><span class="pre">F95</span></tt> for Fortran, and file name:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy.utilities.codegen</span> <span class="kn">import</span> <span class="n">codegen</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">codegen</span><span class="p">((</span><span class="s">&quot;chebyshevt_20&quot;</span><span class="p">,</span> <span class="n">chebyshevt</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">x</span><span class="p">)),</span> <span class="s">&quot;F95&quot;</span><span class="p">,</span> <span class="s">&quot;file&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">!******************************************************************************</span>
+<span class="go">!*                      Code generated with sympy 0.7.1                       *</span>
+<span class="go">!*                                                                            *</span>
+<span class="go">!*              See http://www.sympy.org/ for more information.               *</span>
+<span class="go">!*                                                                            *</span>
+<span class="go">!*                       This file is part of &#39;project&#39;                       *</span>
+<span class="go">!******************************************************************************</span>
+
+<span class="go">REAL*8 function chebyshevt_20(x)</span>
+<span class="go">implicit none</span>
+<span class="go">REAL*8, intent(in) :: x</span>
+
+<span class="go">chebyshevt_20 = 524288*x**20 - 2621440*x**18 + 5570560*x**16 - 6553600*x &amp;</span>
+<span class="go">      **14 + 4659200*x**12 - 2050048*x**10 + 549120*x**8 - 84480*x**6 + &amp;</span>
+<span class="go">      6600*x**4 - 200*x**2 + 1</span>
+
+<span class="go">end function</span>
+</pre></div>
+</div>
+<p>In this example we generated Fortran code for function <tt class="docutils literal"><span class="pre">chebyshevt_20</span></tt> which
+allows use to evaluate Chebyshev polynomial of the first kind of degree 20.
+Almost the same way one can generate C code for this expression.</p>
+<div class="section" id="id2">
+<h3>Tasks<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Generate C code for <tt class="docutils literal"><span class="pre">chebyshevt(20,</span> <span class="pre">x)</span></tt>.</li>
+<li>Make SymPy generate one file of Fortran or/and C code that would contain
+definitions of functions that would allow us to evaluate each of the first
+ten Chebyshev polynomials of the first kind.</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/sympy-logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Setting up and using printers</a><ul>
+<li><a class="reference internal" href="#built-in-printers">Built-in printers</a><ul>
+<li><a class="reference internal" href="#standard">Standard</a></li>
+<li><a class="reference internal" href="#low-level">Low-level</a></li>
+<li><a class="reference internal" href="#pretty-printing">Pretty printing</a></li>
+<li><a class="reference internal" href="#python-printing">Python printing</a></li>
+<li><a class="reference internal" href="#latex-printing">LaTeX printing</a></li>
+<li><a class="reference internal" href="#mathml-printing">MathML printing</a></li>
+<li><a class="reference internal" href="#printing-with-pyglet">Printing with Pyglet</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#setting-up-printers">Setting up printers</a></li>
+<li><a class="reference internal" href="#customizing-built-in-printers">Customizing built-in printers</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#implementing-printers-from-scratch">Implementing printers from scratch</a><ul>
+<li><a class="reference internal" href="#id1">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#code-generation">Code generation</a><ul>
+<li><a class="reference internal" href="#id2">Tasks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="gotchas.html"
+                        title="previous chapter">Gotchas and pitfalls</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mathematics.html"
+                        title="next chapter">Mathematical problem solving with SymPy</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/printers.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="mathematics.html" title="Mathematical problem solving with SymPy"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="gotchas.html" title="Gotchas and pitfalls"
+             >previous</a> |</li>
+        <li><a href="index.html">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li>
+          <li><a href="introduction.html" >Introduction to SymPy</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Mateusz Paprocki, Aaron Meurer.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

@@ -8,12 +8,12 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Guide to symbolic mathematics with SymPy &mdash; SymPy tutorial at SciPy conference 2011</title>
+    <title>Guide to symbolic mathematics with SymPy &mdash; SymPy tutorial at SciPy 2011 conferences</title>
     
     <link rel="stylesheet" href="_static/extra.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="http://live.sympy.org/static/live-core.css" type="text/css" />
-    <link rel="stylesheet" href="http://live.sympy.org/static/live-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost:8080/static/live-core.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost:8080/static/live-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -28,11 +28,11 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
-    <script type="text/javascript" src="http://live.sympy.org/static/external/ext-core.js"></script>
-    <script type="text/javascript" src="http://live.sympy.org/static/live-core.js"></script>
-    <script type="text/javascript" src="http://live.sympy.org/static/live-sphinx.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/external/ext-core.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/live-core.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/live-sphinx.js"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
-    <link rel="top" title="SymPy tutorial at SciPy conference 2011" href="#" />
+    <link rel="top" title="SymPy tutorial at SciPy 2011 conferences" href="#" />
     <link rel="next" title="Introduction to SymPy" href="introduction.html" /> 
   </head>
   <body>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="introduction.html" title="Introduction to SymPy"
              accesskey="N">next</a> |</li>
-        <li><a href="#">SymPy tutorial at SciPy conference 2011</a> &raquo;</li> 
+        <li><a href="#">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,12 +57,12 @@
   <div class="section" id="guide-to-symbolic-mathematics-with-sympy">
 <h1>Guide to symbolic mathematics with SymPy<a class="headerlink" href="#guide-to-symbolic-mathematics-with-sympy" title="Permalink to this headline">¶</a></h1>
 <p>This is a tutorial about <a class="reference external" href="http://www.sympy.org">SymPy</a> for SciPy
-<a class="reference external" href="http://conference.scipy.org/scipy2011/">conference</a> 2011. SymPy
-is a symbolic mathematics library in pure Python. This tutorial gives
-an overview and introduction to SymPy and is divided into two parts.
-The first part discusses the internals of SymPy, whereas the second
-part shows how to use SymPy for solving practical problems in symbolic
-mathematics.</p>
+2011 conferences (<a class="reference external" href="http://conference.scipy.org/scipy2011/">Austin</a>
+and <a class="reference external" href="http://scipy.in/scipyin/2011/">Mumbai</a>). SymPy is a symbolic
+mathematics library in pure Python. This tutorial gives an overview
+and introduction to SymPy and is divided into two parts. The first
+part discusses the internals of SymPy, whereas the second part shows
+how to use SymPy for solving practical problems in symbolic mathematics.</p>
 <p>Information presented in this tutorial should be enough to start
 using SymPy in daily work and hacking its internals, though hacking
 core modules may require additional expertise. More information can
@@ -71,18 +71,19 @@ be found in SymPy&#8217;s <a class="reference external" href="http://docs.sympy.
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction to SymPy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="introduction.html#installing-configuring-and-running-sympy">Installing, configuring and running SymPy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction.html#basics-of-expressions-in-sympy">Basics of expressions in SymPy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction.html#gotchas-and-pitfalls">Gotchas and pitfalls</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction.html#setting-up-and-using-printers">Setting up and using printers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing.html">Installing, configuring and running SymPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html">Basics of expressions in SymPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gotchas.html">Gotchas and pitfalls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="printers.html">Setting up and using printers</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mathematics.html">Mathematical problem solving with SymPy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mathematics.html#partial-fraction-decomposition">Partial fraction decomposition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mathematics.html#deriving-trigonometric-identities">Deriving trigonometric identities</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mathematics.html#not-only-symbolics-numerical-computing">Not only symbolics: numerical computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mathematics.html#summing-roots-of-polynomials">Summing roots of polynomials</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mathematics.html#applications-of-groebner-bases">Applications of Gröbner bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="partfrac.html">Partial fraction decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trigonometry.html">Deriving trigonometric identities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numerics.html">Not only symbolics: numerical computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="summation.html">Summing roots of polynomials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="groebner.html">Applications of Gröbner bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geometry.html">Algebraic geometry</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="extras.html">Extras</a><ul>
@@ -113,7 +114,7 @@ be found in SymPy&#8217;s <a class="reference external" href="http://docs.sympy.
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -136,12 +137,12 @@ be found in SymPy&#8217;s <a class="reference external" href="http://docs.sympy.
         <li class="right" >
           <a href="introduction.html" title="Introduction to SymPy"
              >next</a> |</li>
-        <li><a href="#">SymPy tutorial at SciPy conference 2011</a> &raquo;</li> 
+        <li><a href="#">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2011, Mateusz Paprocki, Aaron Meurer.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1pre/91b4fc984b32.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
     </div>
   </body>
 </html>

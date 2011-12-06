@@ -8,12 +8,12 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Extras &mdash; SymPy tutorial at SciPy conference 2011</title>
+    <title>Extras &mdash; SymPy tutorial at SciPy 2011 conferences</title>
     
     <link rel="stylesheet" href="_static/extra.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="http://live.sympy.org/static/live-core.css" type="text/css" />
-    <link rel="stylesheet" href="http://live.sympy.org/static/live-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost:8080/static/live-core.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost:8080/static/live-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -28,12 +28,12 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
-    <script type="text/javascript" src="http://live.sympy.org/static/external/ext-core.js"></script>
-    <script type="text/javascript" src="http://live.sympy.org/static/live-core.js"></script>
-    <script type="text/javascript" src="http://live.sympy.org/static/live-sphinx.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/external/ext-core.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/live-core.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/live-sphinx.js"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
-    <link rel="top" title="SymPy tutorial at SciPy conference 2011" href="index.html" />
-    <link rel="prev" title="Mathematical problem solving with SymPy" href="mathematics.html" /> 
+    <link rel="top" title="SymPy tutorial at SciPy 2011 conferences" href="index.html" />
+    <link rel="prev" title="Algebraic geometry" href="geometry.html" /> 
   </head>
   <body>
     <div class="related">
@@ -43,9 +43,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="mathematics.html" title="Mathematical problem solving with SymPy"
+          <a href="geometry.html" title="Algebraic geometry"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">SymPy tutorial at SciPy conference 2011</a> &raquo;</li> 
+        <li><a href="index.html">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -559,7 +559,7 @@
 
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">codegen</span><span class="p">((</span><span class="s">&quot;chebyshevt_20&quot;</span><span class="p">,</span> <span class="n">chebyshevt</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">x</span><span class="p">)),</span> <span class="s">&quot;C&quot;</span><span class="p">,</span> <span class="s">&quot;file&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 <span class="go">/******************************************************************************</span>
-<span class="go"> *                      Code generated with sympy 0.7.0                       *</span>
+<span class="go"> *                      Code generated with sympy 0.7.1                       *</span>
 <span class="go"> *                                                                            *</span>
 <span class="go"> *              See http://www.sympy.org/ for more information.               *</span>
 <span class="go"> *                                                                            *</span>
@@ -586,7 +586,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">functions</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="s">&quot;chebyshevt_</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">,</span> <span class="n">chebyshevt</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">codegen</span><span class="p">(</span><span class="n">functions</span><span class="p">,</span> <span class="s">&quot;F95&quot;</span><span class="p">,</span> <span class="s">&quot;file&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 <span class="go">!******************************************************************************</span>
-<span class="go">!*                      Code generated with sympy 0.7.0                       *</span>
+<span class="go">!*                      Code generated with sympy 0.7.1                       *</span>
 <span class="go">!*                                                                            *</span>
 <span class="go">!*              See http://www.sympy.org/ for more information.               *</span>
 <span class="go">!*                                                                            *</span>
@@ -1265,8 +1265,8 @@ x
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="mathematics.html"
-                        title="previous chapter">Mathematical problem solving with SymPy</a></p>
+  <p class="topless"><a href="geometry.html"
+                        title="previous chapter">Algebraic geometry</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/extras.txt"
@@ -1275,7 +1275,7 @@ x
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -1296,14 +1296,14 @@ x
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="mathematics.html" title="Mathematical problem solving with SymPy"
+          <a href="geometry.html" title="Algebraic geometry"
              >previous</a> |</li>
-        <li><a href="index.html">SymPy tutorial at SciPy conference 2011</a> &raquo;</li> 
+        <li><a href="index.html">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2011, Mateusz Paprocki, Aaron Meurer.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1pre/91b4fc984b32.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
     </div>
   </body>
 </html>

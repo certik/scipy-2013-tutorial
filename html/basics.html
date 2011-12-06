@@ -1,0 +1,1278 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Basics of expressions in SymPy &mdash; SymPy tutorial at SciPy 2011 conferences</title>
+    
+    <link rel="stylesheet" href="_static/extra.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost:8080/static/live-core.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost:8080/static/live-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/external/ext-core.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/live-core.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/live-sphinx.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="top" title="SymPy tutorial at SciPy 2011 conferences" href="index.html" />
+    <link rel="up" title="Introduction to SymPy" href="introduction.html" />
+    <link rel="next" title="Gotchas and pitfalls" href="gotchas.html" />
+    <link rel="prev" title="Installing, configuring and running SymPy" href="installing.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="gotchas.html" title="Gotchas and pitfalls"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installing.html" title="Installing, configuring and running SymPy"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li>
+          <li><a href="introduction.html" accesskey="U">Introduction to SymPy</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="basics-of-expressions-in-sympy">
+<h1>Basics of expressions in SymPy<a class="headerlink" href="#basics-of-expressions-in-sympy" title="Permalink to this headline">¶</a></h1>
+<p>SymPy is all about construction and manipulation of <em>expressions</em>. By the
+term expression we mean mathematical expressions represented in the Python
+language using SymPy&#8217;s classes and objects. Expressions may consist of
+symbols, numbers, functions and function applications (and many other) and
+operators binding them together (addiction, subtraction, multiplication,
+division, exponentiation).</p>
+<p>Suppose we want to construct an expression for <span class="math">\(x + 1\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="go">x + 1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.add.Add&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Entering <tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></tt> gave us an instance of <tt class="xref py py-class docutils literal"><span class="pre">Add</span></tt> class. This expression
+consists of a symbol (<tt class="docutils literal"><span class="pre">x</span></tt>), a number (<tt class="docutils literal"><span class="pre">1</span></tt>) and addition operator, which
+is represented by the topmost class (<tt class="xref py py-class docutils literal"><span class="pre">Add</span></tt>). This was the simplest way
+of entering an expression for <span class="math">\(x + 1\)</span>. We could also enter:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">17</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">16</span> <span class="o">+</span> <span class="n">sin</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>
+<span class="go">x + 1</span>
+</pre></div>
+</div>
+<p>In this case SymPy automatically rewrote the input expression and gave its
+canonical form, which is <tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></tt> once again. This is a very important
+behavior: all expressions are subject to automatic evaluation, during which
+SymPy tries to find a canonical form for expressions, but it doesn&#8217;t apply
+&#8220;heroic&#8221; measures to achieve this goal. For example the following expression:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go"> 2</span>
+<span class="go">x  - 1</span>
+<span class="go">──────</span>
+<span class="go">x - 1</span>
+</pre></div>
+</div>
+<p>is left unsimplified. This is because automatic canonicalization would
+lose important information about this expression (<span class="math">\(x \not= 1\)</span>). We can
+use <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#cancel" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">cancel()</span></tt></a> remove common factors from the numerator and the
+denominator:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">cancel</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">x + 1</span>
+</pre></div>
+</div>
+<p>SymPy never applies any transformations automatically that could cause
+information loss or that would result in results that are valid only
+almost everywhere. Consider the following expression:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
+<span class="go">log(x⋅y)</span>
+</pre></div>
+</div>
+<p>We know that <span class="math">\(\log(x y)\)</span> is equivalent to <span class="math">\(\log x + \log y\)</span> and there
+is <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#expand" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">expand()</span></tt></a> that is supposed be able to do this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">log(x⋅y)</span>
+</pre></div>
+</div>
+<p>Unfortunately nothing interesting happened. This is because the formula
+stated above is not universally valid, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">log</span><span class="p">((</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">))</span>
+<span class="go">log(6)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">log</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">log(2) + log(3) + 2⋅ⅈ⋅π</span>
+</pre></div>
+</div>
+<p>It is possible to ignore such cases and expand forcibly:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">),</span> <span class="n">force</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">log(x) + log(y)</span>
+</pre></div>
+</div>
+<p>Many other expression manipulation function also support <tt class="docutils literal"><span class="pre">force</span></tt> option.
+Usually a better way is to assign additional knowledge with an expression:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">(</span><span class="s">&#39;a,b&#39;</span><span class="p">,</span> <span class="n">positive</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">(a, b)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">)</span>
+<span class="go">log(a⋅b)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">log(a) + log(b)</span>
+</pre></div>
+</div>
+<p>In this case <tt class="docutils literal"><span class="pre">force=True</span></tt> wasn&#8217;t necessary, because we gave sufficient
+information to <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#expand" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">expand()</span></tt></a> so that it was able to decide that the
+expansion rule is valid universally for this expression.</p>
+<div class="section" id="arithmetic-operators">
+<h2>Arithmetic operators<a class="headerlink" href="#arithmetic-operators" title="Permalink to this headline">¶</a></h2>
+<p>Arithmetic operators <tt class="docutils literal"><span class="pre">+</span></tt>, <tt class="docutils literal"><span class="pre">-</span></tt>, <tt class="docutils literal"><span class="pre">*</span></tt>, <tt class="docutils literal"><span class="pre">/</span></tt>, <tt class="docutils literal"><span class="pre">**</span></tt> are mapped to
+combinations of three core SymPy&#8217;s classes: <tt class="xref py py-class docutils literal"><span class="pre">Add</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">Mul</span></tt>
+and <tt class="xref py py-class docutils literal"><span class="pre">Pow</span></tt>, and work the following way:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">y</span></tt> uses <tt class="xref py py-class docutils literal"><span class="pre">Add</span></tt> class and <tt class="docutils literal"><span class="pre">__add__</span></tt> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="go">x + y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.add.Add&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">__add__</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="go">x + y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.add.Add&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="go">x + y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.add.Add&#39;&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">x</span> <span class="pre">-</span> <span class="pre">y</span></tt> uses <tt class="xref py py-class docutils literal"><span class="pre">Add</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">Mul</span></tt> classes, and <tt class="docutils literal"><span class="pre">__sub__</span></tt> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span>
+<span class="go">x - y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.add.Add&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="o">.</span><span class="n">args</span>
+<span class="go">(-y, x)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">&lt;class &#39;sympy.core.mul.Mul&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">__sub__</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="go">x - y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.add.Add&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="o">.</span><span class="n">args</span>
+<span class="go">(-y, x)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">&lt;class &#39;sympy.core.mul.Mul&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">y</span><span class="p">))</span>
+<span class="go">x - y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.add.Add&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="o">.</span><span class="n">args</span>
+<span class="go">(-y, x)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">&lt;class &#39;sympy.core.mul.Mul&#39;&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">x*y</span></tt> uses <tt class="xref py py-class docutils literal"><span class="pre">Mul</span></tt> class and <tt class="docutils literal"><span class="pre">__mul__</span></tt> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">*</span><span class="n">y</span>
+<span class="go">x*y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.mul.Mul&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">__mul__</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="go">x*y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.mul.Mul&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Mul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="go">x*y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.mul.Mul&#39;&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">x/y</span></tt> uses <tt class="xref py py-class docutils literal"><span class="pre">Pow</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">Mul</span></tt> classes and <tt class="docutils literal"><span class="pre">__div__</span></tt> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">/</span><span class="n">y</span>
+<span class="go">x</span>
+<span class="go">─</span>
+<span class="go">y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.mul.Mul&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="o">.</span><span class="n">args</span>
+<span class="go">⎛   1⎞</span>
+<span class="go">⎜x, ─⎟</span>
+<span class="go">⎝   y⎠</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&lt;class &#39;sympy.core.pow.Pow&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">__div__</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="go">x</span>
+<span class="go">─</span>
+<span class="go">y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.mul.Mul&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="o">.</span><span class="n">args</span>
+<span class="go">⎛   1⎞</span>
+<span class="go">⎜x, ─⎟</span>
+<span class="go">⎝   y⎠</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&lt;class &#39;sympy.core.pow.Pow&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Mul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">y</span><span class="p">)</span>
+<span class="go">x</span>
+<span class="go">─</span>
+<span class="go">y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.mul.Mul&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="o">.</span><span class="n">args</span>
+<span class="go">⎛   1⎞</span>
+<span class="go">⎜x, ─⎟</span>
+<span class="go">⎝   y⎠</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&lt;class &#39;sympy.core.pow.Pow&#39;&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">x**y</span></tt> uses <tt class="xref py py-class docutils literal"><span class="pre">Pow</span></tt> class and <tt class="docutils literal"><span class="pre">__pow__</span></tt> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">**</span><span class="n">y</span>
+<span class="go"> y</span>
+<span class="go">x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.pow.Pow&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">__pow__</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="go"> y</span>
+<span class="go">x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.pow.Pow&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="go"> y</span>
+<span class="go">x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.pow.Pow&#39;&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>When the first argument is not an instance SymPy&#8217;s class, e.g. as in <tt class="docutils literal"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">x</span></tt>,
+then Python falls back to <tt class="docutils literal"><span class="pre">__r*__</span></tt> methods, which are also implemented in all
+SymPy&#8217;s classes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">__sub__</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">NotImplemented</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">__rsub__</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">-x + 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span>
+<span class="go">-x + 1</span>
+</pre></div>
+</div>
+<div class="section" id="tasks">
+<h3>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Construct an expression for <span class="math">\(1 + x + x^2 + \ldots + x^{10}\)</span>. Can you
+construct this expression in a different way? Write a function that
+could generate an expression for <span class="math">\(1 + x + x^2 + \ldots + x^n\)</span> for any
+integer <span class="math">\(n &gt;= 0\)</span>. Extend this function to allow <span class="math">\(n &lt; 0\)</span>.</p>
+<p>(<a class="reference internal" href="extras.html#solution-arith-op-1"><em>solution</em></a>)</p>
+</li>
+<li><p class="first">Write a function that can compute nested powers, e.g. <span class="math">\(x^x\)</span>, <span class="math">\(x^{x^x}\)</span> and
+so on. The function should take two parameters: an expression and a positive
+integer <span class="math">\(n\)</span> that specifies the depth.</p>
+<p>(<a class="reference internal" href="extras.html#solution-arith-op-2"><em>solution</em></a>)</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="building-blocks-of-expressions">
+<h2>Building blocks of expressions<a class="headerlink" href="#building-blocks-of-expressions" title="Permalink to this headline">¶</a></h2>
+<p>Expressions can consist of instances of subclasses of <tt class="xref py py-class docutils literal"><span class="pre">Expr</span></tt> class. This
+includes:</p>
+<ul>
+<li><p class="first">numbers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Integer</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">1/2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Float</span><span class="p">(</span><span class="s">&quot;1e-1000&quot;</span><span class="p">)</span>
+<span class="go">1.00000000000000e-1000</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">symbols:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
+<span class="go">x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Dummy</span><span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">)</span>
+<span class="go">y</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">numer symbols:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pi</span>
+<span class="go">π</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">E</span>
+<span class="go">ℯ</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Catalan</span>
+<span class="go">Catalan</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">functions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Function</span><span class="p">(</span><span class="s">&#39;f&#39;</span><span class="p">)</span>
+<span class="go">f</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sin</span>
+<span class="go">sin</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cos</span>
+<span class="go">cos</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">function applications:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Function</span><span class="p">(</span><span class="s">&#39;f&#39;</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">f(x)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">sin(x)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">cos(x)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">operators:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+<span class="go">x + y + z</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Mul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+<span class="go">x⋅y⋅z</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="go"> y</span>
+<span class="go">x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Or</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+<span class="go">x ∨ y ∨ z</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">And</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+<span class="go">x ∧ y ∧ z</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">unevaluated operators:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Derivative</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="go">d ⎛1⎞</span>
+<span class="go">──⎜─⎟</span>
+<span class="go">dx⎝x⎠</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Integral</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="go">⌠</span>
+<span class="go">⎮ 1</span>
+<span class="go">⎮ ─ dx</span>
+<span class="go">⎮ x</span>
+<span class="go">⌡</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Sum</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<span class="go">  n</span>
+<span class="go"> ___</span>
+<span class="go"> \  `</span>
+<span class="go">  \   1</span>
+<span class="go">   )  ─</span>
+<span class="go">  /   k</span>
+<span class="go"> /__,</span>
+<span class="go">k = 1</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">other:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Poly</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="go">Poly(x**2 + y, x, domain=&#39;ZZ[y]&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">RootOf</span><span class="p">(</span><span class="n">z</span><span class="o">**</span><span class="mi">5</span> <span class="o">+</span> <span class="n">z</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">      ⎛ 5           ⎞</span>
+<span class="go">RootOf⎝z  + z + 3, 2⎠</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>This list isn&#8217;t at all complete and we included only few classes that SymPy
+implements that can be used as expression building blocks. Besides those,
+SymPy has also very many classes that represent entities that can&#8217;t be used
+for constructing expressions, but can be useful as containers of expressions
+or as utilities for expression building blocks.</p>
+<div class="section" id="id1">
+<h3>Tasks<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Expressions implement a <tt class="xref py py-func docutils literal"><span class="pre">doit()</span></tt> method. For most types expressions
+it doesn&#8217;t do anything useful, but in the case of unevaluated operators,
+it executes an action assigned to to an unevaluated operator (it
+differentiates, integrates, etc.). Take advantage of <tt class="xref py py-func docutils literal"><span class="pre">doit()</span></tt> and
+write a function that generates integral tables for a few polynomials,
+rational functions and elementary functions.</p>
+<p>(<a class="reference internal" href="extras.html#solution-blocks-1"><em>solution</em></a>)</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="foreign-types-in-sympy">
+<h2>Foreign types in SymPy<a class="headerlink" href="#foreign-types-in-sympy" title="Permalink to this headline">¶</a></h2>
+<p>SymPy internally expects that all objects it works with are instances of
+subclasses of <tt class="xref py py-class docutils literal"><span class="pre">Basic</span></tt> class. So why <tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></tt> works without raising
+an exception? The number <tt class="docutils literal"><span class="pre">1</span></tt> is not a SymPy&#8217;s type, but:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">&lt;type &#39;int&#39;&gt;</span>
+</pre></div>
+</div>
+<p>it&#8217;s a built-in type. SymPy implements <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> function for the task
+of converting foreign types to SymPy&#8217;s types (yes, Python&#8217;s built-in types
+are also considered as foreign). All SymPy&#8217;s classes, methods and functions
+use <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> and this is the reason why you can safely write <tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></tt>
+instead of more verbose and less convenient <tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">Integer(1)</span></tt>. Note that
+not all functions return instances of SymPy&#8217;s types. Usually, if a function
+is supposed to return a property of an expression, it will use built-in
+Python&#8217;s types, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Poly</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">degree</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;type &#39;int&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Now see what <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> can do. Let&#8217;s start with built-ins:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.One&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="mi">117</span><span class="p">)</span>
+<span class="go">117</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Integer&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="go">0.500000000000000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Float&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">fractions</span> <span class="kn">import</span> <span class="n">Fraction</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">1/2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Rational&#39;&gt;</span>
+</pre></div>
+</div>
+<p>SymPy implements explicit sympification rules, heuristics based on <tt class="docutils literal"><span class="pre">__int__</span></tt>,
+<tt class="docutils literal"><span class="pre">__float__</span></tt> and other attributes, and in the worst case scenario it falls
+back to parsing string representation of an object. This usually works fine,
+but sometimes <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> can be wrong:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gmpy</span> <span class="kn">import</span> <span class="n">mpz</span><span class="p">,</span> <span class="n">mpq</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">mpz</span><span class="p">(</span><span class="mi">117</span><span class="p">))</span>
+<span class="go">117.000000000000</span>
+<span class="go">&gt;&gt;&gt;&gt; type(_)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Float&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">mpq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">0.500000000000000</span>
+<span class="go">&gt;&gt;&gt;&gt; type(_)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Float&#39;&gt;</span>
+</pre></div>
+</div>
+<p>This happens because <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> doesn&#8217;t know about either <tt class="docutils literal"><span class="pre">mpz</span></tt> or
+<tt class="docutils literal"><span class="pre">mpq</span></tt>, and it first looks for <tt class="docutils literal"><span class="pre">__float__</span></tt> attribute, which is implemented
+by both those types. Getting float for exact value isn&#8217;t very useful so let&#8217;s
+extend <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> and add support for <tt class="docutils literal"><span class="pre">mpz</span></tt>. The way to achieve this
+is to add a new entry to <tt class="docutils literal"><span class="pre">converter</span></tt> dictionary. <tt class="docutils literal"><span class="pre">converter</span></tt> takes types
+as keys and sympification functions as values. Before we extend this <tt class="docutils literal"><span class="pre">dict</span></tt>,
+we have to resolve a little problem with <tt class="docutils literal"><span class="pre">mpz</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mpz</span>
+<span class="go">&lt;built-in function mpz&gt;</span>
+</pre></div>
+</div>
+<p>which isn&#8217;t a type but a function. We can use a little trick here and take
+the type of some <tt class="docutils literal"><span class="pre">mpz</span></tt> object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">mpz</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">&lt;type &#39;mpz&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Let&#8217;s now add an entry to <tt class="docutils literal"><span class="pre">converter</span></tt> for <tt class="docutils literal"><span class="pre">mpz</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy.core.sympify</span> <span class="kn">import</span> <span class="n">converter</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">mpz_to_Integer</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">Integer</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+<span class="gp">...</span>
+<span class="gp">...</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converter</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">mpz</span><span class="p">(</span><span class="mi">1</span><span class="p">))]</span> <span class="o">=</span> <span class="n">mpz_to_Integer</span>
+</pre></div>
+</div>
+<p>We could use <tt class="docutils literal"><span class="pre">lambda</span></tt> as well. Now we can sympify <tt class="docutils literal"><span class="pre">mpz</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">mpz</span><span class="p">(</span><span class="mi">117</span><span class="p">))</span>
+<span class="go">117</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Integer&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Similar things should be done for <tt class="docutils literal"><span class="pre">mpq</span></tt>. Let&#8217;s try one more type:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ar</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">ar</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">ar</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">SympifyError: SympifyError</span>: <span class="n">&quot;could not parse u&#39;[1 2 3]&#39;&quot;</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> isn&#8217;t aware of <tt class="docutils literal"><span class="pre">numpy.ndarray</span></tt> and heuristics didn&#8217;t work,
+so it computed string representation of <tt class="docutils literal"><span class="pre">ar</span></tt> using <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a> and tried
+to parse is, which failed because:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">ar</span><span class="p">)</span>
+<span class="go">[1 2 3]</span>
+</pre></div>
+</div>
+<p>We might be tempted to add support for <tt class="docutils literal"><span class="pre">numpy.ndarray</span></tt> to <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt>
+by treating NumPy&#8217;s arrays (at least a subset of) as SymPy&#8217;s matrices, but
+matrices aren&#8217;t sympifiable:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Matrix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">)</span>
+<span class="go">⎡0  1  2⎤</span>
+<span class="go">⎢       ⎥</span>
+<span class="go">⎢1  2  3⎥</span>
+<span class="go">⎢       ⎥</span>
+<span class="go">⎣2  3  4⎦</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">SympifyError: SympifyError</span>: <span class="n">&#39;Matrix cannot be sympified&#39;</span>
+</pre></div>
+</div>
+<p>We will explain this odd behavior later.</p>
+<div class="section" id="id2">
+<h3>Tasks<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Add support for <tt class="docutils literal"><span class="pre">mpq</span></tt> to <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt>.</p>
+<p>(<a class="reference internal" href="extras.html#solution-foreign-1"><em>solution</em></a>)</p>
+</li>
+<li><p class="first">SymPy implements <tt class="xref py py-class docutils literal"><span class="pre">Tuple</span></tt> class, which provides functionality of
+Python&#8217;s built-in <tt class="docutils literal"><span class="pre">tuple</span></tt>, but is a subclass of <tt class="xref py py-class docutils literal"><span class="pre">Basic</span></tt>. Take
+advantage of this and make <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> work for row NumPy arrays,
+for which it should return instances of <tt class="xref py py-class docutils literal"><span class="pre">Tuple</span></tt>. Raise
+<tt class="xref py py-exc docutils literal"><span class="pre">SympifyError</span></tt> for other classes of arrays.</p>
+<p>(<a class="reference internal" href="extras.html#solution-foreign-2"><em>solution</em></a>)</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="the-role-of-symbols">
+<h2>The role of symbols<a class="headerlink" href="#the-role-of-symbols" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s now talk about the most important part of expressions: symbols. Symbols
+are placeholders, abstract entities that can be filled in with whatever
+content we want (unless there are explicit restrictions given). For example
+in expression <tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></tt> we have one symbol <tt class="docutils literal"><span class="pre">x</span></tt>. Let&#8217;s start fresh Python&#8217;s
+interpreter and issue:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">init_printing</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We want to start work with our very advanced <tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></tt> expression, so we
+may be tempted to simply write:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">NameError</span>: <span class="n">name &#39;x&#39; is not defined</span>
+</pre></div>
+</div>
+<p>For users that come from other symbolic mathematics systems, this behavior
+may seem odd, because in those systems, symbols are constructed implicitly
+when necessary. In general purpose programming language like Python, we
+have to define all objects we want to use before we actually use them. So,
+the first thing we have to always do is to construct symbols and assign
+them to Python&#8217;s variables:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="go">x + 1</span>
+</pre></div>
+</div>
+<p>Now it worked. Symbols are independent of variables, so nothing prevents
+you from issuing:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Well, besides taste. It&#8217;s also perfectly valid to create symbols containing
+special characters:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;+&#39;</span><span class="p">)</span>
+<span class="go">+</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">_</span></tt> and <tt class="docutils literal"><span class="pre">^</span></tt> characters in symbols have special meaning and are used to
+denote subscripts and superscripts, respectively:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;x_1&#39;</span><span class="p">)</span>
+<span class="go">x₁</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;x^1&#39;</span><span class="p">)</span>
+<span class="go">x¹</span>
+</pre></div>
+</div>
+<p>If you need more symbols in your expression, you have to define and assign
+them all before using them. Later you can reuse existing symbols for other
+purposes. To make life easier, SymPy provides several methods for constructing
+symbols. The most low-level method is to use <tt class="xref py py-class docutils literal"><span class="pre">Symbol</span></tt> class, as we
+have been doing it before. However, if you need more symbols, then your can
+use <tt class="xref py py-func docutils literal"><span class="pre">symbols()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span><span class="p">(</span><span class="s">&#39;x,y,z&#39;</span><span class="p">)</span>
+<span class="go">(x, y, z)</span>
+</pre></div>
+</div>
+<p>It takes a textual specification of symbols and returns a <tt class="docutils literal"><span class="pre">tuple</span></tt> with
+constructed symbols. <tt class="xref py py-func docutils literal"><span class="pre">symbols()</span></tt> supports several syntaxes and can make
+your life much simpler, when it comes to constructing symbols. First of all,
+commas can be followed by or completely replaced by whitespace:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span><span class="p">(</span><span class="s">&#39;x, y, z&#39;</span><span class="p">)</span>
+<span class="go">(x, y, z)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span><span class="p">(</span><span class="s">&#39;x y z&#39;</span><span class="p">)</span>
+<span class="go">(x, y, z)</span>
+</pre></div>
+</div>
+<p>If you need indexed symbols, then use range syntax:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span><span class="p">(</span><span class="s">&quot;x:5&quot;</span><span class="p">)</span>
+<span class="go">(x₀, x₁, x₂, x₃, x₄)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span><span class="p">(</span><span class="s">&#39;x5:10&#39;</span><span class="p">)</span>
+<span class="go">(x₅, x₆, x₇, x₈, x₉)</span>
+</pre></div>
+</div>
+<p>You can also create consecutive symbols with lexicographic syntax:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span><span class="p">(</span><span class="s">&#39;a:d&#39;</span><span class="p">)</span>
+<span class="go">(a, b, c, d)</span>
+</pre></div>
+</div>
+<p>Note that range syntax simulates <a class="reference external" href="http://docs.python.org/library/functions.html#range" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">range()</span></tt></a>&#8216;s behavior, so it is exclusive,
+lexicographic syntax is inclusive, because it makes more sense in this case.</p>
+<p>When we issue:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span><span class="p">(</span><span class="s">&#39;u,v&#39;</span><span class="p">)</span>
+<span class="go">(u, v)</span>
+</pre></div>
+</div>
+<p>we may be tempted to use <tt class="docutils literal"><span class="pre">u</span></tt> and <tt class="docutils literal"><span class="pre">v</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">NameError</span>: <span class="n">name &#39;u&#39; is not defined</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">NameError</span>: <span class="n">name &#39;v&#39; is not defined</span>
+</pre></div>
+</div>
+<p>We got <tt class="xref py py-exc docutils literal"><span class="pre">NameError</span></tt>, because we constructed those symbols, but we didn&#8217;t
+assign them to any variables. This solves the problem:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;u,v&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="p">,</span> <span class="n">v</span>
+<span class="go">u, v</span>
+</pre></div>
+</div>
+<p>but is a little redundant, because we have to repeat the same information
+twice. To save time and typing effort, SymPy has another function <tt class="xref py py-func docutils literal"><span class="pre">var()</span></tt>
+for constructing symbols, which has exactly the same syntax and semantics
+as <tt class="xref py py-func docutils literal"><span class="pre">symbols()</span></tt>, but it also injects constructed symbols into the global
+namespace, making this function very useful in interactive sessions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">(</span><span class="s">&#39;u,v)</span>
+<span class="go">(u, v)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span>
+<span class="go">u + v</span>
+</pre></div>
+</div>
+<p>We don&#8217;t allow to use <tt class="xref py py-func docutils literal"><span class="pre">var()</span></tt> in SymPy&#8217;s library code. There is one
+more way of constructing symbols, which is related to indexed symbols.
+Sometimes we don&#8217;t know in advance how many symbols will be required to
+solve a certain problem. For this case, SymPy has <tt class="xref py py-func docutils literal"><span class="pre">numbered_symbols()</span></tt>
+generator:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">numbered_symbols</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">x₀</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span> <span class="n">X</span><span class="o">.</span><span class="n">next</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">]</span>
+<span class="go">[x₁, x₂, x₃, x₄, x₅]</span>
+</pre></div>
+</div>
+<div class="section" id="id3">
+<h3>Tasks<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Implement a function that would generate an expression for <span class="math">\(x_1^1 +
+x_2^2 + \ldots + x_n^n\)</span>. This function would take two arguments: base
+name for indexed symbols and integer exponent <span class="math">\(n &gt;= 1\)</span>. What&#8217;s the
+best approach among the four presented above?</p>
+<p>(<a class="reference internal" href="extras.html#solution-symbols-1"><em>solution</em></a>)</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="obtaining-parts-of-expressions">
+<h2>Obtaining parts of expressions<a class="headerlink" href="#obtaining-parts-of-expressions" title="Permalink to this headline">¶</a></h2>
+<p>We already know how to construct expressions, but how to get parts of complex
+expressions? The most basic and low-level way of decomposing expressions is to
+use <tt class="docutils literal"><span class="pre">args</span></tt> property:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="go">x + y + 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="o">.</span><span class="n">args</span>
+<span class="go">(1, y, x)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">map</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span>
+<span class="go">[&lt;class &#39;sympy.core.numbers.One&#39;&gt;, &lt;class &#39;sympy.core.symbol.Symbol&#39;&gt;, &lt;class &#39;sympy.core.symbol.Symbol&#39;&gt;]</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">args</span></tt> always gives a <tt class="docutils literal"><span class="pre">tuple</span></tt> of instances of SymPy&#8217;s classes. One should
+notice the weird order of elements, which doesn&#8217;t match printing order. This
+happens for classes that in which order of arguments is insignificant. The
+most notable examples of such class are <tt class="xref py py-class docutils literal"><span class="pre">Add</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">Mul</span></tt> (for
+commutative part). In this particular case we can use <tt class="xref py py-func docutils literal"><span class="pre">as_ordered_terms()</span></tt>
+method to get <tt class="docutils literal"><span class="pre">args</span></tt> in printing order:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">as_ordered_terms</span><span class="p">()</span>
+<span class="go">[x, y, 1]</span>
+</pre></div>
+</div>
+<p>When dealing which classes that have fixed order of arguments, printing
+order and <tt class="docutils literal"><span class="pre">args</span></tt> order match:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Derivative</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="go">   2</span>
+<span class="go">  d</span>
+<span class="go">─────(sin(x))</span>
+<span class="go">dx dx</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="o">.</span><span class="n">args</span>
+<span class="go">(sin(x), x, x)</span>
+</pre></div>
+</div>
+<p>Lets suppose that <tt class="xref py py-class docutils literal"><span class="pre">Cls</span></tt> represents any SymPy&#8217;s class and <tt class="docutils literal"><span class="pre">expr</span></tt>
+is an instance of this class (<tt class="docutils literal"><span class="pre">expr</span> <span class="pre">=</span> <span class="pre">Cls()</span></tt>). Then the following holds:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Cls</span><span class="p">(</span><span class="o">*</span><span class="n">expr</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="n">expr</span>
+</pre></div>
+</div>
+<p>This is very useful invariant, because we can easily decompose, modify and
+rebuild expressions of various kinds in SymPy exactly the same way. This
+invariant is being used in all functions that manipulation expressions.</p>
+<p>Let&#8217;s now use <tt class="docutils literal"><span class="pre">args</span></tt> to something a little more interesting than simple
+decomposition of expressions. Working with expressions, one may be interested
+in the depth of such expressions. By viewing expressions as n-ary trees, by
+depth we understand the longest path in a tree.</p>
+<p>Trees consist of branches and leafs. In SymPy, leafs of expressions are
+instances of subclasses of <tt class="xref py py-class docutils literal"><span class="pre">Atom</span></tt> class (numbers, symbols, special
+constants):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Integer</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">Atom</span><span class="p">)</span>
+<span class="go">True</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pi</span>
+<span class="go">π</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">Atom</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Atoms can be also recognized by the fact that their <tt class="docutils literal"><span class="pre">args</span></tt> are empty.
+Note, however, that this is an implementation detail, and one should use
+either <a class="reference external" href="http://docs.python.org/library/functions.html#isinstance" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">isinstance()</span></tt></a> built-in function or <tt class="docutils literal"><span class="pre">is_Atom</span></tt> property to
+recognize atoms properly. Everything else than an <tt class="xref py py-class docutils literal"><span class="pre">Atom</span></tt> is a
+branch.</p>
+<p>Let&#8217;s implement <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy.core</span> <span class="kn">import</span> <span class="n">Atom</span>
+
+<span class="k">def</span> <span class="nf">depth</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">Atom</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">max</span><span class="p">([</span> <span class="n">depth</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">expr</span><span class="o">.</span><span class="n">args</span> <span class="p">])</span>
+</pre></div>
+</div>
+<p>The implementation is straightforward. First we check if the input
+expression is an atom. In this case we return <tt class="docutils literal"><span class="pre">1</span></tt> and terminate
+recursion. Otherwise <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> recurses for every argument of
+<tt class="docutils literal"><span class="pre">expr</span></tt> and returns <tt class="docutils literal"><span class="pre">1</span></tt> plus maximum of depths of all branches.</p>
+<p>Let&#8217;s see <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> in action:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">depth</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">depth</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">depth</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">depth</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">sin</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+<p>All those examples work as expected. However, not everything is perfect
+with this function. Let&#8217;s look at the following phenomenon:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">depth</span><span class="p">(</span><span class="n">Integer</span><span class="p">(</span><span class="mi">117</span><span class="p">))</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">depth</span><span class="p">(</span><span class="mi">117</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">AttributeError</span>: <span class="n">&#39;int&#39; object has no attribute &#39;args&#39;</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">117</span></tt> is an instance of Python&#8217;s built-in type <tt class="xref py py-class docutils literal"><span class="pre">int</span></tt>, but this type
+is not a subclass of <tt class="xref py py-class docutils literal"><span class="pre">Atom</span></tt>, so Python choses the other branch in
+<tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> and this must fail. Before the last example we pass only
+instances of SymPy&#8217;s expression to <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt>. If we want <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> to
+work also for non-SymPy types, we have to sympify <tt class="docutils literal"><span class="pre">expr</span></tt> with <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt>
+before using it.</p>
+<div class="section" id="id4">
+<h3>Tasks<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Change <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> so that it sympifies its input argument. Rewrite
+<tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> so that is calls <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> only once.</p>
+<p>(<a class="reference internal" href="extras.html#solution-parts-1"><em>solution</em></a>)</p>
+</li>
+<li><p class="first">Add support for iterable containers to <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt>. Containers should
+be treated as branches and have depth defined the same way.</p>
+<p>(<a class="reference internal" href="extras.html#solution-parts-2"><em>solution</em></a>)</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="immutability-of-expressions">
+<h2>Immutability of expressions<a class="headerlink" href="#immutability-of-expressions" title="Permalink to this headline">¶</a></h2>
+<p>Expressions in SymPy are immutable and cannot be modified by an in-place
+operation. This means that a function will always return an object, and
+the original expression will not be modified. Consider the following
+code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">(</span><span class="s">&#39;x,y,a,b&#39;</span><span class="p">)</span>
+<span class="go">(x, y, a, b)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">original</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">modified</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">subs</span><span class="p">({</span><span class="n">x</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">b</span><span class="p">})</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">original</span>
+<span class="go">3*x + 4*y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">modified</span>
+<span class="go">3*a + 4*b</span>
+</pre></div>
+</div>
+<p>The output shows that the <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#subs" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt></a> method gave a new expression with
+symbol <tt class="docutils literal"><span class="pre">x</span></tt> replaced with symbol <tt class="docutils literal"><span class="pre">a</span></tt> and symbol <tt class="docutils literal"><span class="pre">y</span></tt> replaced with
+symbol <tt class="docutils literal"><span class="pre">b</span></tt>. The original expression wasn&#8217;t modified. This behavior
+applies to all classes that are subclasses of <tt class="xref py py-class docutils literal"><span class="pre">Basic</span></tt>. An exception
+to immutability rule is <tt class="xref py py-class docutils literal"><span class="pre">Matrix</span></tt>, which allows in-place modifications,
+but it is not a subclass of <tt class="xref py py-class docutils literal"><span class="pre">Basic</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Matrix</span><span class="o">.</span><span class="n">mro</span><span class="p">()</span>
+<span class="go">[&lt;class &#39;sympy.matrices.matrices.Matrix&#39;&gt;, &lt;type &#39;object&#39;&gt;]</span>
+</pre></div>
+</div>
+<p>Be also aware of the fact that SymPy&#8217;s symbols aren&#8217;t Python&#8217;s variables (they
+just can be assigned to Python&#8217;s variables), so if you issue:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;u&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">=</span> <span class="n">u</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span>
+<span class="go">u + 1</span>
+</pre></div>
+</div>
+<p>then in-place operator <tt class="docutils literal"><span class="pre">+=</span></tt> constructed an new instance of <tt class="xref py py-class docutils literal"><span class="pre">Add</span></tt> and
+left the original expression stored in variable <tt class="docutils literal"><span class="pre">u</span></tt> unchanged:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span>
+<span class="go">u</span>
+</pre></div>
+</div>
+<p>For efficiency reason, any in-place operator used on elements of a matrix,
+modifies the matrix in-place and doesn&#8217;t waste memory for unnecessary copies.</p>
+<div class="section" id="id5">
+<h3>Tasks<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">This is the first time we used <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#subs" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt></a>. This is a very important method
+and we will talk more about it later. However, we can also use <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#subs" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt></a>
+to generate some cool looking expressions. Start with <tt class="docutils literal"><span class="pre">x**x</span></tt> expression
+and substitute in it <tt class="docutils literal"><span class="pre">x**x</span></tt> for <tt class="docutils literal"><span class="pre">x</span></tt>. What do you get? (make sure you
+use pretty printer) Can you achieve the same effect without <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#subs" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt></a>?</p>
+<p>(<a class="reference internal" href="extras.html#solution-immutability-1"><em>solution</em></a>)</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="comparing-expressions-with">
+<h2>Comparing expressions with <tt class="docutils literal"><span class="pre">==</span></tt><a class="headerlink" href="#comparing-expressions-with" title="Permalink to this headline">¶</a></h2>
+<p>Consider the following two expressions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span>
+<span class="go">       2</span>
+<span class="go">(x + y)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span>
+<span class="go"> 2</span>
+<span class="go">x  + 2⋅x + 1</span>
+</pre></div>
+</div>
+<p>We should remember from calculus 101 that those two expressions are
+equivalent, because we can use binomial theorem to expand <tt class="docutils literal"><span class="pre">f</span></tt> and
+we will get <tt class="docutils literal"><span class="pre">g</span></tt>. However in SymPy:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">==</span> <span class="n">g</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>This is correct result, because SymPy implements structural understanding
+of <tt class="docutils literal"><span class="pre">==</span></tt> operator, not semantic. So, for SymPy <tt class="docutils literal"><span class="pre">f</span></tt> and <tt class="docutils literal"><span class="pre">g</span></tt> are very
+different expressions.</p>
+<p>What to do if we have two variables and we want to know if their contents
+are equivalent, but not necessarily structurally equal? There is no simple
+answer to this question in general. In the particular case of <tt class="docutils literal"><span class="pre">f</span></tt> and
+<tt class="docutils literal"><span class="pre">g</span></tt>, it is sufficient to issue:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">==</span> <span class="n">expand</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>or, based on <span class="math">\(f = g \equiv f - g = 0\)</span> equivalence:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">(</span><span class="n">f</span> <span class="o">-</span> <span class="n">g</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>In case of more complicated expression, e.g. those involving elementary or
+special functions, this approach may be insufficient. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">==</span> <span class="n">v</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>In this case we have to use more advanced term rewriting function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">simplify</span><span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-meaning-of-expressions">
+<h2>The meaning of expressions<a class="headerlink" href="#the-meaning-of-expressions" title="Permalink to this headline">¶</a></h2>
+<p>Expressions don&#8217;t have any meaning assigned to them by default. Thus <span class="math">\(x + 1\)</span>
+is simply an expression, not a function or a univariate polynomial. Meaning
+is assigned when we use expressions in a context, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">div</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span>
+<span class="go">⎛        2    ⎞</span>
+<span class="go">⎝x + y, y  - y⎠</span>
+</pre></div>
+</div>
+<p>In this case, <tt class="docutils literal"><span class="pre">x**2</span> <span class="pre">-</span> <span class="pre">y</span></tt> and <tt class="docutils literal"><span class="pre">x</span> <span class="pre">-</span> <span class="pre">y</span></tt> where treated as multivariate
+polynomials in variables <tt class="docutils literal"><span class="pre">x</span></tt> and <tt class="docutils literal"><span class="pre">y</span></tt> (in this order). We could change
+this understanding and ask explicitly for polynomials in variables <tt class="docutils literal"><span class="pre">y</span></tt>
+and <tt class="docutils literal"><span class="pre">x</span></tt>. This makes <tt class="xref py py-func docutils literal"><span class="pre">div()</span></tt> return a different result:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">div</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="go">⎛    2    ⎞</span>
+<span class="go">⎝1, x  - x⎠</span>
+</pre></div>
+</div>
+<p>Quite often SymPy is capable of deriving the most useful understanding of
+expressions in a given context. However, there are situations when expressions
+simply don&#8217;t carry enough information to make SymPy perform computations without
+telling it explicitly what to do:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">roots</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">PolynomialError</span>: <span class="n">multivariate polynomials are not supported</span>
+</pre></div>
+</div>
+<p>Here we have to tell <tt class="xref py py-func docutils literal"><span class="pre">roots()</span></tt> in which variable roots should be computed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">roots</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="go">⎧   ⎽⎽⎽       ⎽⎽⎽   ⎫</span>
+<span class="go">⎨-╲╱ y : 1, ╲╱ y : 1⎬</span>
+<span class="go">⎩                   ⎭</span>
+</pre></div>
+</div>
+<p>Of course the choice of <tt class="docutils literal"><span class="pre">y</span></tt> is also a valid one, assuming that this is what
+you really want. This of course doesn&#8217;t apply only to polynomials.</p>
+</div>
+<div class="section" id="turning-strings-into-expressions">
+<h2>Turning strings into expressions<a class="headerlink" href="#turning-strings-into-expressions" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we saved the following expression:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">(</span><span class="s">&#39;x,y&#39;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">sin</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="n">S</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span>
+<span class="go"> 2            1</span>
+<span class="go">x  + sin(y) + ─</span>
+<span class="go">              2</span>
+</pre></div>
+</div>
+<p>by printing it with <tt class="xref py py-func docutils literal"><span class="pre">sstr()</span></tt> printer and storing to a file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sstr</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+<span class="go">x**2 + sin(y) + 1/2</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;expression.txt&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>We used this kind of printer because we wanted the file to be fairly readable.
+Now we want to restore the original expression. First we have to read the text
+form from the file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;expression.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">text_form</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">...</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text_form</span>
+<span class="go">x**2 + sin(y) + 1/2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">&lt;type &#39;str&#39;&gt;</span>
+</pre></div>
+</div>
+<p>We could try to try to use <a class="reference external" href="http://docs.python.org/library/functions.html#eval" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">eval()</span></tt></a> on <tt class="docutils literal"><span class="pre">text_form</span></tt> but this doesn&#8217;t give
+expected results:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">eval</span><span class="p">(</span><span class="n">text_form</span><span class="p">)</span>
+<span class="go"> 2</span>
+<span class="go">x  + sin(y) + 0.5</span>
+</pre></div>
+</div>
+<p>This happens because <tt class="docutils literal"><span class="pre">1/2</span></tt> isn&#8217;t understood by Python as rational number
+and is equivalent to a problem we had when entering expressions of this kind
+in interactive sessions.</p>
+<p>To overcome this problem we have to use <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt>, which implements
+<a class="reference external" href="http://docs.python.org/library/tokenize.html#module-tokenize" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">tokenize</span></tt></a>&#8211;based parser that allows us to handle this issue:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">text_form</span><span class="p">)</span>
+<span class="go"> 2            1</span>
+<span class="go">x  + sin(y) + ─</span>
+<span class="go">              2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">==</span> <span class="n">expr</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Let&#8217;s now consider a more interesting problem. Suppose we define our own function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">my_func</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="sd">&quot;&quot;&quot;Returns zero for integer values. &quot;&quot;&quot;</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="nd">@classmethod</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">is_Number</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">arg</span>
+<span class="gp">...</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>This function gives twice the input argument if the argument is a number and
+doesn&#8217;t do anything for all other classes of arguments:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">my_func</span><span class="p">(</span><span class="mi">117</span><span class="p">)</span>
+<span class="go">234</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_func</span><span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">my_func(x)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">)</span>
+<span class="go">4.20000000000000</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_func</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<p>Let&#8217;s create an expression that contains <tt class="xref py py-func docutils literal"><span class="pre">my_func()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">my_func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span>
+<span class="go">my_func(x) + 1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<p>Now we will print it using <tt class="xref py py-func docutils literal"><span class="pre">sstr()</span></tt> printer and sympify the result:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sympified</span> <span class="o">=</span> <span class="n">sympify</span><span class="p">(</span><span class="n">sstr</span><span class="p">(</span><span class="n">expr</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympified</span>
+<span class="go">my_func(x) + 1</span>
+</pre></div>
+</div>
+<p>We can use <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#subs" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt></a> method to quickly verify the expression is correct:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sympified</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">my_func(1) + 1</span>
+</pre></div>
+</div>
+<p>This is not exactly what we expected. This happens because:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">==</span> <span class="n">sympified</span>
+<span class="go">False</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span><span class="o">.</span><span class="n">args</span>
+<span class="go">(1, my_func(x))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="ow">is</span> <span class="n">my_func</span>
+<span class="go">True</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympified</span><span class="o">.</span><span class="n">args</span>
+<span class="go">(1, my_func(x))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">_</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="ow">is</span> <span class="n">my_func</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> evaluates the given string in the context of <tt class="docutils literal"><span class="pre">from</span> <span class="pre">sympy</span> <span class="pre">import</span> <span class="pre">*</span></tt>
+and is not aware of user defined names. We can explicitly pass a mapping between
+names and values to it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">sstr</span><span class="p">(</span><span class="n">expr</span><span class="p">),</span> <span class="p">{</span><span class="s">&#39;my_func&#39;</span><span class="p">:</span> <span class="n">my_func</span><span class="p">})</span>
+<span class="go">my_func(x) + 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<p>This time we got the desired result. This shows that we have to be careful when
+working with expressions encoded as strings. This happens to be even more tricky
+when we put assumptions on symbols. Do you remember the example in which we
+tried to expand <span class="math">\(\log(a b)\)</span>? Lets do it once again:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">(</span><span class="s">&#39;a,b&#39;</span><span class="p">,</span> <span class="n">positive</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">(a, b)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">log</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+<span class="go">log(a) + log(b)</span>
+</pre></div>
+</div>
+<p>This worked as previously. However, let&#8217;s now print <span class="math">\(\log(a b)\)</span>, sympify the
+resulting string and expand the restored expression:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">sstr</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">)))</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+<span class="go">log(a⋅b)</span>
+</pre></div>
+</div>
+<p>This didn&#8217;t work, because <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> doesn&#8217;t know what <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt>
+are, so it assumed that those are symbols and it created them implicitly.
+This issue is similar to what we already experienced with <tt class="xref py py-func docutils literal"><span class="pre">my_func()</span></tt>.</p>
+<p>The most reliable approach to storing expression is to use <a class="reference external" href="http://docs.python.org/library/pickle.html#module-pickle" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a>
+module. In the case of <span class="math">\(\log(a b)\)</span> it works like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickled</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">pickled</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+<span class="go">log(a) + log(b)</span>
+</pre></div>
+</div>
+<p>Unfortunately, due to <a class="reference external" href="http://docs.python.org/library/pickle.html#module-pickle" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a>&#8216;s limitations, this doesn&#8217;t work for
+user defined functions like <tt class="xref py py-func docutils literal"><span class="pre">my_func()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">my_func</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">PicklingError: Can&#39;t pickle my_func</span>: <span class="n">it&#39;s not found as __main__.my_func</span>
+</pre></div>
+</div>
+<div class="section" id="id6">
+<h3>Tasks<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Construct a polynomial of degree, let&#8217;s say, 1000. Use both techniques
+to save and restore this expression. Compare speed of those approaches.
+Verify that the result is correct.</p>
+<p>(<a class="reference internal" href="extras.html#solution-sympify-1"><em>solution</em></a>)</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/sympy-logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Basics of expressions in SymPy</a><ul>
+<li><a class="reference internal" href="#arithmetic-operators">Arithmetic operators</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#building-blocks-of-expressions">Building blocks of expressions</a><ul>
+<li><a class="reference internal" href="#id1">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#foreign-types-in-sympy">Foreign types in SymPy</a><ul>
+<li><a class="reference internal" href="#id2">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-role-of-symbols">The role of symbols</a><ul>
+<li><a class="reference internal" href="#id3">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#obtaining-parts-of-expressions">Obtaining parts of expressions</a><ul>
+<li><a class="reference internal" href="#id4">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#immutability-of-expressions">Immutability of expressions</a><ul>
+<li><a class="reference internal" href="#id5">Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#comparing-expressions-with">Comparing expressions with <tt class="docutils literal"><span class="pre">==</span></tt></a></li>
+<li><a class="reference internal" href="#the-meaning-of-expressions">The meaning of expressions</a></li>
+<li><a class="reference internal" href="#turning-strings-into-expressions">Turning strings into expressions</a><ul>
+<li><a class="reference internal" href="#id6">Tasks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installing.html"
+                        title="previous chapter">Installing, configuring and running SymPy</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="gotchas.html"
+                        title="next chapter">Gotchas and pitfalls</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/basics.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="gotchas.html" title="Gotchas and pitfalls"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installing.html" title="Installing, configuring and running SymPy"
+             >previous</a> |</li>
+        <li><a href="index.html">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li>
+          <li><a href="introduction.html" >Introduction to SymPy</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Mateusz Paprocki, Aaron Meurer.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>
