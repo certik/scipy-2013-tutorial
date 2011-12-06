@@ -112,6 +112,30 @@ improve speed of otherwise pure Python library. If gmpy is not available,
 those modules fall back automatically to pure Python implementation of
 arithmetic routines. Other optional dependencies are IPython, Matplotlib,
 NumPy, SciPy, Cython, Pyglet, LaTeX distribution and more.</p>
+<div class="section" id="translating-sympy-to-python-3">
+<h2>Translating SymPy to Python 3<a class="headerlink" href="#translating-sympy-to-python-3" title="Permalink to this headline">¶</a></h2>
+<p>Support for Python 3.2+ was added to master branch of SymPy&#8217;s repository
+and will be a part of 0.7.2 release. If you use SymPy from git, then you
+can switch to Python 3 now. However, SymPy&#8217;s source is not compatible with
+Python 3 by default and you have to translate it:</p>
+<pre class="literal-block">
+$ <strong class="input">cd sympy</strong>
+$ <strong class="input">python3.2 bin/use2to3</strong>
+$ <strong class="input">cd py3k-sympy</strong>
+$ <strong class="input">python3.2</strong>
+Python 3.2.2 (default, Sep  5 2011, 21:17:14)
+[GCC 4.6.1] on linux2
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; import sympy
+&gt;&gt;&gt; sympy.__version__
+'0.7.1-git'
+&gt;&gt;&gt;
+</pre>
+<p>Make sure you run <tt class="docutils literal"><span class="pre">use2to3</span></tt> under Python 3.2, because Python 3.0 and 3.1
+will fail translating SymPy. Although you can&#8217;t translate SymPy using Python
+3.1 and this version isn&#8217;t officially supported, SymPy works very well in it,
+just if you run <tt class="docutils literal"><span class="pre">python3.1</span> <span class="pre">bin/test</span></tt>, you will get a few harmless failures</p>
+</div>
 <div class="section" id="sympy-in-python-ipython">
 <h2>SymPy in Python/IPython<a class="headerlink" href="#sympy-in-python-ipython" title="Permalink to this headline">¶</a></h2>
 <p>Sessions in standard Python&#8217;s interpreter and IPython look very similar,
@@ -302,6 +326,7 @@ will setup pretty printing among other things.</p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Installing, configuring and running SymPy</a><ul>
+<li><a class="reference internal" href="#translating-sympy-to-python-3">Translating SymPy to Python 3</a></li>
 <li><a class="reference internal" href="#sympy-in-python-ipython">SymPy in Python/IPython</a></li>
 <li><a class="reference internal" href="#interactive-sympy-isympy">Interactive SymPy (<tt class="docutils literal"><span class="pre">isympy</span></tt>)</a><ul>
 <li><a class="reference internal" href="#command-line-arguments">Command-line arguments</a></li>
