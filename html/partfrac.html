@@ -12,8 +12,8 @@
     
     <link rel="stylesheet" href="_static/extra.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="http://localhost:8080/static/live-core.css" type="text/css" />
-    <link rel="stylesheet" href="http://localhost:8080/static/live-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="http://live.sympy.org/static/live-core.css" type="text/css" />
+    <link rel="stylesheet" href="http://live.sympy.org/static/live-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -27,10 +27,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="/mathjax/MathJax.js?config=TeX-AMS_HTML-full"></script>
-    <script type="text/javascript" src="http://localhost:8080/static/external/ext-core.js"></script>
-    <script type="text/javascript" src="http://localhost:8080/static/live-core.js"></script>
-    <script type="text/javascript" src="http://localhost:8080/static/live-sphinx.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
+    <script type="text/javascript" src="http://live.sympy.org/static/external/ext-core.js"></script>
+    <script type="text/javascript" src="http://live.sympy.org/static/live-core.js"></script>
+    <script type="text/javascript" src="http://live.sympy.org/static/live-sphinx.js"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
     <link rel="top" title="SymPy tutorial at SciPy 2011 conferences" href="index.html" />
     <link rel="up" title="Mathematical problem solving with SymPy" href="mathematics.html" />
@@ -73,7 +73,7 @@ of the form:</p>
 rationals) of <span class="math">\(q\)</span>:</p>
 <div class="math">
 \[q(x) = \prod_{i=1}^k q_i^{n_i}\]</div>
-<p>If <span class="math">\(p\)</span> and <span class="math">\(q\)</span> aren&#8217;t co-prime, we can use <tt class="xref py py-func docutils literal"><span class="pre">cancel()</span></tt> to remove common
+<p>If <span class="math">\(p\)</span> and <span class="math">\(q\)</span> aren&#8217;t co-prime, we can use <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#cancel" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">cancel()</span></tt></a> to remove common
 factors and if <span class="math">\(\deg(p) &gt;= \deg(q)\)</span>, then <tt class="xref py py-func docutils literal"><span class="pre">div()</span></tt> can be used to extract
 the polynomial part of <span class="math">\(f\)</span> and reduce the degree of <span class="math">\(p\)</span>.</p>
 <p>Suppose we would like to compute partial fraction decomposition of:</p>
@@ -226,7 +226,7 @@ previously:</p>
 </pre></div>
 </div>
 <p>There are several other ways we can approach undetermined coefficients
-method. For example we could use <tt class="xref py py-func docutils literal"><span class="pre">collect()</span></tt> for this:</p>
+method. For example we could use <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#collect" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">collect()</span></tt></a> for this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">collect</span><span class="p">(</span><span class="n">eq</span><span class="o">.</span><span class="n">lhs</span> <span class="o">-</span> <span class="n">eq</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">evaluate</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="go">⎧                 2          3       ⎫</span>
 <span class="go">⎨1: B - 1, x: A, x : B + D, x : A + C⎬</span>

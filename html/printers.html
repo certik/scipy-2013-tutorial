@@ -12,8 +12,8 @@
     
     <link rel="stylesheet" href="_static/extra.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="http://localhost:8080/static/live-core.css" type="text/css" />
-    <link rel="stylesheet" href="http://localhost:8080/static/live-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="http://live.sympy.org/static/live-core.css" type="text/css" />
+    <link rel="stylesheet" href="http://live.sympy.org/static/live-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -27,10 +27,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="/mathjax/MathJax.js?config=TeX-AMS_HTML-full"></script>
-    <script type="text/javascript" src="http://localhost:8080/static/external/ext-core.js"></script>
-    <script type="text/javascript" src="http://localhost:8080/static/live-core.js"></script>
-    <script type="text/javascript" src="http://localhost:8080/static/live-sphinx.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
+    <script type="text/javascript" src="http://live.sympy.org/static/external/ext-core.js"></script>
+    <script type="text/javascript" src="http://live.sympy.org/static/live-core.js"></script>
+    <script type="text/javascript" src="http://live.sympy.org/static/live-sphinx.js"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
     <link rel="top" title="SymPy tutorial at SciPy 2011 conferences" href="index.html" />
     <link rel="up" title="Introduction to SymPy" href="introduction.html" />
@@ -82,14 +82,14 @@ foreign types.</p>
 <span class="go">Integral(x**2, x)</span>
 </pre></div>
 </div>
-<p>Note that <tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt> is by design not aware of global configuration,
-so if you for example run <tt class="docutils literal"><span class="pre">bin/isympy</span> <span class="pre">-o</span> <span class="pre">grlex</span></tt>, <tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt> will
+<p>Note that <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a> is by design not aware of global configuration,
+so if you for example run <tt class="docutils literal"><span class="pre">bin/isympy</span> <span class="pre">-o</span> <span class="pre">grlex</span></tt>, <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a> will
 ignore this. There is another function <tt class="xref py py-func docutils literal"><span class="pre">sstr()</span></tt> that takes global
 configuration into account.</p>
 </div>
 <div class="section" id="low-level">
 <h3>Low-level<a class="headerlink" href="#low-level" title="Permalink to this headline">¶</a></h3>
-<p>Due to internal implementation of Python, SymPy can&#8217;t use <tt class="xref py py-func docutils literal"><span class="pre">repr()</span></tt>
+<p>Due to internal implementation of Python, SymPy can&#8217;t use <a class="reference external" href="http://docs.python.org/library/functions.html#repr" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">repr()</span></tt></a>
 for generating low-level textual representation of expressions. To get
 this kind of representation you have to use:func:<span class="math">\(srepr\)</span></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">srepr</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
@@ -102,12 +102,12 @@ this kind of representation you have to use:func:<span class="math">\(srepr\)</s
 <span class="go">Integral(Pow(Symbol(&#39;x&#39;), Integer(2)), Tuple(Symbol(&#39;x&#39;)))</span>
 </pre></div>
 </div>
-<p><tt class="xref py py-func docutils literal"><span class="pre">repr()</span></tt> gives the same result as <tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt>:</p>
+<p><a class="reference external" href="http://docs.python.org/library/functions.html#repr" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">repr()</span></tt></a> gives the same result as <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">repr</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">x**2</span>
 </pre></div>
 </div>
-<p>Note that <tt class="xref py py-func docutils literal"><span class="pre">repr()</span></tt> is also not aware of global configuration.</p>
+<p>Note that <a class="reference external" href="http://docs.python.org/library/functions.html#repr" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">repr()</span></tt></a> is also not aware of global configuration.</p>
 </div>
 <div class="section" id="pretty-printing">
 <h3>Pretty printing<a class="headerlink" href="#pretty-printing" title="Permalink to this headline">¶</a></h3>
@@ -197,7 +197,7 @@ desired character set by setting <tt class="docutils literal"><span class="pre">
 </div>
 <div class="section" id="setting-up-printers">
 <h2>Setting up printers<a class="headerlink" href="#setting-up-printers" title="Permalink to this headline">¶</a></h2>
-<p>By default SymPy uses <tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt>/<tt class="xref py py-func docutils literal"><span class="pre">sstr()</span></tt> printer. Other printers can
+<p>By default SymPy uses <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a>/<tt class="xref py py-func docutils literal"><span class="pre">sstr()</span></tt> printer. Other printers can
 be used explicitly as in examples in subsections above. This is efficient
 only when printing at most a few times with a non-standard printer. To make
 Python use a different printer than the default one, the typical approach
@@ -278,7 +278,7 @@ for <tt class="xref py py-class docutils literal"><span class="pre">Lambda</span
 of lambda calculus-like notation.</p>
 <p>(<a class="reference internal" href="extras.html#solution-custom-printers-1"><em>solution</em></a>)</p>
 </li>
-<li><p class="first">Following the way how <tt class="xref py py-class docutils literal"><span class="pre">Poly</span></tt> is printed by <tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt> printer,
+<li><p class="first">Following the way how <tt class="xref py py-class docutils literal"><span class="pre">Poly</span></tt> is printed by <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a> printer,
 make <tt class="xref py py-class docutils literal"><span class="pre">PolyPrettyPrinter</span></tt> print domain including <tt class="docutils literal"><span class="pre">domain=</span></tt> string.</p>
 <p>(<a class="reference internal" href="extras.html#solution-custom-printers-2"><em>solution</em></a>)</p>
 </li>

@@ -12,8 +12,8 @@
     
     <link rel="stylesheet" href="_static/extra.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="http://localhost:8080/static/live-core.css" type="text/css" />
-    <link rel="stylesheet" href="http://localhost:8080/static/live-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="http://live.sympy.org/static/live-core.css" type="text/css" />
+    <link rel="stylesheet" href="http://live.sympy.org/static/live-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -27,15 +27,15 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="/mathjax/MathJax.js?config=TeX-AMS_HTML-full"></script>
-    <script type="text/javascript" src="http://localhost:8080/static/external/ext-core.js"></script>
-    <script type="text/javascript" src="http://localhost:8080/static/live-core.js"></script>
-    <script type="text/javascript" src="http://localhost:8080/static/live-sphinx.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
+    <script type="text/javascript" src="http://live.sympy.org/static/external/ext-core.js"></script>
+    <script type="text/javascript" src="http://live.sympy.org/static/live-core.js"></script>
+    <script type="text/javascript" src="http://live.sympy.org/static/live-sphinx.js"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
     <link rel="top" title="SymPy tutorial at SciPy 2011 conferences" href="index.html" />
     <link rel="up" title="Introduction to SymPy" href="introduction.html" />
     <link rel="next" title="Gotchas and pitfalls" href="gotchas.html" />
-    <link rel="prev" title="Installing, configuring and running SymPy" href="installing.html" /> 
+    <link rel="prev" title="History of SymPy and a few statistics" href="history.html" /> 
   </head>
   <body>
     <div class="related">
@@ -48,7 +48,7 @@
           <a href="gotchas.html" title="Gotchas and pitfalls"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="installing.html" title="Installing, configuring and running SymPy"
+          <a href="history.html" title="History of SymPy and a few statistics"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li>
           <li><a href="introduction.html" accesskey="U">Introduction to SymPy</a> &raquo;</li> 
@@ -102,7 +102,7 @@ SymPy tries to find a canonical form for expressions, but it doesn&#8217;t apply
 </div>
 <p>is left unsimplified. This is because automatic canonicalization would
 lose important information about this expression (<span class="math">\(x \not= 1\)</span>). We can
-use <tt class="xref py py-func docutils literal"><span class="pre">cancel()</span></tt> remove common factors from the numerator and the
+use <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#cancel" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">cancel()</span></tt></a> remove common factors from the numerator and the
 denominator:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">cancel</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
 <span class="go">x + 1</span>
@@ -116,7 +116,7 @@ almost everywhere. Consider the following expression:</p>
 </pre></div>
 </div>
 <p>We know that <span class="math">\(\log(x y)\)</span> is equivalent to <span class="math">\(\log x + \log y\)</span> and there
-is <tt class="xref py py-func docutils literal"><span class="pre">expand()</span></tt> that is supposed be able to do this:</p>
+is <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#expand" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">expand()</span></tt></a> that is supposed be able to do this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
 <span class="go">log(x⋅y)</span>
 </pre></div>
@@ -147,7 +147,7 @@ Usually a better way is to assign additional knowledge with an expression:</p>
 </pre></div>
 </div>
 <p>In this case <tt class="docutils literal"><span class="pre">force=True</span></tt> wasn&#8217;t necessary, because we gave sufficient
-information to <tt class="xref py py-func docutils literal"><span class="pre">expand()</span></tt> so that it was able to decide that the
+information to <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#expand" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">expand()</span></tt></a> so that it was able to decide that the
 expansion rule is valid universally for this expression.</p>
 <div class="section" id="arithmetic-operators">
 <h2>Arithmetic operators<a class="headerlink" href="#arithmetic-operators" title="Permalink to this headline">¶</a></h2>
@@ -546,7 +546,7 @@ the type of some <tt class="docutils literal"><span class="pre">mpz</span></tt> 
 </pre></div>
 </div>
 <p><tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> isn&#8217;t aware of <tt class="docutils literal"><span class="pre">numpy.ndarray</span></tt> and heuristics didn&#8217;t work,
-so it computed string representation of <tt class="docutils literal"><span class="pre">ar</span></tt> using <tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt> and tried
+so it computed string representation of <tt class="docutils literal"><span class="pre">ar</span></tt> using <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt></a> and tried
 to parse is, which failed because:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">ar</span><span class="p">)</span>
 <span class="go">[1 2 3]</span>
@@ -666,7 +666,7 @@ commas can be followed by or completely replaced by whitespace:</p>
 <span class="go">(a, b, c, d)</span>
 </pre></div>
 </div>
-<p>Note that range syntax simulates <tt class="xref py py-func docutils literal"><span class="pre">range()</span></tt>&#8216;s behavior, so it is exclusive,
+<p>Note that range syntax simulates <a class="reference external" href="http://docs.python.org/library/functions.html#range" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">range()</span></tt></a>&#8216;s behavior, so it is exclusive,
 lexicographic syntax is inclusive, because it makes more sense in this case.</p>
 <p>When we issue:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span><span class="p">(</span><span class="s">&#39;u,v&#39;</span><span class="p">)</span>
@@ -794,7 +794,7 @@ constants):</p>
 </div>
 <p>Atoms can be also recognized by the fact that their <tt class="docutils literal"><span class="pre">args</span></tt> are empty.
 Note, however, that this is an implementation detail, and one should use
-either <tt class="xref py py-func docutils literal"><span class="pre">isinstance()</span></tt> built-in function or <tt class="docutils literal"><span class="pre">is_Atom</span></tt> property to
+either <a class="reference external" href="http://docs.python.org/library/functions.html#isinstance" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">isinstance()</span></tt></a> built-in function or <tt class="docutils literal"><span class="pre">is_Atom</span></tt> property to
 recognize atoms properly. Everything else than an <tt class="xref py py-class docutils literal"><span class="pre">Atom</span></tt> is a
 branch.</p>
 <p>Let&#8217;s implement <tt class="xref py py-func docutils literal"><span class="pre">depth()</span></tt> function:</p>
@@ -870,7 +870,7 @@ code:</p>
 <span class="go">3*a + 4*b</span>
 </pre></div>
 </div>
-<p>The output shows that the <tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt> method gave a new expression with
+<p>The output shows that the <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#subs" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt></a> method gave a new expression with
 symbol <tt class="docutils literal"><span class="pre">x</span></tt> replaced with symbol <tt class="docutils literal"><span class="pre">a</span></tt> and symbol <tt class="docutils literal"><span class="pre">y</span></tt> replaced with
 symbol <tt class="docutils literal"><span class="pre">b</span></tt>. The original expression wasn&#8217;t modified. This behavior
 applies to all classes that are subclasses of <tt class="xref py py-class docutils literal"><span class="pre">Basic</span></tt>. An exception
@@ -900,11 +900,11 @@ modifies the matrix in-place and doesn&#8217;t waste memory for unnecessary copi
 <div class="section" id="id5">
 <h3>Tasks<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic">
-<li><p class="first">This is the first time we used <tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt>. This is a very important method
-and we will talk more about it later. However, we can also use <tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt>
+<li><p class="first">This is the first time we used <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#subs" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt></a>. This is a very important method
+and we will talk more about it later. However, we can also use <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#subs" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt></a>
 to generate some cool looking expressions. Start with <tt class="docutils literal"><span class="pre">x**x</span></tt> expression
 and substitute in it <tt class="docutils literal"><span class="pre">x**x</span></tt> for <tt class="docutils literal"><span class="pre">x</span></tt>. What do you get? (make sure you
-use pretty printer) Can you achieve the same effect without <tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt>?</p>
+use pretty printer) Can you achieve the same effect without <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#subs" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt></a>?</p>
 <p>(<a class="reference internal" href="extras.html#solution-immutability-1"><em>solution</em></a>)</p>
 </li>
 </ol>
@@ -1039,7 +1039,7 @@ form from the file:</p>
 <span class="go">&lt;type &#39;str&#39;&gt;</span>
 </pre></div>
 </div>
-<p>We could try to try to use <tt class="xref py py-func docutils literal"><span class="pre">eval()</span></tt> on <tt class="docutils literal"><span class="pre">text_form</span></tt> but this doesn&#8217;t give
+<p>We could try to try to use <a class="reference external" href="http://docs.python.org/library/functions.html#eval" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">eval()</span></tt></a> on <tt class="docutils literal"><span class="pre">text_form</span></tt> but this doesn&#8217;t give
 expected results:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">eval</span><span class="p">(</span><span class="n">text_form</span><span class="p">)</span>
 <span class="go"> 2</span>
@@ -1050,7 +1050,7 @@ expected results:</p>
 and is equivalent to a problem we had when entering expressions of this kind
 in interactive sessions.</p>
 <p>To overcome this problem we have to use <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt>, which implements
-<tt class="xref py py-mod docutils literal"><span class="pre">tokenize</span></tt>&#8211;based parser that allows us to handle this issue:</p>
+<a class="reference external" href="http://docs.python.org/library/tokenize.html#module-tokenize" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">tokenize</span></tt></a>&#8211;based parser that allows us to handle this issue:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sympify</span><span class="p">(</span><span class="n">text_form</span><span class="p">)</span>
 <span class="go"> 2            1</span>
 <span class="go">x  + sin(y) + ─</span>
@@ -1102,7 +1102,7 @@ doesn&#8217;t do anything for all other classes of arguments:</p>
 <span class="go">my_func(x) + 1</span>
 </pre></div>
 </div>
-<p>We can use <tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt> method to quickly verify the expression is correct:</p>
+<p>We can use <a class="reference external" href="http://docs.sympy.org/0.7.1/modules/galgebra/GA/GAsympy.html#subs" title="(in SymPy v0.7.1)"><tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt></a> method to quickly verify the expression is correct:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sympified</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">my_func(1) + 1</span>
 </pre></div>
@@ -1150,7 +1150,7 @@ resulting string and expand the restored expression:</p>
 <p>This didn&#8217;t work, because <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> doesn&#8217;t know what <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt>
 are, so it assumed that those are symbols and it created them implicitly.
 This issue is similar to what we already experienced with <tt class="xref py py-func docutils literal"><span class="pre">my_func()</span></tt>.</p>
-<p>The most reliable approach to storing expression is to use <tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt>
+<p>The most reliable approach to storing expression is to use <a class="reference external" href="http://docs.python.org/library/pickle.html#module-pickle" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a>
 module. In the case of <span class="math">\(\log(a b)\)</span> it works like this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pickle</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pickled</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">))</span>
@@ -1159,7 +1159,7 @@ module. In the case of <span class="math">\(\log(a b)\)</span> it works like thi
 <span class="go">log(a) + log(b)</span>
 </pre></div>
 </div>
-<p>Unfortunately, due to <tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt>&#8216;s limitations, this doesn&#8217;t work for
+<p>Unfortunately, due to <a class="reference external" href="http://docs.python.org/library/pickle.html#module-pickle" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a>&#8216;s limitations, this doesn&#8217;t work for
 user defined functions like <tt class="xref py py-func docutils literal"><span class="pre">my_func()</span></tt>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">my_func</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="gt">Traceback (most recent call last):</span>
@@ -1227,8 +1227,8 @@ Verify that the result is correct.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="installing.html"
-                        title="previous chapter">Installing, configuring and running SymPy</a></p>
+  <p class="topless"><a href="history.html"
+                        title="previous chapter">History of SymPy and a few statistics</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="gotchas.html"
                         title="next chapter">Gotchas and pitfalls</a></p>
@@ -1264,7 +1264,7 @@ Verify that the result is correct.</p>
           <a href="gotchas.html" title="Gotchas and pitfalls"
              >next</a> |</li>
         <li class="right" >
-          <a href="installing.html" title="Installing, configuring and running SymPy"
+          <a href="history.html" title="History of SymPy and a few statistics"
              >previous</a> |</li>
         <li><a href="index.html">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li>
           <li><a href="introduction.html" >Introduction to SymPy</a> &raquo;</li> 
