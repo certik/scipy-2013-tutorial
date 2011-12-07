@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Introduction to SymPy &mdash; SymPy tutorial at SciPy 2011 conferences</title>
+    <title>History of SymPy and a few statistics &mdash; SymPy tutorial at SciPy 2011 conferences</title>
     
     <link rel="stylesheet" href="_static/extra.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -33,8 +33,9 @@
     <script type="text/javascript" src="http://localhost:8080/static/live-sphinx.js"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
     <link rel="top" title="SymPy tutorial at SciPy 2011 conferences" href="index.html" />
-    <link rel="next" title="Installing, configuring and running SymPy" href="installing.html" />
-    <link rel="prev" title="Guide to symbolic mathematics with SymPy" href="index.html" /> 
+    <link rel="up" title="Introduction to SymPy" href="introduction.html" />
+    <link rel="next" title="Basics of expressions in SymPy" href="basics.html" />
+    <link rel="prev" title="Installing, configuring and running SymPy" href="installing.html" /> 
   </head>
   <body>
     <div class="related">
@@ -44,12 +45,13 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="installing.html" title="Installing, configuring and running SymPy"
+          <a href="basics.html" title="Basics of expressions in SymPy"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Guide to symbolic mathematics with SymPy"
+          <a href="installing.html" title="Installing, configuring and running SymPy"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li> 
+        <li><a href="index.html">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li>
+          <li><a href="introduction.html" accesskey="U">Introduction to SymPy</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -58,27 +60,55 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="introduction-to-sympy">
-<h1>Introduction to SymPy<a class="headerlink" href="#introduction-to-sympy" title="Permalink to this headline">¶</a></h1>
-<p>SymPy (<a class="reference external" href="http://www.sympy.org">http://www.sympy.org</a>) is a pure Python library for symbolic mathematics.
-It aims to become a full-featured computer algebra system (CAS) while keeping the
-code as simple as possible in order to be comprehensible and easily extensible.
-SymPy is written entirely in Python and does not require any external libraries.</p>
-<p>We will start the presentation of SymPy by showing how to install and setup it.
-Then we will proceed with the basics of constructing and manipulating mathematical
-expressions in SymPy. We will also discuss the most common problems with SymPy and
-differences between it and mathematical systems, and how to deal with them. At the
-end we will discuss SymPy&#8217;s capabilities of printing expressions and show how to
-modify existing printers and implement new ones.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing, configuring and running SymPy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="history.html">History of SymPy and a few statistics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basics.html">Basics of expressions in SymPy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gotchas.html">Gotchas and pitfalls</a></li>
-<li class="toctree-l1"><a class="reference internal" href="printers.html">Setting up and using printers</a></li>
-</ul>
-</div>
+  <div class="section" id="history-of-sympy-and-a-few-statistics">
+<h1>History of SymPy and a few statistics<a class="headerlink" href="#history-of-sympy-and-a-few-statistics" title="Permalink to this headline">¶</a></h1>
+<p>SymPy was started in August 2006 by Ondrej Certik. Since then, a toy like
+project grew considerably and many people contributed to it. As of beginning
+of December 2011 there have been over 150 people who contributed at least
+one commit to SymPy (see <tt class="docutils literal"><span class="pre">AUTHORS</span></tt> file in SymPy&#8217;s repository for details).
+SymPy itself consists of over 200k lines of code spread across 26 modules.
+The GIT history of SymPy contains more than 7000 commits, although early
+history wasn&#8217;t imported from SVN due to technical difficulties.</p>
+<p>Since 2007 SymPy participates in Google Summer of Code. This program was a
+great opportunity for the project to get massive development over summers.
+During five years of participation in the program there were 24 students
+working on different aspects of SymPy:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Year</th>
+<th class="head">2007</th>
+<th class="head">2008</th>
+<th class="head">2009</th>
+<th class="head">2010</th>
+<th class="head">2011</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Students</td>
+<td>5</td>
+<td>1</td>
+<td>4</td>
+<td>5</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<p>Only one student failed his project. In 2011 SymPy was for the first time
+a mentoring organization. In the previous years SymPy participated under
+the umbrella of Python Software Foundation, Portland State University and
+Space Telescope Science Institute. Both authors of this tutorials were
+GSoC students at some point, Mateusz in 2007 and Aaron in 2009 and 2010.</p>
+<p>SymPy also have participated in Google&#8217;s programs for precollege students:
+Highly Open Participation Contest in 2008 and Code&#8211;In in 2011, having
+often excellent contributions from young (13-17 years old) participants.</p>
 </div>
 
 
@@ -91,14 +121,14 @@ modify existing printers and implement new ones.</p>
               <img class="logo" src="_static/sympy-logo.png" alt="Logo"/>
             </a></p>
   <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Guide to symbolic mathematics with SymPy</a></p>
-  <h4>Next topic</h4>
   <p class="topless"><a href="installing.html"
-                        title="next chapter">Installing, configuring and running SymPy</a></p>
+                        title="previous chapter">Installing, configuring and running SymPy</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="basics.html"
+                        title="next chapter">Basics of expressions in SymPy</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/introduction.txt"
+    <li><a href="_sources/history.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -125,12 +155,13 @@ modify existing printers and implement new ones.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="installing.html" title="Installing, configuring and running SymPy"
+          <a href="basics.html" title="Basics of expressions in SymPy"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Guide to symbolic mathematics with SymPy"
+          <a href="installing.html" title="Installing, configuring and running SymPy"
              >previous</a> |</li>
-        <li><a href="index.html">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li> 
+        <li><a href="index.html">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li>
+          <li><a href="introduction.html" >Introduction to SymPy</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
