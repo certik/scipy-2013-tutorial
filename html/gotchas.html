@@ -92,33 +92,36 @@ Alternatively, all expressions are assumed to equal zero, so you can
 just subtract one side and use <tt class="docutils literal"><span class="pre">x</span> <span class="pre">-</span> <span class="pre">y</span></tt>.</p>
 <p>The proper use of the equals sign is to assign expressions to variables.</p>
 <p>For example:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; from sympy.abc import x, y
-&gt;&gt;&gt; a = x - y
-&gt;&gt;&gt; print a
-x - y</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy.abc</span> <span class="kn">import</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span>
+<span class="go">x - y</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="double-equals-signs">
 <h3>Double Equals Signs<a class="headerlink" href="#double-equals-signs" title="Permalink to this headline">¶</a></h3>
 <p>Double equals signs (<tt class="docutils literal"><span class="pre">==</span></tt>) are used to test equality.  However, this
 tests expressions exactly, not symbolically.  For example:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; (x + 1)**2 == x**2 + 2*x + 1
-False
-&gt;&gt;&gt; (x + 1)**2 == (x + 1)**2
-True</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">==</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">==</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="go">True</span>
+</pre></div>
 </div>
 <p>If you want to test for symbolic equality, one way is to subtract one
 expression from the other and run it through functions like
 <tt class="xref py py-func docutils literal"><span class="pre">expand()</span></tt>, <tt class="xref py py-func docutils literal"><span class="pre">simplify()</span></tt>, and <tt class="xref py py-func docutils literal"><span class="pre">trigsimp()</span></tt> and see if the
 equation reduces to 0.</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; from sympy import simplify, cos, sin, expand
-&gt;&gt;&gt; simplify((x + 1)**2 - (x**2 + 2*x + 1))
-0
-&gt;&gt;&gt; eq = sin(2*x) - 2*sin(x)*cos(x)
-&gt;&gt;&gt; simplify(eq)
-0
-&gt;&gt;&gt; expand(eq, trig=True)
-0</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">simplify</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">expand</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simplify</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eq</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simplify</span><span class="p">(</span><span class="n">eq</span><span class="p">)</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">(</span><span class="n">eq</span><span class="p">,</span> <span class="n">trig</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">0</span>
+</pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -136,16 +139,17 @@ value you assigned to it.  The equations you are typing use the values
 present at the time of creation to &#8220;fill in&#8221; values, just like regular
 Python definitions. They are not altered by changes made afterwards.
 Consider the following:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; from sympy import Symbol
-&gt;&gt;&gt; a = Symbol('a')  # Symbol, `a`, stored as variable "a"
-&gt;&gt;&gt; b = a + 1        # an expression involving `a` stored as variable "b"
-&gt;&gt;&gt; print b
-a + 1
-&gt;&gt;&gt; a = 4            # "a" now points to literal integer 4, not Symbol('a')
-&gt;&gt;&gt; print a
-4
-&gt;&gt;&gt; b                # "b" is still pointing at the expression involving `a`
-a + 1</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Symbol</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>  <span class="c"># Symbol, `a`, stored as variable &quot;a&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span>        <span class="c"># an expression involving `a` stored as variable &quot;b&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">b</span>
+<span class="go">a + 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">4</span>            <span class="c"># &quot;a&quot; now points to literal integer 4, not Symbol(&#39;a&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span>
+<span class="go">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span>                <span class="c"># &quot;b&quot; is still pointing at the expression involving `a`</span>
+<span class="go">a + 1</span>
+</pre></div>
 </div>
 <p>Changing quantity <tt class="xref py py-obj docutils literal"><span class="pre">a</span></tt> does not change <tt class="xref py py-obj docutils literal"><span class="pre">b</span></tt>; you are not working
 with a set of simultaneous equations. It might be helpful to remember
@@ -153,63 +157,66 @@ that the string that gets printed when you print a variable referring to
 a SymPy object is the string that was given to it when it was created;
 that string does not have to be the same as the variable that you assign
 it to.</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; from sympy import var
-&gt;&gt;&gt; r, t, d = var('rate time short_life')
-&gt;&gt;&gt; d = r*t
-&gt;&gt;&gt; print d
-rate*time
-&gt;&gt;&gt; r = 80
-&gt;&gt;&gt; t = 2
-&gt;&gt;&gt; print d         # We haven't changed d, only r and t
-rate*time
-&gt;&gt;&gt; d = r*t
-&gt;&gt;&gt; print d         # Now d is using the current values of r and t
-160</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">var</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="s">&#39;rate time short_life&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">t</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">d</span>
+<span class="go">rate*time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="mi">80</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">d</span>         <span class="c"># We haven&#39;t changed d, only r and t</span>
+<span class="go">rate*time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">t</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">d</span>         <span class="c"># Now d is using the current values of r and t</span>
+<span class="go">160</span>
+</pre></div>
 </div>
 <p>If you need variables that have dependence on each other, you can define
 functions.  Use the <tt class="docutils literal"><span class="pre">def</span></tt> operator.  Indent the body of the function.
 See the Python docs for more information on defining functions.</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; c, d = var('c d')
-&gt;&gt;&gt; print c
-c
-&gt;&gt;&gt; print d
-d
-&gt;&gt;&gt; def ctimesd():
-...     """
-...     This function returns whatever c is times whatever d is.
-...     """
-...     return c*d
-...
-&gt;&gt;&gt; ctimesd()
-c*d
-&gt;&gt;&gt; c = 2
-&gt;&gt;&gt; print c
-2
-&gt;&gt;&gt; ctimesd()
-2*d</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="s">&#39;c d&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">c</span>
+<span class="go">c</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">d</span>
+<span class="go">d</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">ctimesd</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="gp">... </span><span class="sd">    This function returns whatever c is times whatever d is.</span>
+<span class="gp">... </span><span class="sd">    &quot;&quot;&quot;</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">c</span><span class="o">*</span><span class="n">d</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ctimesd</span><span class="p">()</span>
+<span class="go">c*d</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">c</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ctimesd</span><span class="p">()</span>
+<span class="go">2*d</span>
+</pre></div>
 </div>
 <p>If you define a circular relationship, you will get a
 <tt class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></tt>.</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; def a():
-...     return b()
-...
-&gt;&gt;&gt; def b():
-...     return a()
-...
-&gt;&gt;&gt; a()
-Traceback (most recent call last):
-  File "...", line ..., in ...
-    compileflags, 1) in test.globs
-  File "&lt;...&gt;", line 1, in &lt;module&gt;
-    a()
-  File "&lt;...&gt;", line 2, in a
-    return b()
-  File "&lt;...&gt;", line 2, in b
-    return a()
-  File "&lt;...&gt;", line 2, in a
-    return b()
-...
-RuntimeError: maximum recursion depth exceeded</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">a</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">b</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">b</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">a</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="gr">  File &quot;...&quot;, line ..., in ...</span>
+<span class="gr">    compileflags, 1) in test.globs</span>
+<span class="gr">  File &quot;&lt;...&gt;&quot;, line 1, in &lt;module&gt;</span>
+<span class="gr">    a()</span>
+<span class="gr">  File &quot;&lt;...&gt;&quot;, line 2, in a</span>
+<span class="gr">    return b()</span>
+<span class="gr">  File &quot;&lt;...&gt;&quot;, line 2, in b</span>
+<span class="gr">    return a()</span>
+<span class="gr">  File &quot;&lt;...&gt;&quot;, line 2, in a</span>
+<span class="gr">    return b()</span>
+<span class="gr">...</span>
+<span class="gr">RuntimeError</span>: <span class="n">maximum recursion depth exceeded</span>
+</pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -220,38 +227,41 @@ RuntimeError: maximum recursion depth exceeded</pre>
 <span id="id2"></span><h3>Symbols<a class="headerlink" href="#symbols" title="Permalink to this headline">¶</a></h3>
 <p>Symbols are variables, and like all other variables, they need to be
 assigned before you can use them.  For example:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; import sympy
-&gt;&gt;&gt; z**2  # z is not defined yet #doctest: +SKIP
-Traceback (most recent call last):
-  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
-NameError: name 'z' is not defined
-&gt;&gt;&gt; sympy.var('z')  # This is the easiest way to define z as a standard symbol
-z
-&gt;&gt;&gt; z**2
-z**2</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sympy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z</span><span class="o">**</span><span class="mi">2</span>  <span class="c"># z is not defined yet </span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">NameError</span>: <span class="n">name &#39;z&#39; is not defined</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sympy</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="s">&#39;z&#39;</span><span class="p">)</span>  <span class="c"># This is the easiest way to define z as a standard symbol</span>
+<span class="go">z</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z</span><span class="o">**</span><span class="mi">2</span>
+<span class="go">z**2</span>
+</pre></div>
 </div>
 <p>If you use <strong class="command">isympy</strong>, it runs the following commands for you,
 giving you some default Symbols and Functions.</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; from __future__ import division
-&gt;&gt;&gt; from sympy import *
-&gt;&gt;&gt; x, y, z, t = symbols('x y z t')
-&gt;&gt;&gt; k, m, n = symbols('k m n', integer=True)
-&gt;&gt;&gt; f, g, h = symbols('f g h', cls=Function)</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;x y z t&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">k</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;k m n&#39;</span><span class="p">,</span> <span class="n">integer</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;f g h&#39;</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="n">Function</span><span class="p">)</span>
+</pre></div>
 </div>
 <p>You can also import common symbol names from <tt class="xref py py-mod docutils literal"><span class="pre">sympy.abc</span></tt>.</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; from sympy.abc import w
-&gt;&gt;&gt; w
-w
-&gt;&gt;&gt; import sympy
-&gt;&gt;&gt; dir(sympy.abc)  #doctest: +SKIP
-['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
-'P', 'Q', 'R', 'S', 'Symbol', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-'__builtins__', '__doc__', '__file__', '__name__', '__package__', '_greek',
-'_latin', 'a', 'alpha', 'b', 'beta', 'c', 'chi', 'd', 'delta', 'e',
-'epsilon', 'eta', 'f', 'g', 'gamma', 'h', 'i', 'iota', 'j', 'k', 'kappa',
-'l', 'm', 'mu', 'n', 'nu', 'o', 'omega', 'omicron', 'p', 'phi', 'pi',
-'psi', 'q', 'r', 'rho', 's', 'sigma', 't', 'tau', 'theta', 'u', 'upsilon',
-'v', 'w', 'x', 'xi', 'y', 'z', 'zeta']</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy.abc</span> <span class="kn">import</span> <span class="n">w</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">w</span>
+<span class="go">w</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sympy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">abc</span><span class="p">)</span>  
+<span class="go">[&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;O&#39;,</span>
+<span class="go">&#39;P&#39;, &#39;Q&#39;, &#39;R&#39;, &#39;S&#39;, &#39;Symbol&#39;, &#39;T&#39;, &#39;U&#39;, &#39;V&#39;, &#39;W&#39;, &#39;X&#39;, &#39;Y&#39;, &#39;Z&#39;,</span>
+<span class="go">&#39;__builtins__&#39;, &#39;__doc__&#39;, &#39;__file__&#39;, &#39;__name__&#39;, &#39;__package__&#39;, &#39;_greek&#39;,</span>
+<span class="go">&#39;_latin&#39;, &#39;a&#39;, &#39;alpha&#39;, &#39;b&#39;, &#39;beta&#39;, &#39;c&#39;, &#39;chi&#39;, &#39;d&#39;, &#39;delta&#39;, &#39;e&#39;,</span>
+<span class="go">&#39;epsilon&#39;, &#39;eta&#39;, &#39;f&#39;, &#39;g&#39;, &#39;gamma&#39;, &#39;h&#39;, &#39;i&#39;, &#39;iota&#39;, &#39;j&#39;, &#39;k&#39;, &#39;kappa&#39;,</span>
+<span class="go">&#39;l&#39;, &#39;m&#39;, &#39;mu&#39;, &#39;n&#39;, &#39;nu&#39;, &#39;o&#39;, &#39;omega&#39;, &#39;omicron&#39;, &#39;p&#39;, &#39;phi&#39;, &#39;pi&#39;,</span>
+<span class="go">&#39;psi&#39;, &#39;q&#39;, &#39;r&#39;, &#39;rho&#39;, &#39;s&#39;, &#39;sigma&#39;, &#39;t&#39;, &#39;tau&#39;, &#39;theta&#39;, &#39;u&#39;, &#39;upsilon&#39;,</span>
+<span class="go">&#39;v&#39;, &#39;w&#39;, &#39;x&#39;, &#39;xi&#39;, &#39;y&#39;, &#39;z&#39;, &#39;zeta&#39;]</span>
+</pre></div>
 </div>
 <p>If you want control over the assumptions of the variables, use
 <tt class="xref py py-func docutils literal"><span class="pre">Symbol()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">symbols()</span></tt>.  See <a class="reference internal" href="#keyword-arguments"><em>Keyword
@@ -270,23 +280,25 @@ mnemonic <tt class="docutils literal"><span class="pre">QCOSINE</span></tt> to r
 Or better yet, always use lowercase letters for Symbol names.  Python will
 not prevent you from overriding default SymPy names or functions, so be
 careful.</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; cos(pi)  # cos and pi are a built-in sympy names.
--1
-&gt;&gt;&gt; pi = 3   # Notice that there is no warning for overriding pi.
-&gt;&gt;&gt; cos(pi)
-cos(3)
-&gt;&gt;&gt; def cos(x):  # No warning for overriding built-in functions either.
-...     return 5*x
-...
-&gt;&gt;&gt; cos(pi)
-15
-&gt;&gt;&gt; from sympy import cos  # reimport to restore normal behavior</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">cos</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>  <span class="c"># cos and pi are a built-in sympy names.</span>
+<span class="go">-1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pi</span> <span class="o">=</span> <span class="mi">3</span>   <span class="c"># Notice that there is no warning for overriding pi.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cos</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>
+<span class="go">cos(3)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">cos</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>  <span class="c"># No warning for overriding built-in functions either.</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="mi">5</span><span class="o">*</span><span class="n">x</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cos</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>
+<span class="go">15</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">cos</span>  <span class="c"># reimport to restore normal behavior</span>
+</pre></div>
 </div>
 <p>To get a full list of all default names in SymPy do:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; import sympy
-&gt;&gt;&gt; dir(sympy)  #doctest: +SKIP
-# A big list of all default sympy names and functions follows.
-# Ignore everything that starts and ends with __.</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sympy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">sympy</span><span class="p">)</span>  
+<span class="go"># A big list of all default sympy names and functions follows.</span>
+<span class="go"># Ignore everything that starts and ends with __.</span>
+</pre></div>
 </div>
 <p>If you have <a class="reference external" href="http://ipython.scipy.org/moin/">iPython</a> installed and
 use <strong class="command">isympy</strong>, you can also press the TAB key to get a list of
@@ -308,14 +320,15 @@ types because it allows for more control.  But you have to be careful.
 If you type an expression that just has numbers in it, it will default
 to a Python expression.  Use the <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> function, or just
 <tt class="xref py py-func docutils literal"><span class="pre">S()</span></tt>, to ensure that something is a SymPy expression.</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; 6.2  # Python float. Notice the floating point accuracy problems.
-6.2000000000000002
-&gt;&gt;&gt; type(6.2)
-&lt;... 'float'&gt;
-&gt;&gt;&gt; S(6.2)  # SymPy Float has no such problems because of arbitrary precision.
-6.20000000000000
-&gt;&gt;&gt; type(S(6.2))
-&lt;class 'sympy.core.numbers.Float'&gt;</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mf">6.2</span>  <span class="c"># Python float. Notice the floating point accuracy problems.</span>
+<span class="go">6.2000000000000002</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mf">6.2</span><span class="p">)</span>
+<span class="go">&lt;... &#39;float&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span><span class="p">(</span><span class="mf">6.2</span><span class="p">)</span>  <span class="c"># SymPy Float has no such problems because of arbitrary precision.</span>
+<span class="go">6.20000000000000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="mf">6.2</span><span class="p">))</span>
+<span class="go">&lt;class &#39;sympy.core.numbers.Float&#39;&gt;</span>
+</pre></div>
 </div>
 <p>If you include numbers in a SymPy expression, they will be sympified
 automatically, but there is one gotcha you should be aware of.  If you
@@ -323,21 +336,24 @@ do <tt class="docutils literal"><span class="pre">&lt;number&gt;/&lt;number&gt;<
 evaluate the two numbers before SymPy has a chance to get
 to them.  The solution is to <tt class="xref py py-func docutils literal"><span class="pre">sympify()</span></tt> one of the numbers, or use
 <tt class="xref py py-mod docutils literal"><span class="pre">Rational</span></tt>.</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; x**(1/2)  # evaluates to x**0 or x**0.5
-x**0.5
-&gt;&gt;&gt; x**(S(1)/2)  # sympyify one of the ints
-sqrt(x)
-&gt;&gt;&gt; x**Rational(1, 2)  # use the Rational class
-sqrt(x)</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>  <span class="c"># evaluates to x**0 or x**0.5</span>
+<span class="go">x**0.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>  <span class="c"># sympyify one of the ints</span>
+<span class="go">sqrt(x)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">**</span><span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c"># use the Rational class</span>
+<span class="go">sqrt(x)</span>
+</pre></div>
 </div>
 <p>With a power of <tt class="docutils literal"><span class="pre">1/2</span></tt> you can also use <tt class="docutils literal"><span class="pre">sqrt</span></tt> shorthand:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; sqrt(x) == x**Rational(1, 2)
-True</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="n">x</span><span class="o">**</span><span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
 </div>
 <p>If the two integers are not directly separated by a division sign then
 you don&#8217;t have to worry about this problem:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; x**(2*x/3)
-x**(2*x/3)</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">x**(2*x/3)</span>
+</pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -346,37 +362,41 @@ reusing it.  If the expression has a <tt class="xref py py-mod docutils literal"
 <tt class="docutils literal"><span class="pre">&lt;number&gt;/&lt;number&gt;</span></tt>) in it, you will not get the same result,
 obtaining the Python result for the division rather than a SymPy
 Rational.</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; x = Symbol('x')
-&gt;&gt;&gt; print solve(7*x -22, x)
-[22/7]
-&gt;&gt;&gt; 22/7  # If we just copy and paste we get int 3 or a float
-3.142857142857143
-&gt;&gt;&gt; # One solution is to just assign the expression to a variable
-&gt;&gt;&gt; # if we need to use it again.
-&gt;&gt;&gt; a = solve(7*x - 22, x)
-&gt;&gt;&gt; a
-[22/7]</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">solve</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span><span class="mi">22</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="go">[22/7]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">22</span><span class="o">/</span><span class="mi">7</span>  <span class="c"># If we just copy and paste we get int 3 or a float</span>
+<span class="go">3.142857142857143</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># One solution is to just assign the expression to a variable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># if we need to use it again.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="mi">22</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">[22/7]</span>
+</pre></div>
 </div>
 <p>The other solution is to put quotes around the expression
 and run it through S() (i.e., sympify it):</p>
-<div class="last highlight-python"><pre>&gt;&gt;&gt; S("22/7")
-22/7</pre>
+<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">S</span><span class="p">(</span><span class="s">&quot;22/7&quot;</span><span class="p">)</span>
+<span class="go">22/7</span>
+</pre></div>
 </div>
 </div>
 <p>Also, if you do not use <strong class="command">isympy</strong>, you could use <tt class="docutils literal"><span class="pre">from</span>
 <span class="pre">__future__</span> <span class="pre">import</span> <span class="pre">division</span></tt> to prevent the <tt class="docutils literal"><span class="pre">/</span></tt> sign from performing
 <a class="reference external" href="http://en.wikipedia.org/wiki/Integer_division">integer division</a>.</p>
 <blockquote>
-<div><div class="highlight-python"><pre>&gt;&gt;&gt; from __future__ import division
-&gt;&gt;&gt; 1/2   # With division imported it evaluates to a python float
-0.5
-&gt;&gt;&gt; 1//2  # You can still achieve integer division with //
-0</pre>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span>   <span class="c"># With division imported it evaluates to a python float</span>
+<span class="go">0.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span><span class="o">//</span><span class="mi">2</span>  <span class="c"># You can still achieve integer division with //</span>
+<span class="go">0</span>
+</pre></div>
 </div>
 <p>But be careful: you will now receive floats where you might have desired
 a Rational:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; x**(1/2)
-x**0.5</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">x**0.5</span>
+</pre></div>
 </div>
 </div></blockquote>
 <p><tt class="xref py py-mod docutils literal"><span class="pre">Rational</span></tt> only works for number/number and is only meant for
@@ -384,12 +404,13 @@ rational numbers.  If you want a fraction with symbols or expressions in
 it, just use <tt class="docutils literal"><span class="pre">/</span></tt>.  If you do number/expression or expression/number,
 then the number will automatically be converted into a SymPy Number.
 You only need to be careful with number/number.</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; Rational(2, x)
-Traceback (most recent call last):
-...
-TypeError: invalid input: x
-&gt;&gt;&gt; 2/x
-2/x</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Rational</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">TypeError</span>: <span class="n">invalid input: x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span><span class="o">/</span><span class="n">x</span>
+<span class="go">2/x</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="evaluating-expressions-with-floats-and-rationals">
@@ -406,27 +427,30 @@ to use when that Float (or an expression it appears in) is evaluated.</p>
 <div><ul class="simple">
 <li>strings and integers are interpreted as exact</li>
 </ul>
-<div class="highlight-python"><pre>&gt;&gt;&gt; Float(100)
-100.000000000000
-&gt;&gt;&gt; Float('100', 5)
-100.00</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Float</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="go">100.000000000000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Float</span><span class="p">(</span><span class="s">&#39;100&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">100.00</span>
+</pre></div>
 </div>
 <ul class="simple">
 <li>to have the precision match the number of digits, the null string
 can be used for the precision</li>
 </ul>
-<div class="highlight-python"><pre>&gt;&gt;&gt; Float(100, '')
-100.
-&gt;&gt;&gt; Float('12.34')
-12.3400000000000
-&gt;&gt;&gt; Float('12.34', '')
-12.34</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Float</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+<span class="go">100.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Float</span><span class="p">(</span><span class="s">&#39;12.34&#39;</span><span class="p">)</span>
+<span class="go">12.3400000000000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Float</span><span class="p">(</span><span class="s">&#39;12.34&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+<span class="go">12.34</span>
+</pre></div>
 </div>
-<div class="highlight-python"><pre>&gt;&gt;&gt; s, r = [Float(j, 3) for j in ('0.25', Rational(1, 7))]
-&gt;&gt;&gt; for f in [s, r]:
-...     print f
-0.250
-0.143</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">Float</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;0.25&#39;</span><span class="p">,</span> <span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">))]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="p">]:</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">f</span>
+<span class="go">0.250</span>
+<span class="go">0.143</span>
+</pre></div>
 </div>
 </div></blockquote>
 <p>Next, notice that each of those values looks correct to 3 digits. But if we try
@@ -436,10 +460,11 @@ to evaluate them to 20 digits, a difference will become apparent:</p>
 binary decimal; 1/7 is repeating in binary and decimal &#8211; it cannot be
 represented accurately too far past those first 3 digits (the correct
 decimal is a repeating 142857):</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; s.n(20)
-0.25000000000000000000
-&gt;&gt;&gt; r.n(20)
-0.14285278320312500000</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">n</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="go">0.25000000000000000000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">n</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="go">0.14285278320312500000</span>
+</pre></div>
 </div>
 <p>It is important to realize that although a Float is being displayed in
 decimal at aritrary precision, it is actually stored in binary. Once the
@@ -452,8 +477,9 @@ not make it a more accurate value of 1/7.</p>
 with higher precision values, the evalf engine will increase the precision
 of the low precision values and inexact results will be obtained. This is
 feature of calculations with limited precision:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; Float('0.1', 10) + Float('0.1', 3)
-0.2000061035</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Float</span><span class="p">(</span><span class="s">&#39;0.1&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="n">Float</span><span class="p">(</span><span class="s">&#39;0.1&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">0.2000061035</span>
+</pre></div>
 </div>
 <p>Although the evalf engine tried to maintain 10 digits of precision (since
 that was the highest precision represented) the 3-digit precision used
@@ -466,10 +492,11 @@ understand why more complicated expressions (like trig expressions that
 may not be simplified) will not evaluate to an exact zero even though,
 with the right simplification, they should be zero. Consider this
 unsimplified trig identity, multiplied by a big number:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; big = 12345678901234567890
-&gt;&gt;&gt; big_trig_identity = big*cos(x)**2 + big*sin(x)**2 - big*1
-&gt;&gt;&gt; abs(big_trig_identity.subs(x, .1).n(2)) &gt; 1000
-True</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">big</span> <span class="o">=</span> <span class="mi">12345678901234567890</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">big_trig_identity</span> <span class="o">=</span> <span class="n">big</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">big</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">big</span><span class="o">*</span><span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">abs</span><span class="p">(</span><span class="n">big_trig_identity</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">n</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1000</span>
+<span class="go">True</span>
+</pre></div>
 </div>
 <p>When the cos and sin terms were evaluated to 15 digits of precision and
 multiplied by the big number, they gave a large number that was only
@@ -483,8 +510,9 @@ the subs first, the Float values can not be updated as necessary. By
 passing the desired substitutions with the call to evalf the ability
 to re-evaluate as necessary is gained and the results are impressively
 better:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; big_trig_identity.n(2, {x: 0.1})
--0.e-91</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">big_trig_identity</span><span class="o">.</span><span class="n">n</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
+<span class="go">-0.e-91</span>
+</pre></div>
 </div>
 <p>2) Use Rationals, not Floats. During the evaluation process, the
 Rational can be computed to an arbitrary precision while the Float,
@@ -492,14 +520,16 @@ once created &#8211; at a default of 15 digits &#8211; cannot. Compare the
 value of -1.4e+3 above with the nearly zero value obtained when
 replacing x with a Rational representing 1/10 &#8211; before the call
 to evaluate:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; big_trig_identity.subs(x, S('1/10')).n(2)
-0.e-91</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">big_trig_identity</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">S</span><span class="p">(</span><span class="s">&#39;1/10&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">n</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">0.e-91</span>
+</pre></div>
 </div>
 <p>3) Try to simplify the expression. In this case, SymPy will recognize
 the trig identity and simplify it to zero so you don&#8217;t even have to
 evaluate it numerically:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; big_trig_identity.simplify()
-0</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">big_trig_identity</span><span class="o">.</span><span class="n">simplify</span><span class="p">()</span>
+<span class="go">0</span>
+</pre></div>
 </div>
 </div></blockquote>
 </div>
@@ -509,20 +539,22 @@ evaluate it numerically:</p>
 operation.  This means that a function will always return an object, and the
 original expression will not be modified. The following example snippet
 demonstrates how this works:</p>
-<div class="highlight-python"><pre>def main():
-    var('x y a b')
-    expr = 3*x + 4*y
-    print 'original =', expr
-    expr_modified = expr.subs({x: a, y: b})
-    print 'modified =', expr_modified
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">var</span><span class="p">(</span><span class="s">&#39;x y a b&#39;</span><span class="p">)</span>
+    <span class="n">expr</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">y</span>
+    <span class="k">print</span> <span class="s">&#39;original =&#39;</span><span class="p">,</span> <span class="n">expr</span>
+    <span class="n">expr_modified</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">({</span><span class="n">x</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">b</span><span class="p">})</span>
+    <span class="k">print</span> <span class="s">&#39;modified =&#39;</span><span class="p">,</span> <span class="n">expr_modified</span>
 
-if __name__ == "__main__":
-    main()</pre>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
 </div>
 <p>The output shows that the <tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt> function has replaced variable
 <tt class="xref py py-obj docutils literal"><span class="pre">x</span></tt> with variable <tt class="xref py py-obj docutils literal"><span class="pre">a</span></tt>, and variable <tt class="xref py py-obj docutils literal"><span class="pre">y</span></tt> with variable <tt class="xref py py-obj docutils literal"><span class="pre">b</span></tt>:</p>
-<div class="highlight-python"><pre>original = 3*x + 4*y
-modified = 3*a + 4*b</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">original</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">y</span>
+<span class="n">modified</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">a</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">b</span>
+</pre></div>
 </div>
 <p>The <tt class="xref py py-func docutils literal"><span class="pre">subs()</span></tt> function does not modify the original expression <tt class="xref py py-obj docutils literal"><span class="pre">expr</span></tt>.
 Rather, a modified copy of the expression is returned. This returned object
@@ -541,23 +573,24 @@ raise something to a power, use <tt class="docutils literal"><span class="pre">*
 algebra systems use.  Parentheses <tt class="docutils literal"><span class="pre">()</span></tt> change operator precedence as
 you would normally expect.</p>
 <p>In <strong class="command">isympy</strong>, with the <strong class="command">ipython</strong> shell:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; 2x
-Traceback (most recent call last):
-...
-SyntaxError: invalid syntax
-&gt;&gt;&gt; 2*x
-2*x
-&gt;&gt;&gt; (x + 1)^2  # This is not power.  Use ** instead.
-Traceback (most recent call last):
-...
-TypeError: unsupported operand type(s) for ^: 'Add' and 'int'
-&gt;&gt;&gt; (x + 1)**2
-(x + 1)**2
-&gt;&gt;&gt; pprint(3 - x**(2*x)/(x + 1))
-    2*x
-   x
-- ----- + 3
-  x + 1</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span><span class="n">x</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">SyntaxError</span>: <span class="n">invalid syntax</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+<span class="go">2*x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span>  <span class="c"># This is not power.  Use ** instead.</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">TypeError</span>: <span class="n">unsupported operand type(s) for ^: &#39;Add&#39; and &#39;int&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="go">(x + 1)**2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="mi">3</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<span class="go">    2*x</span>
+<span class="go">   x</span>
+<span class="go">- ----- + 3</span>
+<span class="go">  x + 1</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="inverse-trig-functions">
@@ -587,16 +620,17 @@ or list variable.  Items are numbered using the space before the item.</p>
 <p class="last">List indexes begin at 0.</p>
 </div>
 <p>Example:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; a = [x, 1]  # A simple list of two items
-&gt;&gt;&gt; a
-[x, 1]
-&gt;&gt;&gt; a[0]  # This is the first item
-x
-&gt;&gt;&gt; a[0] = 2  # You can change values of lists after they have been created
-&gt;&gt;&gt; print a
-[2, 1]
-&gt;&gt;&gt; print solve(x**2 + 2*x - 1, x)  # Some functions return lists
-[-1 + sqrt(2), -sqrt(2) - 1]</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c"># A simple list of two items</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">[x, 1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c"># This is the first item</span>
+<span class="go">x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c"># You can change values of lists after they have been created</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span>
+<span class="go">[2, 1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">solve</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>  <span class="c"># Some functions return lists</span>
+<span class="go">[-1 + sqrt(2), -sqrt(2) - 1]</span>
+</pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -610,18 +644,19 @@ bracket notation for accessing elements of a list.</p>
 dictionary is an unordered list of non-duplicate keys and values.  The
 syntax is <tt class="docutils literal"><span class="pre">{key:</span> <span class="pre">value}</span></tt>.  You can access values of keys using square
 bracket notation.</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; d = {'a': 1, 'b': 2}  # A dictionary.
-&gt;&gt;&gt; d
-{'a': 1, 'b': 2}
-&gt;&gt;&gt; d['a']  # How to access items in a dict
-1
-&gt;&gt;&gt; roots((x - 1)**2*(x - 2), x)  # Some functions return dicts
-{1: 2, 2: 1}
-&gt;&gt;&gt; # Some SymPy functions return dictionaries.  For example,
-&gt;&gt;&gt; # roots returns a dictionary of root:multiplicity items.
-&gt;&gt;&gt; roots((x - 5)**2*(x + 3), x)
-{-3: 1, 5: 2}
-&gt;&gt;&gt; # This means that the root -3 occurs once and the root 5 occurs twice.</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>  <span class="c"># A dictionary.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span>
+<span class="go">{&#39;a&#39;: 1, &#39;b&#39;: 2}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span>  <span class="c"># How to access items in a dict</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">roots</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>  <span class="c"># Some functions return dicts</span>
+<span class="go">{1: 2, 2: 1}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Some SymPy functions return dictionaries.  For example,</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># roots returns a dictionary of root:multiplicity items.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">roots</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">3</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>
+<span class="go">{-3: 1, 5: 2}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># This means that the root -3 occurs once and the root 5 occurs twice.</span>
+</pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -638,30 +673,34 @@ have been created.  In general, you will not need tuples in SymPy, but
 sometimes it can be more convenient to type parentheses instead of
 square brackets.</p>
 <blockquote>
-<div><div class="highlight-python"><pre>&gt;&gt;&gt; t = (1, 2, x)  # Tuples are like lists
-&gt;&gt;&gt; t
-(1, 2, x)
-&gt;&gt;&gt; t[0]
-1
-&gt;&gt;&gt; t[0] = 4  # Except you can not change them after they have been created
-Traceback (most recent call last):
-  File "&lt;console&gt;", line 1, in &lt;module&gt;
-TypeError: 'tuple' object does not support item assignment</pre>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>  <span class="c"># Tuples are like lists</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span>
+<span class="go">(1, 2, x)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c"># Except you can not change them after they have been created</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;console&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">&#39;tuple&#39; object does not support item assignment</span>
+</pre></div>
 </div>
 <p>Single element tuples, unlike lists, must have a comma in them:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; (x,)
-(x,)</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">x</span><span class="p">,)</span>
+<span class="go">(x,)</span>
+</pre></div>
 </div>
 <p>Without the comma, a single expression without a comma is not a tuple:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; (x)
-x</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">x</span>
+</pre></div>
 </div>
 <p>integrate takes a sequence as the second argument if you want to integrate
 with limits (and a tuple or list will work):</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; integrate(x**2, (x, 0, 1))
-1/3
-&gt;&gt;&gt; integrate(x**2, [x, 0, 1])
-1/3</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">integrate</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="go">1/3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">integrate</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="go">1/3</span>
+</pre></div>
 </div>
 </div></blockquote>
 <div class="admonition note">
@@ -683,35 +722,42 @@ that you want, and they will all be evaluated according to the function.</p>
 <blockquote>
 <div><p>sqrt(x**2) doesn&#8217;t auto simplify to x because x is assumed to be
 complex by default, and, for example, sqrt((-1)**2) == sqrt(1) == 1 != -1:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; sqrt(x**2)
-sqrt(x**2)</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">sqrt(x**2)</span>
+</pre></div>
 </div>
 <p>Giving assumptions to Symbols is an example of using the keyword argument:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; x = Symbol('x', positive=True)</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="n">positive</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
 </div>
 <p>The square root will now simplify since it knows that x &gt;= 0:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; sqrt(x**2)
-x</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">x</span>
+</pre></div>
 </div>
 <p>powsimp has a default argument of combine=&#8217;all&#8217;:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; pprint(powsimp(x**n*x**m*y**n*y**m))
-     m + n
-(x*y)</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">powsimp</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="n">n</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="n">m</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="n">n</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="n">m</span><span class="p">))</span>
+<span class="go">     m + n</span>
+<span class="go">(x*y)</span>
+</pre></div>
 </div>
 <p>Setting combine to the default value is the same as not setting it.</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; pprint(powsimp(x**n*x**m*y**n*y**m, combine='all'))
-     m + n
-(x*y)</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">powsimp</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="n">n</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="n">m</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="n">n</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="n">m</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">))</span>
+<span class="go">     m + n</span>
+<span class="go">(x*y)</span>
+</pre></div>
 </div>
 <p>The non-default options are &#8216;exp&#8217;, which combines exponents...</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; pprint(powsimp(x**n*x**m*y**n*y**m, combine='exp'))
- m + n  m + n
-x     *y</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">powsimp</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="n">n</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="n">m</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="n">n</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="n">m</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s">&#39;exp&#39;</span><span class="p">))</span>
+<span class="go"> m + n  m + n</span>
+<span class="go">x     *y</span>
+</pre></div>
 </div>
 <p>...and &#8216;base&#8217;, which combines bases.</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; pprint(powsimp(x**n*x**m*y**n*y**m, combine='base'))
-     m      n
-(x*y) *(x*y)</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">powsimp</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="n">n</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="n">m</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="n">n</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="n">m</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s">&#39;base&#39;</span><span class="p">))</span>
+<span class="go">     m      n</span>
+<span class="go">(x*y) *(x*y)</span>
+</pre></div>
 </div>
 </div></blockquote>
 <div class="admonition note">
@@ -743,22 +789,23 @@ In [4]: powsimp?</pre>
 the source code of a function, including any docstring that it may have.
 You can also do <tt class="docutils literal"><span class="pre">function??</span></tt> in <strong class="command">ipython</strong>.  For example,
 from SymPy 0.6.5:</p>
-<div class="highlight-python"><pre>&gt;&gt;&gt; source(simplify)  # simplify() is actually only 2 lines of code. #doctest: +SKIP
-In file: ./sympy/simplify/simplify.py
-def simplify(expr):
-    """Naively simplifies the given expression.
-       ...
-       Simplification is not a well defined term and the exact strategies
-       this function tries can change in the future versions of SymPy. If
-       your algorithm relies on "simplification" (whatever it is), try to
-       determine what you need exactly  -  is it powsimp()? radsimp()?
-       together()?, logcombine()?, or something else? And use this particular
-       function directly, because those are well defined and thus your algorithm
-       will be robust.
-       ...
-    """
-    expr = Poly.cancel(powsimp(expr))
-    return powsimp(together(expr.expand()), combine='exp', deep=True)</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">source</span><span class="p">(</span><span class="n">simplify</span><span class="p">)</span>  <span class="c"># simplify() is actually only 2 lines of code. </span>
+<span class="go">In file: ./sympy/simplify/simplify.py</span>
+<span class="go">def simplify(expr):</span>
+<span class="go">    &quot;&quot;&quot;Naively simplifies the given expression.</span>
+<span class="go">       ...</span>
+<span class="go">       Simplification is not a well defined term and the exact strategies</span>
+<span class="go">       this function tries can change in the future versions of SymPy. If</span>
+<span class="go">       your algorithm relies on &quot;simplification&quot; (whatever it is), try to</span>
+<span class="go">       determine what you need exactly  -  is it powsimp()? radsimp()?</span>
+<span class="go">       together()?, logcombine()?, or something else? And use this particular</span>
+<span class="go">       function directly, because those are well defined and thus your algorithm</span>
+<span class="go">       will be robust.</span>
+<span class="go">       ...</span>
+<span class="go">    &quot;&quot;&quot;</span>
+<span class="go">    expr = Poly.cancel(powsimp(expr))</span>
+<span class="go">    return powsimp(together(expr.expand()), combine=&#39;exp&#39;, deep=True)</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -862,7 +909,7 @@ def simplify(expr):
     </div>
     <div class="footer">
         &copy; Copyright 2013 SymPy Development Team.
-      Last updated on Jun 20, 2013.
+      Last updated on Jun 22, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
