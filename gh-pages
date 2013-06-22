@@ -1,6 +1,6 @@
 #!/bin/bash
 
 rm -rf html
-cp -r build/html .
-git add html
-git ci -m "Update"
+cp -r tutorial_sphinx/_build/html .
+git add --all html
+git commit -m "Update"
