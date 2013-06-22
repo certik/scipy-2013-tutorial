@@ -3,19 +3,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Guide to symbolic mathematics with SymPy &mdash; SymPy tutorial at SciPy 2011 conferences</title>
-    <link rel="stylesheet" href="_static/extra.css" type="text/css" />
+    <title>SymPy Tutorial for SciPy 2013 &mdash; SymPy 0.7.2-git documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/http://live.sympy.org/static/live-core.css" type="text/css" />
-    <link rel="stylesheet" href="_static/http://live.sympy.org/static/live-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="http://live.sympy.org/static/live-core.css" type="text/css" />
+    <link rel="stylesheet" href="http://live.sympy.org/static/live-autocomplete.css" type="text/css" />
+    <link rel="stylesheet" href="http://live.sympy.org/static/live-sphinx.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.0',
+        VERSION:     '0.7.2-git',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,14 +28,16 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
-    <script type="text/javascript" src="http://live.sympy.org/static/external/ext-core.js"></script>
+    <script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
+    <script type="text/javascript" src="http://live.sympy.org/static/utilities.js"></script>
+    <script type="text/javascript" src="http://live.sympy.org/static/external/classy.js"></script>
     <script type="text/javascript" src="http://live.sympy.org/static/live-core.js"></script>
+    <script type="text/javascript" src="http://live.sympy.org/static/live-autocomplete.js"></script>
     <script type="text/javascript" src="http://live.sympy.org/static/live-sphinx.js"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
-    <link rel="top" title="SymPy tutorial at SciPy 2011 conferences" href="#" />
-    <link rel="next" title="Introduction to SymPy" href="introduction.html" /> 
+    <link rel="shortcut icon" href="_static/SymPy-Favicon.ico"/>
+    <link rel="top" title="SymPy 0.7.2-git documentation" href="#" />
+    <link rel="next" title="Installation" href="install.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,9 +47,15 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="introduction.html" title="Introduction to SymPy"
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Installation"
              accesskey="N">next</a> |</li>
-        <li><a href="#">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li> 
+        <li><a href="#">SymPy 0.7.2-git documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -52,45 +64,58 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="guide-to-symbolic-mathematics-with-sympy">
-<h1>Guide to symbolic mathematics with SymPy<a class="headerlink" href="#guide-to-symbolic-mathematics-with-sympy" title="Permalink to this headline">¶</a></h1>
-<p>This is a tutorial about <a class="reference external" href="http://www.sympy.org">SymPy</a> for SciPy
-2011 conferences (<a class="reference external" href="http://conference.scipy.org/scipy2011/">Austin</a>
-and <a class="reference external" href="http://scipy.in/scipyin/2011/">Mumbai</a>). SymPy is a symbolic
-mathematics library in pure Python. This tutorial gives an overview
-and introduction to SymPy and is divided into two parts. The first
-part discusses the internals of SymPy, whereas the second part shows
-how to use SymPy for solving practical problems in symbolic mathematics.</p>
-<p>Information presented in this tutorial should be enough to start
-using SymPy in daily work and hacking its internals, though hacking
-core modules may require additional expertise. More information can
-be found in SymPy&#8217;s <a class="reference external" href="http://docs.sympy.org">documentation</a> and on
-<a class="reference external" href="http://wiki.sympy.org">wiki</a> pages.</p>
+  <div class="section" id="sympy-tutorial-for-scipy-2013">
+<h1>SymPy Tutorial for SciPy 2013<a class="headerlink" href="#sympy-tutorial-for-scipy-2013" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://sympy.org">SymPy</a> is a Python library for symbolic mathematics.
+If you are new to SymPy, start with the Tutorial.</p>
+<p>This is the tutorial that Aaron Meurer and Ondřej Čertík will be giving at
+SciPy 2013.  This is just a stripped down version of our <a class="reference external" href="http://docs.sympy.org">docs</a>, with the new tutorial that Aaron Meurer has
+written, adapted for SymPy 0.7.2.</p>
+<p>Contents:</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction to SymPy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installing.html">Installing, configuring and running SymPy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="history.html">History of SymPy and a few statistics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics.html">Basics of expressions in SymPy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gotchas.html">Gotchas and pitfalls</a></li>
-<li class="toctree-l2"><a class="reference internal" href="printers.html">Setting up and using printers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#source">Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#git">Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#anaconda">Anaconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#other-methods">Other Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#run-sympy">Run SymPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#questions">Questions</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mathematics.html">Mathematical problem solving with SymPy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="partfrac.html">Partial fraction decomposition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="trigonometry.html">Deriving trigonometric identities</a></li>
-<li class="toctree-l2"><a class="reference internal" href="numerics.html">Not only symbolics: numerical computing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="summation.html">Summing roots of polynomials</a></li>
-<li class="toctree-l2"><a class="reference internal" href="groebner.html">Applications of Gröbner bases</a></li>
-<li class="toctree-l2"><a class="reference internal" href="geometry.html">Algebraic geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/index.html">SymPy Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/preliminaries.html">Preliminaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/printing.html">Printing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/gotchas.html">Gotchas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/basic_operations.html">Basic Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/simplification.html">Simplification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/calculus.html">Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/solvers.html">Solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/matrices.html">Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/manipulation.html">Advanced Expression Manipulation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="extras.html">Extras</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="extras.html#solutions">Solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gotchas.html">Gotchas and Pitfalls</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gotchas.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gotchas.html#equals-signs">Equals Signs (=)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gotchas.html#variables">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gotchas.html#symbolic-expressions">Symbolic Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gotchas.html#special-symbols">Special Symbols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gotchas.html#getting-help-from-within-sympy">Getting help from within SymPy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="aboutus.html">About</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="aboutus.html#sympy-development-team">SymPy Development Team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aboutus.html#financial-and-infrastructure-support">Financial and Infrastructure Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aboutus.html#license">License</a></li>
 </ul>
 </li>
 </ul>
 </div>
+<p>If something cannot be easily accessed from this page, it&#8217;s a bug (<a class="reference external" href="http://code.google.com/p/sympy/issues/list">please
+report it</a>).</p>
+<p>This documentation is maintained with docutils, so you might see some comments in the form #doctest:... . You can safely ignore them.</p>
 </div>
 
 
@@ -100,11 +125,11 @@ be found in SymPy&#8217;s <a class="reference external" href="http://docs.sympy.
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="#">
-              <img class="logo" src="_static/sympy-logo.png" alt="Logo"/>
+              <img class="logo" src="_static/sympylogo.png" alt="Logo"/>
             </a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="introduction.html"
-                        title="next chapter">Introduction to SymPy</a></p>
+  <p class="topless"><a href="install.html"
+                        title="next chapter">Installation</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/index.txt"
@@ -113,7 +138,7 @@ be found in SymPy&#8217;s <a class="reference external" href="http://docs.sympy.
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -134,14 +159,21 @@ be found in SymPy&#8217;s <a class="reference external" href="http://docs.sympy.
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="introduction.html" title="Introduction to SymPy"
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Installation"
              >next</a> |</li>
-        <li><a href="#">SymPy tutorial at SciPy 2011 conferences</a> &raquo;</li> 
+        <li><a href="#">SymPy 0.7.2-git documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Mateusz Paprocki, Aaron Meurer.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013 SymPy Development Team.
+      Last updated on Jun 22, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

@@ -1,24 +1,31 @@
+.. SymPy documentation master file, created by sphinx-quickstart.py on Sat Mar 22 19:34:32 2008.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
 
-Guide to symbolic mathematics with SymPy
-========================================
+SymPy Tutorial for SciPy 2013
+=============================
 
-This is a tutorial about `SymPy <http://www.sympy.org>`_ for SciPy
-2011 conferences (`Austin <http://conference.scipy.org/scipy2011/>`_
-and `Mumbai <http://scipy.in/scipyin/2011/>`_). SymPy is a symbolic
-mathematics library in pure Python. This tutorial gives an overview
-and introduction to SymPy and is divided into two parts. The first
-part discusses the internals of SymPy, whereas the second part shows
-how to use SymPy for solving practical problems in symbolic mathematics.
+`SymPy <http://sympy.org>`_ is a Python library for symbolic mathematics.
+If you are new to SymPy, start with the Tutorial.
 
-Information presented in this tutorial should be enough to start
-using SymPy in daily work and hacking its internals, though hacking
-core modules may require additional expertise. More information can
-be found in SymPy's `documentation <http://docs.sympy.org>`_ and on
-`wiki <http://wiki.sympy.org>`_ pages.
+This is the tutorial that Aaron Meurer and Ondřej Čertík will be giving at
+SciPy 2013.  This is just a stripped down version of our `docs
+<http://docs.sympy.org>`_, with the new tutorial that Aaron Meurer has
+written, adapted for SymPy 0.7.2.
+
+Contents:
 
 .. toctree::
-    :maxdepth: 2
+   :maxdepth: 2
 
-    introduction.rst
-    mathematics.rst
-    extras.rst
+   install.rst
+   tutorial/index.rst
+   gotchas.rst
+   aboutus.rst
+
+If something cannot be easily accessed from this page, it's a bug (`please
+report it`_).
+
+This documentation is maintained with docutils, so you might see some comments in the form #doctest:... . You can safely ignore them.
+
+.. _please report it: http://code.google.com/p/sympy/issues/list
