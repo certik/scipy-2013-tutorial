@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -117,6 +115,8 @@ expressions or as keys to dictionaries.  If you need an immutable version of
 <tt class="docutils literal"><span class="pre">Matrix</span></tt>, use <tt class="docutils literal"><span class="pre">ImmutableMatrix</span></tt>.</p>
 <div class="section" id="basic-operations">
 <h2>Basic Operations<a class="headerlink" href="#basic-operations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="shape">
+<h3>Shape<a class="headerlink" href="#shape" title="Permalink to this headline">¶</a></h3>
 <p>Here are some basic operations on <tt class="docutils literal"><span class="pre">Matrix</span></tt>.  To get the shape of a matrix
 use <tt class="docutils literal"><span class="pre">shape</span></tt></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
@@ -128,7 +128,10 @@ use <tt class="docutils literal"><span class="pre">shape</span></tt></p>
 <span class="go">(2, 3)</span>
 </pre></div>
 </div>
-<p>To an individual row or column of a matrix, use <tt class="docutils literal"><span class="pre">row</span></tt> or <tt class="docutils literal"><span class="pre">col</span></tt>.  For
+</div>
+<div class="section" id="accessing-rows-and-columns">
+<h3>Accessing Rows and Columns<a class="headerlink" href="#accessing-rows-and-columns" title="Permalink to this headline">¶</a></h3>
+<p>To get an individual row or column of a matrix, use <tt class="docutils literal"><span class="pre">row</span></tt> or <tt class="docutils literal"><span class="pre">col</span></tt>.  For
 example, <tt class="docutils literal"><span class="pre">M.row(0)</span></tt> will get the first row. <tt class="docutils literal"><span class="pre">M.col(-1)</span></tt> will get the last
 column.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">M</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -139,6 +142,9 @@ column.</p>
 <span class="go">⎣4⎦</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="deleting-and-inserting-rows-and-columns">
+<h3>Deleting and Inserting Rows and Columns<a class="headerlink" href="#deleting-and-inserting-rows-and-columns" title="Permalink to this headline">¶</a></h3>
 <p>To delete a row or column, use <tt class="docutils literal"><span class="pre">row_del</span></tt> or <tt class="docutils literal"><span class="pre">col_del</span></tt>.  These operations
 will modify the Matrix <strong>in place</strong>.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">M</span><span class="o">.</span><span class="n">col_del</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -170,6 +176,7 @@ operations <strong>do not</strong> operate in place.</p>
 <p>Unless explicitly stated, the methods mentioned below do not operate in
 place. In general, a method that does not operate in place will return a new
 <tt class="docutils literal"><span class="pre">Matrix</span></tt> and a method that does operate in place will return <tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+</div>
 </div>
 <div class="section" id="basic-methods">
 <h2>Basic Methods<a class="headerlink" href="#basic-methods" title="Permalink to this headline">¶</a></h2>
@@ -257,9 +264,9 @@ identity matrix, use <tt class="docutils literal"><span class="pre">eye</span></
 </pre></div>
 </div>
 <p>To create diagonal matrices, use <tt class="docutils literal"><span class="pre">diag</span></tt>.  The arguments to <tt class="docutils literal"><span class="pre">diag</span></tt> can be
-either numbers or matrices.  A number is interpreted as a <span class="math">\(1\times 1\)</span> matrix,
-and they are then stacked diagonally.  The remaining elements are filled with
-<span class="math">\(0\)</span>s.</p>
+either numbers or matrices.  A number is interpreted as a <span class="math">\(1\times 1\)</span>
+matrix. The matrices are stacked diagonally.  The remaining elements are
+filled with <span class="math">\(0\)</span>s.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">diag</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">⎡1  0  0⎤</span>
 <span class="go">⎢       ⎥</span>
@@ -283,6 +290,8 @@ and they are then stacked diagonally.  The remaining elements are filled with
 </div>
 <div class="section" id="advanced-methods">
 <h2>Advanced Methods<a class="headerlink" href="#advanced-methods" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="determinant">
+<h3>Determinant<a class="headerlink" href="#determinant" title="Permalink to this headline">¶</a></h3>
 <p>To compute the determinant of a matrix, use <tt class="docutils literal"><span class="pre">det</span></tt>.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">M</span>
@@ -295,6 +304,9 @@ and they are then stacked diagonally.  The remaining elements are filled with
 <span class="go">-1</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="rref">
+<h3>RREF<a class="headerlink" href="#rref" title="Permalink to this headline">¶</a></h3>
 <p>To put a matrix into reduced row echelon form, use <tt class="docutils literal"><span class="pre">rref</span></tt>.  <tt class="docutils literal"><span class="pre">rref</span></tt> returns
 a tuple of two elements. The first is the reduced row echelon form, and the
 second is a list of indices of the pivot columns.</p>
@@ -318,7 +330,10 @@ second is a list of indices of the pivot columns.</p>
 <p class="last">The first element of the tuple returned by <tt class="docutils literal"><span class="pre">rref</span></tt> is of type
 <tt class="docutils literal"><span class="pre">Matrix</span></tt>. The second is of type <tt class="docutils literal"><span class="pre">list</span></tt>.</p>
 </div>
-<p>To find the null space of a matrix, use <tt class="docutils literal"><span class="pre">nullspace</span></tt>. <tt class="docutils literal"><span class="pre">nullspace</span></tt> returns a
+</div>
+<div class="section" id="nullspace">
+<h3>Nullspace<a class="headerlink" href="#nullspace" title="Permalink to this headline">¶</a></h3>
+<p>To find the nullspace of a matrix, use <tt class="docutils literal"><span class="pre">nullspace</span></tt>. <tt class="docutils literal"><span class="pre">nullspace</span></tt> returns a
 <tt class="docutils literal"><span class="pre">list</span></tt> of column vectors that span the nullspace of the matrix.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">M</span>
@@ -337,9 +352,12 @@ second is a list of indices of the pivot columns.</p>
 <span class="go">⎣⎣ 0 ⎦  ⎣0⎦  ⎣ 1  ⎦⎦</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="eigenvalues-eigenvectors-and-diagonalization">
+<h3>Eigenvalues, Eigenvectors, and Diagonalization<a class="headerlink" href="#eigenvalues-eigenvectors-and-diagonalization" title="Permalink to this headline">¶</a></h3>
 <p>To find the eigenvalues of a matrix, use <tt class="docutils literal"><span class="pre">eigenvals</span></tt>.  <tt class="docutils literal"><span class="pre">eigenvals</span></tt>
 returns a dictionary of <tt class="docutils literal"><span class="pre">eigenvalue:algebraic</span> <span class="pre">multiplicity</span></tt> pairs (similar to the
-output of <a class="reference internal" href="solvers.html#tutorial-roots"><em>roots</em></a>.</p>
+output of <a class="reference internal" href="solvers.html#tutorial-roots"><em>roots</em></a>).</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span>  <span class="mi">3</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">M</span>
 <span class="go">⎡3  -2  4   -2⎤</span>
@@ -427,6 +445,7 @@ expensive to calculate.</p>
 </div>
 </div>
 </div>
+</div>
 
 
           </div>
@@ -440,10 +459,21 @@ expensive to calculate.</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Matrices</a><ul>
-<li><a class="reference internal" href="#basic-operations">Basic Operations</a></li>
+<li><a class="reference internal" href="#basic-operations">Basic Operations</a><ul>
+<li><a class="reference internal" href="#shape">Shape</a></li>
+<li><a class="reference internal" href="#accessing-rows-and-columns">Accessing Rows and Columns</a></li>
+<li><a class="reference internal" href="#deleting-and-inserting-rows-and-columns">Deleting and Inserting Rows and Columns</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#basic-methods">Basic Methods</a></li>
 <li><a class="reference internal" href="#matrix-constructors">Matrix Constructors</a></li>
-<li><a class="reference internal" href="#advanced-methods">Advanced Methods</a></li>
+<li><a class="reference internal" href="#advanced-methods">Advanced Methods</a><ul>
+<li><a class="reference internal" href="#determinant">Determinant</a></li>
+<li><a class="reference internal" href="#rref">RREF</a></li>
+<li><a class="reference internal" href="#nullspace">Nullspace</a></li>
+<li><a class="reference internal" href="#eigenvalues-eigenvectors-and-diagonalization">Eigenvalues, Eigenvectors, and Diagonalization</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -500,8 +530,8 @@ expensive to calculate.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2013 SymPy Development Team.
-      Last updated on Jun 22, 2013.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Last updated on Jun 23, 2013.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2pre.
     </div>
   </body>
 </html>
