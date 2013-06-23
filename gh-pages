@@ -3,4 +3,6 @@
 rm -rf html
 cp -r tutorial_sphinx/_build/html .
 git add --all html
+cp slides/intro.pdf intro.pdf
+git add intro.pdf
 git commit -m "Update"
