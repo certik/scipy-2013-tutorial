@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -73,9 +75,8 @@
 <p>Here we discuss some of the most basic operations needed for expression
 manipulation in SymPy.  Some more advanced operations will be discussed later
 in the <a class="reference internal" href="manipulation.html#tutorial-manipulation"><em>advanced expression manipulation</em></a> section.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&quot;x y z&quot;</span><span class="p">)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; from sympy import *
+&gt;&gt;&gt; x, y, z = symbols("x y z")</pre>
 </div>
 <div class="section" id="substitution">
 <h2>Substitution<a class="headerlink" href="#substitution" title="Permalink to this headline">¶</a></h2>
@@ -83,19 +84,17 @@ in the <a class="reference internal" href="manipulation.html#tutorial-manipulati
 expression is substitution.  Substitution replaces all instances of something
 in an expression with something else.  It is done using the <tt class="docutils literal"><span class="pre">subs</span></tt> method.
 For example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="go">cos(y) + 1</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expr = cos(x) + 1
+&gt;&gt;&gt; expr.subs(x, y)
+cos(y) + 1</pre>
 </div>
 <p>Substitution is usually done for one of two reasons:</p>
 <ol class="arabic">
 <li><p class="first">Evaluating an expression at a point. For example, if our expression is
 <tt class="docutils literal"><span class="pre">cos(x)</span> <span class="pre">+</span> <span class="pre">1</span></tt> and we want to evaluate it at the point <tt class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">0</span></tt>, so that
 we get <tt class="docutils literal"><span class="pre">cos(0)</span> <span class="pre">+</span> <span class="pre">1</span></tt>, which is 2.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="go">2</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expr.subs(x, 0)
+2</pre>
 </div>
 </li>
 <li><p class="first">Replacing a subexpression with another subexpression.  There are two
@@ -104,16 +103,15 @@ an expression that has some symmetry, such as <span class="math">\(x^{x^{x^x}}\)
 this, we might start with <tt class="docutils literal"><span class="pre">x**y</span></tt>, and replace <tt class="docutils literal"><span class="pre">y</span></tt> with <tt class="docutils literal"><span class="pre">x**y</span></tt>.  We
 would then get <tt class="docutils literal"><span class="pre">x**(x**y)</span></tt>.  If we replaced <tt class="docutils literal"><span class="pre">y</span></tt> in this new expression
 with <tt class="docutils literal"><span class="pre">x**x</span></tt>, we would get <tt class="docutils literal"><span class="pre">x**(x**(x**x))</span></tt>, the desired expression.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="n">y</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span>
-<span class="go">x**y</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="o">**</span><span class="n">y</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span>
-<span class="go">x**(x**y)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="o">**</span><span class="n">x</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span>
-<span class="go">x**(x**(x**x))</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expr = x**y
+&gt;&gt;&gt; expr
+x**y
+&gt;&gt;&gt; expr = expr.subs(y, x**y)
+&gt;&gt;&gt; expr
+x**(x**y)
+&gt;&gt;&gt; expr = expr.subs(y, x**x)
+&gt;&gt;&gt; expr
+x**(x**(x**x))</pre>
 </div>
 <p>The second is if we want to perform a very controlled simplification, or
 perhaps a simplification that SymPy is otherwise unable to do.  For
@@ -124,26 +122,24 @@ example, say we have <span class="math">\(\sin(2x) + \cos(2x)\)</span>, and we w
 precise simplification, and we will learn some of them in the
 <a class="reference internal" href="manipulation.html#tutorial-manipulation"><em>advanced expression manipulation</em></a> section, an
 easy way is to just replace <span class="math">\(\sin(2x)\)</span> with <span class="math">\(2\sin(x)\cos(x)\)</span>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expand_trig</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
-<span class="go">2*sin(x)*cos(x) + 2*cos(x)**2 - 1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="go">2*sin(x)*cos(x) + cos(2*x)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expr = sin(2*x) + cos(2*x)
+&gt;&gt;&gt; expand_trig(expr)
+2*sin(x)*cos(x) + 2*cos(x)**2 - 1
+&gt;&gt;&gt; expr.subs(sin(2*x), 2*sin(x)*cos(x))
+2*sin(x)*cos(x) + cos(2*x)</pre>
 </div>
 </li>
 </ol>
 <p>There are two important things to note about <tt class="docutils literal"><span class="pre">subs</span></tt>.  First, it returns a
 new expression.  SymPy objects are immutable.  That means that <tt class="docutils literal"><span class="pre">subs</span></tt> does
 modify it in-place.  For example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="go">1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span>
-<span class="go">cos(x)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
-<span class="go">x</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expr = cos(x)
+&gt;&gt;&gt; expr.subs(x, 0)
+1
+&gt;&gt;&gt; expr
+cos(x)
+&gt;&gt;&gt; x
+x</pre>
 </div>
 <div class="sidebar">
 <p class="first sidebar-title">Quick Tip</p>
@@ -154,20 +150,18 @@ In fact, since SymPy expressions are immutable, no function will change them
 in-place.  All functions will return new expressions.</p>
 <p>To perform multiple substitutions at once, pass a list of <tt class="docutils literal"><span class="pre">(old,</span> <span class="pre">new)</span></tt> pairs
 to <tt class="docutils literal"><span class="pre">subs</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="n">z</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">([(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
-<span class="go">40</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expr = x**3 + 4*x*y - z
+&gt;&gt;&gt; expr.subs([(x, 2), (y, 4), (z, 0)])
+40</pre>
 </div>
 <p>It is often useful to combine this with a list comprehension to do a large set
 of similar replacements all at once.  For example, say we had <span class="math">\(x^4 - 4x^3 + 4x^2 -
 2x + 3\)</span> and we wanted to replace all instances of <span class="math">\(x\)</span> that have an even power
 with <span class="math">\(y\)</span>, to get <span class="math">\(y^4 - 4x^3 + 4y^2 - 2x + 3\)</span>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">replacements</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="o">**</span><span class="n">i</span><span class="p">,</span> <span class="n">y</span><span class="o">**</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">replacements</span><span class="p">)</span>
-<span class="go">-4*x**3 - 2*x + y**4 + 4*y**2 + 3</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expr = x**4 - 4*x**3 + 4*x**2 - 2*x + 3
+&gt;&gt;&gt; replacements = [(x**i, y**i) for i in range(5) if i % 2 == 0]
+&gt;&gt;&gt; expr.subs(replacements)
+-4*x**3 - 2*x + y**4 + 4*y**2 + 3</pre>
 </div>
 </div>
 <div class="section" id="converting-strings-to-sympy-expressions">
@@ -175,13 +169,12 @@ with <span class="math">\(y\)</span>, to get <span class="math">\(y^4 - 4x^3 + 4
 <p>The <tt class="docutils literal"><span class="pre">sympify</span></tt> function (that&#8217;s <tt class="docutils literal"><span class="pre">sympify</span></tt>, not to be confused with
 <tt class="docutils literal"><span class="pre">simplify</span></tt>) can be used to convert strings into SymPy expressions.</p>
 <p>For example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">str_expr</span> <span class="o">=</span> <span class="s">&quot;x**2 + 3*x - 1/2&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">sympify</span><span class="p">(</span><span class="n">str_expr</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span>
-<span class="go">x**2 + 3*x - 1/2</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="go">19/2</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; str_expr = "x**2 + 3*x - 1/2"
+&gt;&gt;&gt; expr = sympify(str_expr)
+&gt;&gt;&gt; expr
+x**2 + 3*x - 1/2
+&gt;&gt;&gt; expr.subs(x, 2)
+19/2</pre>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -192,26 +185,23 @@ with <span class="math">\(y\)</span>, to get <span class="math">\(y^4 - 4x^3 + 4
 <h2><tt class="docutils literal"><span class="pre">evalf</span></tt><a class="headerlink" href="#evalf" title="Permalink to this headline">¶</a></h2>
 <p>To evaluate a numerical expression into a floating point number, use
 <tt class="docutils literal"><span class="pre">evalf</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
-<span class="go">2.82842712474619</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expr = sqrt(8)
+&gt;&gt;&gt; expr.evalf()
+2.82842712474619</pre>
 </div>
 <p>SymPy can evaluate floating point expressions to arbitrary precision.  By
 default, 15 digits of precision are used, but you can pass any number as the
 argument to <tt class="docutils literal"><span class="pre">evalf</span></tt>.  Let&#8217;s compute the first 100 digits of <span class="math">\(\pi\)</span>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pi</span><span class="o">.</span><span class="n">evalf</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-<span class="go">3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117068</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; pi.evalf(100)
+3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117068</pre>
 </div>
 <p>To numerically evaluate an expression with a Symbol at a point, we might use
 <tt class="docutils literal"><span class="pre">subs</span></tt> followed by <tt class="docutils literal"><span class="pre">evalf</span></tt>, but it is more efficient and numerically
 stable to pass the substitution to <tt class="docutils literal"><span class="pre">evalf</span></tt> using the <tt class="docutils literal"><span class="pre">subs</span></tt> flag, which
 takes a dictionary of <tt class="docutils literal"><span class="pre">Symbol:</span> <span class="pre">point</span></tt> pairs.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span><span class="o">.</span><span class="n">evalf</span><span class="p">(</span><span class="n">subs</span><span class="o">=</span><span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="mf">2.4</span><span class="p">})</span>
-<span class="go">    0.0874989834394464</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expr = cos(2*x)
+&gt;&gt;&gt; expr.evalf(subs={x: 2.4})
+    0.0874989834394464</pre>
 </div>
 <p><tt class="docutils literal"><span class="pre">subs</span></tt> and <tt class="docutils literal"><span class="pre">evalf</span></tt> are good if you want to do simple evaluation, but if
 you intend to evaluate an expression at many points, there are more efficient
@@ -290,8 +280,8 @@ ways.  See the advanced numerics section for more details.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2013 SymPy Development Team.
-      Last updated on Jun 23, 2013.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2pre.
+      Last updated on Jun 24, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

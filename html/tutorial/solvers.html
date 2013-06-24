@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -70,31 +72,28 @@
             
   <div class="section" id="solvers">
 <h1>Solvers<a class="headerlink" href="#solvers" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;x y z&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">init_printing</span><span class="p">(</span><span class="n">use_unicode</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; from sympy import *
+&gt;&gt;&gt; x, y, z = symbols('x y z')
+&gt;&gt;&gt; init_printing(use_unicode=True)</pre>
 </div>
 <div class="section" id="a-note-about-equations">
 <h2>A Note about Equations<a class="headerlink" href="#a-note-about-equations" title="Permalink to this headline">¶</a></h2>
 <p>Recall from the <a class="reference internal" href="gotchas.html#tutorial-gotchas-equals"><em>gotchas</em></a> section of this
 tutorial that symbolic equations in SymPy are not represented by <tt class="docutils literal"><span class="pre">=</span></tt> or
 <tt class="docutils literal"><span class="pre">==</span></tt>, but by <tt class="docutils literal"><span class="pre">Eq</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Eq</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="go">x = y</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; Eq(x, y)
+x = y</pre>
 </div>
 <p>However, there is an even easier way.  In SymPy, any expression is not in an
 <tt class="docutils literal"><span class="pre">Eq</span></tt> is automatically assumed to equal 0 by the solving functions.  Since <span class="math">\(a
 = b\)</span> if and only if <span class="math">\(a - b = 0\)</span>, this means that instead of using <tt class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y</span></tt>,
 you can just use <tt class="docutils literal"><span class="pre">x</span> <span class="pre">-</span> <span class="pre">y</span></tt>.  For example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">solve</span><span class="p">(</span><span class="n">Eq</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>
-<span class="go">[-1, 1]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">solve</span><span class="p">(</span><span class="n">Eq</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>
-<span class="go">[-1, 1]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">solve</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="go">[-1, 1]</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; solve(Eq(x**2, 1), x)
+[-1, 1]
+&gt;&gt;&gt; solve(Eq(x**2 - 1, 0), x)
+[-1, 1]
+&gt;&gt;&gt; solve(x**2 - 1, x)
+[-1, 1]</pre>
 </div>
 <p>This is particularly useful if the equation you wish to solve is already equal
 to 0.  Instead of typing <tt class="docutils literal"><span class="pre">solve(Eq(expr,</span> <span class="pre">0),</span> <span class="pre">x)</span></tt>, you can just use
@@ -108,15 +107,13 @@ above, <tt class="docutils literal"><span class="pre">equations</span></tt> may 
 that are assumed to be equal to zero.</p>
 <p>When solving a single equation, the output of <tt class="docutils literal"><span class="pre">solve</span></tt> is a list of the
 solutions.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">solve</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="go">[0, 1]</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; solve(x**2 - x, x)
+[0, 1]</pre>
 </div>
 <p>If no solutions are found, an empty list is returned, or
 <tt class="docutils literal"><span class="pre">NotImplementedError</span></tt> is raised.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">solve</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>
-<span class="go">[]</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; solve(exp(x), x)
+[]</pre>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -125,12 +122,11 @@ mean that the equation has no solutions.  It just means that it couldn&#8217;t
 find any.  Often this means that the solutions cannot be represented
 symbolically.  For example, the equation <span class="math">\(x = \cos(x)\)</span> has a solution, but
 it cannot be represented symbolically using standard functions.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">solve</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>
-<span class="gt">Traceback (most recent call last):</span>
-<span class="c">...</span>
-<span class="gr">NotImplementedError</span>: <span class="n">multiple generators [x, exp(I*x)]</span>
-<span class="go">No algorithms are implemented to solve equation exp(I*x)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; solve(x - cos(x), x)
+Traceback (most recent call last):
+...
+NotImplementedError: multiple generators [x, exp(I*x)]
+No algorithms are implemented to solve equation exp(I*x)</pre>
 </div>
 <p class="last">In fact, <tt class="docutils literal"><span class="pre">solve</span></tt> makes <em>no guarantees whatsoever</em> about the completeness
 of the solutions it finds.  Much of <tt class="docutils literal"><span class="pre">solve</span></tt> is heuristics, which may find
@@ -138,34 +134,31 @@ some solutions to an equation or system of equations, but not all of them.</p>
 </div>
 <p><tt class="docutils literal"><span class="pre">solve</span></tt> can also solve systems of equations.  Pass a list of equations and a
 list of variables to solve for.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">solve</span><span class="p">([</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span>
-<span class="go">{x: 1/2, y: 5/2}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">solve</span><span class="p">([</span><span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mi">7</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span>
-<span class="go">⎡⎛    ___        ___    ⎞  ⎛  ___          ___    ⎞⎤</span>
-<span class="go">⎣⎝- ╲╱ 2  + 3, ╲╱ 2  + 3⎠, ⎝╲╱ 2  + 3, - ╲╱ 2  + 3⎠⎦</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; solve([x - y + 2, x + y - 3], [x, y])
+{x: 1/2, y: 5/2}
+&gt;&gt;&gt; solve([x*y - 7, x + y - 6], [x, y])
+⎡⎛    ___        ___    ⎞  ⎛  ___          ___    ⎞⎤
+⎣⎝- ╲╱ 2  + 3, ╲╱ 2  + 3⎠, ⎝╲╱ 2  + 3, - ╲╱ 2  + 3⎠⎦</pre>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>The type of the output of <tt class="docutils literal"><span class="pre">solve</span></tt> when solving systems of equations
 varies depending on the type of the input.  If you want a consistent
 interface, pass <tt class="docutils literal"><span class="pre">dict=True</span></tt>.</p>
-<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">solve</span><span class="p">([</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span> <span class="nb">dict</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="go">[{x: 1/2, y: 5/2}]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">solve</span><span class="p">([</span><span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mi">7</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span> <span class="nb">dict</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="go">⎡⎧       ___           ___    ⎫  ⎧     ___             ___    ⎫⎤</span>
-<span class="go">⎢⎨x: - ╲╱ 2  + 3, y: ╲╱ 2  + 3⎬, ⎨x: ╲╱ 2  + 3, y: - ╲╱ 2  + 3⎬⎥</span>
-<span class="go">⎣⎩                            ⎭  ⎩                            ⎭⎦</span>
-</pre></div>
+<div class="last highlight-python"><pre>&gt;&gt;&gt; solve([x - y + 2, x + y - 3], [x, y], dict=True)
+[{x: 1/2, y: 5/2}]
+&gt;&gt;&gt; solve([x*y - 7, x + y - 6], [x, y], dict=True)
+⎡⎧       ___           ___    ⎫  ⎧     ___             ___    ⎫⎤
+⎢⎨x: - ╲╱ 2  + 3, y: ╲╱ 2  + 3⎬, ⎨x: ╲╱ 2  + 3, y: - ╲╱ 2  + 3⎬⎥
+⎣⎩                            ⎭  ⎩                            ⎭⎦</pre>
 </div>
 </div>
 <p id="tutorial-roots"><tt class="docutils literal"><span class="pre">solve</span></tt> reports each solution only once.  To get the solutions of a
 polynomial including multiplicity use <tt class="docutils literal"><span class="pre">roots</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">solve</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">9</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="go">[0, 3]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">roots</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">9</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="go">{0: 1, 3: 2}</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; solve(x**3 - 6*x**2 + 9*x, x)
+[0, 3]
+&gt;&gt;&gt; roots(x**3 - 6*x**2 + 9*x, x)
+{0: 1, 3: 2}</pre>
 </div>
 <p>The output <tt class="docutils literal"><span class="pre">{0:</span> <span class="pre">1,</span> <span class="pre">3:</span> <span class="pre">2}</span></tt> of <tt class="docutils literal"><span class="pre">roots</span></tt> means that <tt class="docutils literal"><span class="pre">0</span></tt> is a root of
 multiplicity 1 and <tt class="docutils literal"><span class="pre">3</span></tt> is a root of multiplicity 2.</p>
@@ -174,48 +167,42 @@ multiplicity 1 and <tt class="docutils literal"><span class="pre">3</span></tt> 
 <span id="tutorial-dsolve"></span><h2>Solving Differential Equations<a class="headerlink" href="#solving-differential-equations" title="Permalink to this headline">¶</a></h2>
 <p>To solve differential equations, use <tt class="docutils literal"><span class="pre">dsolve</span></tt>.  First, create an undefined
 function by passing <tt class="docutils literal"><span class="pre">cls=Function</span></tt> to the <tt class="docutils literal"><span class="pre">symbols</span></tt> function.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">,</span> <span class="n">g</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;f g&#39;</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="n">Function</span><span class="p">)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; f, g = symbols('f g', cls=Function)</pre>
 </div>
 <p><tt class="docutils literal"><span class="pre">f</span></tt> and <tt class="docutils literal"><span class="pre">g</span></tt> are now undefined functions.  We can call <tt class="docutils literal"><span class="pre">f(x)</span></tt>, and it
 will represent an unknown function.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="go">f(x)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; f(x)
+f(x)</pre>
 </div>
 <p>Derivatives of <tt class="docutils literal"><span class="pre">f(x)</span></tt> are unevaluated.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="go">d</span>
-<span class="go">──(f(x))</span>
-<span class="go">dx</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; f(x).diff(x)
+d
+──(f(x))
+dx</pre>
 </div>
 <p>(see the <a class="reference internal" href="calculus.html#tutorial-derivatives"><em>Derivatives</em></a> section for more on
 derivatives).</p>
 <p>To represent the differential equation <span class="math">\(f''(x) - 2f'(x) + f(x) = \sin(x)\)</span>, we
 would thus use</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">diffeq</span> <span class="o">=</span> <span class="n">Eq</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">diffeq</span>
-<span class="go">                      2</span>
-<span class="go">         d           d</span>
-<span class="go">f(x) - 2⋅──(f(x)) + ───(f(x)) = sin(x)</span>
-<span class="go">         dx           2</span>
-<span class="go">                    dx</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; diffeq = Eq(f(x).diff(x, x) - 2*f(x).diff(x) + f(x), sin(x))
+&gt;&gt;&gt; diffeq
+                      2
+         d           d
+f(x) - 2⋅──(f(x)) + ───(f(x)) = sin(x)
+         dx           2
+                    dx</pre>
 </div>
 <p>To solve the ODE, pass it and the function to solve for to <tt class="docutils literal"><span class="pre">dsolve</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">dsolve</span><span class="p">(</span><span class="n">diffeq</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="go">                    x   cos(x)</span>
-<span class="go">f(x) = (C₁ + C₂⋅x)⋅ℯ  + ──────</span>
-<span class="go">                          2</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; dsolve(diffeq, f(x))
+                    x   cos(x)
+f(x) = (C₁ + C₂⋅x)⋅ℯ  + ──────
+                          2</pre>
 </div>
 <p><tt class="docutils literal"><span class="pre">dsolve</span></tt> returns an instance of <tt class="docutils literal"><span class="pre">Eq</span></tt>.  This is because in general,
 solutions to differential equations cannot be solved explicitly for the
 function.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">dsolve</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sin</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))),</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="go">f(x) + cos(f(x)) = C₁</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; dsolve(f(x).diff(x)*(1 - sin(f(x))), f(x))
+f(x) + cos(f(x)) = C₁</pre>
 </div>
 <p>The arbitrary constants in the solutions from dsolve are symbols of the form
 <tt class="docutils literal"><span class="pre">C1</span></tt>, <tt class="docutils literal"><span class="pre">C2</span></tt>, <tt class="docutils literal"><span class="pre">C3</span></tt>, and so on.</p>
@@ -293,8 +280,8 @@ function.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2013 SymPy Development Team.
-      Last updated on Jun 23, 2013.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2pre.
+      Last updated on Jun 24, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -16,7 +18,7 @@
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
+        URL_ROOT:    '',
         VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -94,14 +96,13 @@ packages and defines common symbols) by executing within the &#8220;sympy&#8221;
 <div class="highlight-python"><pre>$ ./bin/isympy</pre>
 </div>
 <p>You may now run SymPy statements directly within the Python shell:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;x y z t&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">k</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;k m n&#39;</span><span class="p">,</span> <span class="n">integer</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;f g h&#39;</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="n">Function</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="go">x</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; from __future__ import division
+&gt;&gt;&gt; from sympy import *
+&gt;&gt;&gt; x, y, z, t = symbols('x y z t')
+&gt;&gt;&gt; k, m, n = symbols('k m n', integer=True)
+&gt;&gt;&gt; f, g, h = symbols('f g h', cls=Function)
+&gt;&gt;&gt; print diff(x**2/2, x)
+x</pre>
 </div>
 </div>
 <div class="section" id="git">
@@ -152,12 +153,11 @@ works. To do this, start up Python and import the SymPy libraries:</p>
 &gt;&gt;&gt; from sympy import *</pre>
 </div>
 <p>From here, execute some simple SymPy statements like the ones below:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">limit</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="go">1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">integrate</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="go">log(x)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; x = Symbol('x')
+&gt;&gt;&gt; limit(sin(x)/x, x, 0)
+1
+&gt;&gt;&gt; integrate(1/x, x)
+log(x)</pre>
 </div>
 <p>For a starter guide on using SymPy effectively, refer to the <a class="reference internal" href="tutorial/index.html#tutorial"><em>SymPy Tutorial</em></a>.</p>
 </div>
@@ -244,8 +244,8 @@ an <a class="reference external" href="http://code.google.com/p/sympy/issues/lis
     </div>
     <div class="footer">
         &copy; Copyright 2013 SymPy Development Team.
-      Last updated on Jun 23, 2013.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2pre.
+      Last updated on Jun 24, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

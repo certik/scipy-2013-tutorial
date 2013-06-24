@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -71,10 +73,9 @@
   <div class="section" id="simplification">
 <span id="tutorial-simplify"></span><h1>Simplification<a class="headerlink" href="#simplification" title="Permalink to this headline">¶</a></h1>
 <p>To make this document easier to read, we are going to enable pretty printing.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;x y z&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">init_printing</span><span class="p">(</span><span class="n">use_unicode</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; from sympy import *
+&gt;&gt;&gt; x, y, z = symbols('x y z')
+&gt;&gt;&gt; init_printing(use_unicode=True)</pre>
 </div>
 <div class="section" id="simplify">
 <h2><tt class="docutils literal"><span class="pre">simplify</span></tt><a class="headerlink" href="#simplify" title="Permalink to this headline">¶</a></h2>
@@ -84,13 +85,12 @@ mathematical expressions.  SymPy has dozens of functions to perform various
 kinds of simplification.  There is also one general function called
 <tt class="docutils literal"><span class="pre">simplify</span></tt> that attempts to apply all of these functions in an intelligent
 way to arrive at the simplest form of an expression.  Here are some examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">simplify</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">simplify</span><span class="p">((</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-<span class="go">x - 1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">simplify</span><span class="p">(</span><span class="n">gamma</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="n">gamma</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">))</span>
-<span class="go">(x - 2)⋅(x - 1)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; simplify(sin(x)**2 + cos(x)**2)
+1
+&gt;&gt;&gt; simplify((x**3 + x**2 - x - 1)/(x**2 + 2*x + 1))
+x - 1
+&gt;&gt;&gt; simplify(gamma(x)/gamma(x - 2))
+(x - 2)⋅(x - 1)</pre>
 </div>
 <p>Here, <tt class="docutils literal"><span class="pre">gamma(x)</span></tt> is <span class="math">\(\Gamma(x)\)</span>, the <a class="reference external" href="http://en.wikipedia.org/wiki/Gamma_function">gamma function</a>.  We see that <tt class="docutils literal"><span class="pre">simplify</span></tt> is
 capable of handling a large class of expressions.</p>
@@ -98,10 +98,9 @@ capable of handling a large class of expressions.</p>
 operations in SymPy, and uses heuristics to determine the simplest result. But
 &#8220;simplest&#8221; is not a well-defined term.  For example, say we wanted to
 &#8220;simplify&#8221; <span class="math">\(x^2 + 2x + 1\)</span> into <span class="math">\((x + 1)^2\)</span>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">simplify</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-<span class="go"> 2</span>
-<span class="go">x  + 2⋅x + 1</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; simplify(x**2 + 2*x + 1)
+ 2
+x  + 2⋅x + 1</pre>
 </div>
 <p>We did not get what we want.  There is a function to perform this
 simplification, called <tt class="docutils literal"><span class="pre">factor</span></tt>, which will be discussed below.</p>
@@ -130,13 +129,12 @@ take, and you need a catchall function to simplify it.</p>
 <p><tt class="docutils literal"><span class="pre">expand</span></tt> is one of the most common simplification functions in SymPy.
 Although it has a lot of scopes, for now, we will consider its function in
 expanding polynomial expressions. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-<span class="go"> 2</span>
-<span class="go">x  + 2⋅x + 1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">3</span><span class="p">))</span>
-<span class="go"> 2</span>
-<span class="go">x  - x - 6</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expand((x + 1)**2)
+ 2
+x  + 2⋅x + 1
+&gt;&gt;&gt; expand((x + 2)*(x - 3))
+ 2
+x  - x - 6</pre>
 </div>
 <p>Given a polynomial, <tt class="docutils literal"><span class="pre">expand</span></tt> will put it into a canonical form of a sum of
 monomials.</p>
@@ -144,22 +142,20 @@ monomials.</p>
 very name, it makes expressions bigger, not smaller.  Usually this is the
 case, but often an expression will become smaller upon calling <tt class="docutils literal"><span class="pre">expand</span></tt> on
 it due to cancellation</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
-<span class="go">-2</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expand((x + 1)*(x - 2) - (x - 1)*x)
+-2</pre>
 </div>
 </div>
 <div class="section" id="factor">
 <h3><tt class="docutils literal"><span class="pre">factor</span></tt><a class="headerlink" href="#factor" title="Permalink to this headline">¶</a></h3>
 <p><tt class="docutils literal"><span class="pre">factor</span></tt> takes a polynomial and factors it into irreducible factors over the
 rational numbers.  For example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">factor</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-<span class="go">        ⎛ 2    ⎞</span>
-<span class="go">(x - 1)⋅⎝x  + 1⎠</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">factor</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">z</span><span class="p">)</span>
-<span class="go">           2</span>
-<span class="go">z⋅(x + 2⋅y)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; factor(x**3 - x**2 + x - 1)
+        ⎛ 2    ⎞
+(x - 1)⋅⎝x  + 1⎠
+&gt;&gt;&gt; factor(x**2*z + 4*x*y*z + 4*y**2*z)
+           2
+z⋅(x + 2⋅y)</pre>
 </div>
 <p>For polynomials, <tt class="docutils literal"><span class="pre">factor</span></tt> is the opposite of <tt class="docutils literal"><span class="pre">expand</span></tt>.  <tt class="docutils literal"><span class="pre">factor</span></tt> uses a
 complete multivariate factorization algorithm over the rational numbers, which
@@ -167,41 +163,37 @@ means that each of the factors returned by <tt class="docutils literal"><span cl
 irreducible.</p>
 <p>If you are interested in the factors themselves, <tt class="docutils literal"><span class="pre">factor_list</span></tt> returns a
 more structured output.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">factor_list</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">z</span><span class="p">)</span>
-<span class="go">(1, [(z, 1), (x + 2⋅y, 2)])</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; factor_list(x**2*z + 4*x*y*z + 4*y**2*z)
+(1, [(z, 1), (x + 2⋅y, 2)])</pre>
 </div>
 <p>Note that the input to <tt class="docutils literal"><span class="pre">factor</span></tt> and <tt class="docutils literal"><span class="pre">expand</span></tt> need not be polynomials in
 the strict sense.  They will intelligently factor or expand any kind of
 expression (though note that the factors may not be irreducible if the input
 is no longer a polynomial over the rationals).</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand</span><span class="p">((</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">   2                           2</span>
-<span class="go">sin (x) + 2⋅sin(x)⋅cos(x) + cos (x)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">factor</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">                 2</span>
-<span class="go">(sin(x) + cos(x))</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expand((cos(x) + sin(x))**2)
+   2                           2
+sin (x) + 2⋅sin(x)⋅cos(x) + cos (x)
+&gt;&gt;&gt; factor(cos(x)**2 + 2*cos(x)*sin(x) + sin(x)**2)
+                 2
+(sin(x) + cos(x))</pre>
 </div>
 </div>
 <div class="section" id="collect">
 <h3><tt class="docutils literal"><span class="pre">collect</span></tt><a class="headerlink" href="#collect" title="Permalink to this headline">¶</a></h3>
 <p><tt class="docutils literal"><span class="pre">collect</span></tt> collects common powers of a term in an expression.  For example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="o">+</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">z</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span>
-<span class="go"> 3    2        2</span>
-<span class="go">x  - x ⋅z + 2⋅x  + x⋅y + x - 3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">collected_expr</span> <span class="o">=</span> <span class="n">collect</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">collected_expr</span>
-<span class="go"> 3    2</span>
-<span class="go">x  + x ⋅(-z + 2) + x⋅(y + 1) - 3</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expr = x*y + x - 3 + 2*x**2 - z*x**2 + x**3
+&gt;&gt;&gt; expr
+ 3    2        2
+x  - x ⋅z + 2⋅x  + x⋅y + x - 3
+&gt;&gt;&gt; collected_expr = collect(expr, x)
+&gt;&gt;&gt; collected_expr
+ 3    2
+x  + x ⋅(-z + 2) + x⋅(y + 1) - 3</pre>
 </div>
 <p><tt class="docutils literal"><span class="pre">collect</span></tt> is particularly useful in conjunction with the <tt class="docutils literal"><span class="pre">.coeff</span></tt> method.
 <tt class="docutils literal"><span class="pre">expr.coeff(x,</span> <span class="pre">n)</span></tt> gives the coefficient of <tt class="docutils literal"><span class="pre">x**n</span></tt> in <tt class="docutils literal"><span class="pre">expr</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">collected_expr</span><span class="o">.</span><span class="n">coeff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="go">-z + 2</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; collected_expr.coeff(x, 2)
+-z + 2</pre>
 </div>
 </div>
 <div class="section" id="cancel">
@@ -210,49 +202,45 @@ is no longer a polynomial over the rationals).</p>
 canonical form, <span class="math">\(\frac{p}{q}\)</span>, where <span class="math">\(p\)</span> and <span class="math">\(q\)</span> are expanded polynomials with
 no common factors, and the leading coefficients of <span class="math">\(p\)</span> and <span class="math">\(q\)</span> do not have
 denominators (i.e., are integers).</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">cancel</span><span class="p">((</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">x</span><span class="p">))</span>
-<span class="go">x + 1</span>
-<span class="go">─────</span>
-<span class="go">  x</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; cancel((x**2 + 2*x + 1)/(x**2 + x))
+x + 1
+─────
+  x</pre>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span>
-<span class="go">3⋅x</span>
-<span class="go">─── - 2</span>
-<span class="go"> 2        1</span>
-<span class="go">─────── + ─</span>
-<span class="go"> x - 4    x</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cancel</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
-<span class="go">   2</span>
-<span class="go">3⋅x  - 2⋅x - 8</span>
-<span class="go">──────────────</span>
-<span class="go">     2</span>
-<span class="go">  2⋅x  - 8⋅x</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expr = 1/x + (3*x/2 - 2)/(x - 4)
+&gt;&gt;&gt; expr
+3⋅x
+─── - 2
+ 2        1
+─────── + ─
+ x - 4    x
+&gt;&gt;&gt; cancel(expr)
+   2
+3⋅x  - 2⋅x - 8
+──────────────
+     2
+  2⋅x  - 8⋅x</pre>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="n">x</span><span class="o">*</span><span class="n">z</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">y</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="n">z</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span>
-<span class="go">   2                2    2            2</span>
-<span class="go">x⋅y  - 2⋅x⋅y⋅z + x⋅z  + y  - 2⋅y⋅z + z</span>
-<span class="go">───────────────────────────────────────</span>
-<span class="go">                  2</span>
-<span class="go">                 x  - 1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cancel</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
-<span class="go"> 2            2</span>
-<span class="go">y  - 2⋅y⋅z + z</span>
-<span class="go">───────────────</span>
-<span class="go">     x - 1</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expr = (x*y**2 - 2*x*y*z + x*z**2 + y**2 - 2*y*z + z**2)/(x**2 - 1)
+&gt;&gt;&gt; expr
+   2                2    2            2
+x⋅y  - 2⋅x⋅y⋅z + x⋅z  + y  - 2⋅y⋅z + z
+───────────────────────────────────────
+                  2
+                 x  - 1
+&gt;&gt;&gt; cancel(expr)
+ 2            2
+y  - 2⋅y⋅z + z
+───────────────
+     x - 1</pre>
 </div>
 <p>Note that since <tt class="docutils literal"><span class="pre">factor</span></tt> will completely factorize both the numerator and
 the denominator of an expression, it can also be used to do the same thing:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">factor</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
-<span class="go">       2</span>
-<span class="go">(y - z)</span>
-<span class="go">────────</span>
-<span class="go"> x - 1</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; factor(expr)
+       2
+(y - z)
+────────
+ x - 1</pre>
 </div>
 <p>However, if you are only interested in making sure that the expression is in
 canceled form, <tt class="docutils literal"><span class="pre">cancel</span></tt> is more efficient than <tt class="docutils literal"><span class="pre">factor</span></tt>.</p>
@@ -261,19 +249,18 @@ canceled form, <tt class="docutils literal"><span class="pre">cancel</span></tt>
 <h3><tt class="docutils literal"><span class="pre">apart</span></tt><a class="headerlink" href="#apart" title="Permalink to this headline">¶</a></h3>
 <p><tt class="docutils literal"><span class="pre">apart</span></tt> performs a <a class="reference external" href="http://en.wikipedia.org/wiki/Partial_fraction_decomposition">partial fraction decomposition</a> on a rational
 function.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">21</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">10</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">12</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span>
-<span class="go">   3       2</span>
-<span class="go">4⋅x  + 21⋅x  + 10⋅x + 12</span>
-<span class="go">────────────────────────</span>
-<span class="go">  4      3      2</span>
-<span class="go"> x  + 5⋅x  + 5⋅x  + 4⋅x</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">apart</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
-<span class="go"> 2⋅x - 1       1     3</span>
-<span class="go">────────── - ───── + ─</span>
-<span class="go"> 2           x + 4   x</span>
-<span class="go">x  + x + 1</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expr = (4*x**3 + 21*x**2 + 10*x + 12)/(x**4 + 5*x**3 + 5*x**2 + 4*x)
+&gt;&gt;&gt; expr
+   3       2
+4⋅x  + 21⋅x  + 10⋅x + 12
+────────────────────────
+  4      3      2
+ x  + 5⋅x  + 5⋅x  + 4⋅x
+&gt;&gt;&gt; apart(expr)
+ 2⋅x - 1       1     3
+────────── - ───── + ─
+ 2           x + 4   x
+x  + x + 1</pre>
 </div>
 </div>
 </div>
@@ -284,23 +271,21 @@ function.</p>
 <p>SymPy follows Python&#8217;s naming conventions for inverse trigonometric
 functions, which is to append an <tt class="docutils literal"><span class="pre">a</span></tt> to the front of the function&#8217;s
 name.  For example, the inverse cosine, or arc cosine, is called <tt class="docutils literal"><span class="pre">acos</span></tt>.</p>
-<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">acos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="go">acos(x)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cos</span><span class="p">(</span><span class="n">acos</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="go">x</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">asin</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">π</span>
-<span class="go">─</span>
-<span class="go">2</span>
-</pre></div>
+<div class="last highlight-python"><pre>&gt;&gt;&gt; acos(x)
+acos(x)
+&gt;&gt;&gt; cos(acos(x))
+x
+&gt;&gt;&gt; asin(1)
+π
+─
+2</pre>
 </div>
 </div>
 <div class="section" id="trigsimp">
 <h3><tt class="docutils literal"><span class="pre">trigsimp</span></tt><a class="headerlink" href="#trigsimp" title="Permalink to this headline">¶</a></h3>
 <p>To simplify expressions using trigonometric identities, use <tt class="docutils literal"><span class="pre">trigsimp</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">trigsimp</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">1</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; trigsimp(sin(x)**2 + cos(x)**2)
+1</pre>
 </div>
 <p>Much like <tt class="docutils literal"><span class="pre">simplify</span></tt>, <tt class="docutils literal"><span class="pre">trigsimp</span></tt> applies various trigonometric identities to
 the input expression, and then uses a heuristic to return the &#8220;best&#8221; one.</p>
@@ -309,12 +294,11 @@ the input expression, and then uses a heuristic to return the &#8220;best&#8221;
 <h3><tt class="docutils literal"><span class="pre">expand_trig</span></tt><a class="headerlink" href="#expand-trig" title="Permalink to this headline">¶</a></h3>
 <p>To expand trigonometric functions, that is, apply the sum or double angle
 identities, use <tt class="docutils literal"><span class="pre">expand_trig</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_trig</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">))</span>
-<span class="go">sin(x)⋅cos(y) + sin(y)⋅cos(x)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expand_trig</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">))</span>
-<span class="go">     2</span>
-<span class="go">2⋅cos (x) - 1</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expand_trig(sin(x + y))
+sin(x)⋅cos(y) + sin(y)⋅cos(x)
+&gt;&gt;&gt; expand_trig(cos(2*x))
+     2
+2⋅cos (x) - 1</pre>
 </div>
 </div>
 </div>
@@ -400,10 +384,9 @@ expression with a given Symbol unless it holds for all complex numbers.</p>
 and <tt class="docutils literal"><span class="pre">y</span></tt> are positive, and that <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> are real.  We will leave
 <tt class="docutils literal"><span class="pre">z</span></tt>, <tt class="docutils literal"><span class="pre">t</span></tt>, and <tt class="docutils literal"><span class="pre">c</span></tt> as arbitrary complex Symbols to demonstrate what
 happens in that case.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;x y&#39;</span><span class="p">,</span> <span class="n">positive</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;a b&#39;</span><span class="p">,</span> <span class="n">real</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">z</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;z t c&#39;</span><span class="p">)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; x, y = symbols('x y', positive=True)
+&gt;&gt;&gt; a, b = symbols('a b', real=True)
+&gt;&gt;&gt; z, t, c = symbols('z t c')</pre>
 </div>
 </li>
 </ul>
@@ -411,117 +394,103 @@ happens in that case.</p>
 <p class="first admonition-title">Note</p>
 <p>In SymPy, <tt class="docutils literal"><span class="pre">sqrt(x)</span></tt> is just a shortcut to <tt class="docutils literal"><span class="pre">x**Rational(1,</span> <span class="pre">2)</span></tt>.  They
 are exactly the same object.</p>
-<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="n">x</span><span class="o">**</span><span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="go">True</span>
-</pre></div>
+<div class="last highlight-python"><pre>&gt;&gt;&gt; sqrt(x) == x**Rational(1, 2)
+True</pre>
 </div>
 </div>
 <div class="section" id="powsimp">
 <h3><tt class="docutils literal"><span class="pre">powsimp</span></tt><a class="headerlink" href="#powsimp" title="Permalink to this headline">¶</a></h3>
 <p><tt class="docutils literal"><span class="pre">powsimp</span></tt> applies identities 1 and 2 from above, from left to right.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">powsimp</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="n">b</span><span class="p">)</span>
-<span class="go">  a + b</span>
-<span class="go"> x</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">powsimp</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="n">a</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="n">a</span><span class="p">)</span>
-<span class="go">     a</span>
-<span class="go">(x⋅y)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; powsimp(x**a*x**b)
+  a + b
+ x
+&gt;&gt;&gt; powsimp(x**a*y**a)
+     a
+(x⋅y)</pre>
 </div>
 <p>Notice that <tt class="docutils literal"><span class="pre">powsimp</span></tt> refuses to do the simplification if it is not valid.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">powsimp</span><span class="p">(</span><span class="n">t</span><span class="o">**</span><span class="n">c</span><span class="o">*</span><span class="n">z</span><span class="o">**</span><span class="n">c</span><span class="p">)</span>
-<span class="go"> c  c</span>
-<span class="go">t ⋅z</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; powsimp(t**c*z**c)
+ c  c
+t ⋅z</pre>
 </div>
 <p>If you know that you want to apply this simplification, but you don&#8217;t want to
 mess with assumptions, you can pass the <tt class="docutils literal"><span class="pre">force=True</span></tt> flag.  This will force
 the simplification to take place, regardless of assumptions.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">powsimp</span><span class="p">(</span><span class="n">t</span><span class="o">**</span><span class="n">c</span><span class="o">*</span><span class="n">z</span><span class="o">**</span><span class="n">c</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="go">     c</span>
-<span class="go">(t⋅z)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; powsimp(t**c*z**c, force=True)
+     c
+(t⋅z)</pre>
 </div>
 <p>Note that in some instances, in particular, when the exponents are integers or
 rational numbers, and identity 2 holds, it will be applied automatically</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">z</span><span class="o">*</span><span class="n">t</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
-<span class="go">  2  2</span>
-<span class="go"> t ⋅z</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
-<span class="go">   ___   ___</span>
-<span class="go"> ╲╱ x ⋅╲╱ y</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; (z*t)**2
+  2  2
+ t ⋅z
+&gt;&gt;&gt; sqrt(x*y)
+   ___   ___
+ ╲╱ x ⋅╲╱ y</pre>
 </div>
 <p>This means that it will be impossible to undo this identity with <tt class="docutils literal"><span class="pre">powsimp</span></tt>,
 because even if <tt class="docutils literal"><span class="pre">powsimp</span></tt> were to put the bases together, they would be
 automatically split apart again.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">powsimp</span><span class="p">(</span><span class="n">z</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">  2  2</span>
-<span class="go"> t ⋅z</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">powsimp</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">sqrt</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-<span class="go">   ___   ___</span>
-<span class="go"> ╲╱ x ⋅╲╱ y</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; powsimp(z**2*t**2)
+  2  2
+ t ⋅z
+&gt;&gt;&gt; powsimp(sqrt(x)*sqrt(y))
+   ___   ___
+ ╲╱ x ⋅╲╱ y</pre>
 </div>
 </div>
 <div class="section" id="expand-power-exp-expand-power-base">
 <h3><tt class="docutils literal"><span class="pre">expand_power_exp</span></tt> / <tt class="docutils literal"><span class="pre">expand_power_base</span></tt><a class="headerlink" href="#expand-power-exp-expand-power-base" title="Permalink to this headline">¶</a></h3>
 <p><tt class="docutils literal"><span class="pre">expand_power_exp</span></tt> and <tt class="docutils literal"><span class="pre">expand_power_base</span></tt> apply identities 1 and 2 from
 right to left, respectively.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_power_exp</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">))</span>
-<span class="go"> a  b</span>
-<span class="go">x ⋅x</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expand_power_exp(x**(a + b))
+ a  b
+x ⋅x</pre>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_power_base</span><span class="p">((</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="n">a</span><span class="p">)</span>
-<span class="go"> a  a</span>
-<span class="go">x ⋅y</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expand_power_base((x*y)**a)
+ a  a
+x ⋅y</pre>
 </div>
 <p>As with <tt class="docutils literal"><span class="pre">powsimp</span></tt>, identity 2 is not applied if it is not valid.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_power_base</span><span class="p">((</span><span class="n">z</span><span class="o">*</span><span class="n">t</span><span class="p">)</span><span class="o">**</span><span class="n">c</span><span class="p">)</span>
-<span class="go">     c</span>
-<span class="go">(t⋅z)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expand_power_base((z*t)**c)
+     c
+(t⋅z)</pre>
 </div>
 <p>And as with <tt class="docutils literal"><span class="pre">powsimp</span></tt>, you can force the expansion to happen without
 fiddling with assumptions by using <tt class="docutils literal"><span class="pre">force=True</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_power_base</span><span class="p">((</span><span class="n">z</span><span class="o">*</span><span class="n">t</span><span class="p">)</span><span class="o">**</span><span class="n">c</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="go">  c  c</span>
-<span class="go"> t ⋅z</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expand_power_base((z*t)**c, force=True)
+  c  c
+ t ⋅z</pre>
 </div>
 <p>As with identity 2, identity 1 is applied automatically if the power is a
 number, and hence cannot be undone with <tt class="docutils literal"><span class="pre">expand_power_exp</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span>
-<span class="go">  5</span>
-<span class="go"> x</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expand_power_exp</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span>
-<span class="go">  5</span>
-<span class="go"> x</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; x**2*x**3
+  5
+ x
+&gt;&gt;&gt; expand_power_exp(x**5)
+  5
+ x</pre>
 </div>
 </div>
 <div class="section" id="powdenest">
 <h3><tt class="docutils literal"><span class="pre">powdenest</span></tt><a class="headerlink" href="#powdenest" title="Permalink to this headline">¶</a></h3>
 <p><tt class="docutils literal"><span class="pre">powdenest</span></tt> applies identity 3, from left to right.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">powdenest</span><span class="p">((</span><span class="n">x</span><span class="o">**</span><span class="n">a</span><span class="p">)</span><span class="o">**</span><span class="n">b</span><span class="p">)</span>
-<span class="go"> a⋅b</span>
-<span class="go">x</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; powdenest((x**a)**b)
+ a⋅b
+x</pre>
 </div>
 <p>As before, the identity is not applied if it is not true under the given
 assumptions.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">powdenest</span><span class="p">((</span><span class="n">z</span><span class="o">**</span><span class="n">a</span><span class="p">)</span><span class="o">**</span><span class="n">b</span><span class="p">)</span>
-<span class="go">    b</span>
-<span class="go">⎛ a⎞</span>
-<span class="go">⎝z ⎠</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; powdenest((z**a)**b)
+    b
+⎛ a⎞
+⎝z ⎠</pre>
 </div>
 <p>And as before, this can be manually overridden with <tt class="docutils literal"><span class="pre">force=True</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">powdenest</span><span class="p">((</span><span class="n">z</span><span class="o">**</span><span class="n">a</span><span class="p">)</span><span class="o">**</span><span class="n">b</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="go"> a⋅b</span>
-<span class="go">z</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; powdenest((z**a)**b, force=True)
+ a⋅b
+z</pre>
 </div>
 </div>
 </div>
@@ -532,9 +501,8 @@ assumptions.</p>
 <p>In SymPy, as in Python and most programming languages, <tt class="docutils literal"><span class="pre">log</span></tt> is the
 natural logarithm, also known as <tt class="docutils literal"><span class="pre">ln</span></tt>.  SymPy automatically provides an
 alias <tt class="docutils literal"><span class="pre">ln</span> <span class="pre">=</span> <span class="pre">log</span></tt> in case you forget this.</p>
-<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ln</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="go">log(x)</span>
-</pre></div>
+<div class="last highlight-python"><pre>&gt;&gt;&gt; ln(x)
+log(x)</pre>
 </div>
 </div>
 <p>Logarithms have similar issues as powers.  There are two main identities</p>
@@ -546,10 +514,9 @@ alias <tt class="docutils literal"><span class="pre">ln</span> <span class="pre"
 cut in the complex plane for the complex logarithm.  However, sufficient
 conditions for the identities to hold are if <span class="math">\(x\)</span> and <span class="math">\(y\)</span> are positive and <span class="math">\(n\)</span>
 is real.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;x y&#39;</span><span class="p">,</span> <span class="n">positive</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="n">real</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">z</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;z t&#39;</span><span class="p">)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; x, y = symbols('x y', positive=True)
+&gt;&gt;&gt; n = symbols('n', real=True)
+&gt;&gt;&gt; z, t = symbols('z t')</pre>
 </div>
 <p>As before, <tt class="docutils literal"><span class="pre">z</span></tt> and <tt class="docutils literal"><span class="pre">t</span></tt> will be Symbols with no additional assumptions.</p>
 <p>Note that the identity <span class="math">\(\log{\left (\frac{x}{y}\right )} = \log(x) - \log(y)\)</span>
@@ -566,44 +533,40 @@ example, <span class="math">\(\log{\left (e^{x + 2\pi i}\right)} = \log{\left (e
 <h3><tt class="docutils literal"><span class="pre">expand_log</span></tt><a class="headerlink" href="#expand-log" title="Permalink to this headline">¶</a></h3>
 <p>To apply identities 1 and 2 from left to right, use <tt class="docutils literal"><span class="pre">expand_log</span></tt>.  As
 always, the identities will not be applied unless they are valid.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_log</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">))</span>
-<span class="go">log(x) + log(y)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expand_log</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">y</span><span class="p">))</span>
-<span class="go">log(x) - log(y)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expand_log</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
-<span class="go">2⋅log(x)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expand_log</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="n">n</span><span class="p">))</span>
-<span class="go">n⋅log(x)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expand_log</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">z</span><span class="o">*</span><span class="n">t</span><span class="p">))</span>
-<span class="go">log(t⋅z)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expand_log(log(x*y))
+log(x) + log(y)
+&gt;&gt;&gt; expand_log(log(x/y))
+log(x) - log(y)
+&gt;&gt;&gt; expand_log(log(x**2))
+2⋅log(x)
+&gt;&gt;&gt; expand_log(log(x**n))
+n⋅log(x)
+&gt;&gt;&gt; expand_log(log(z*t))
+log(t⋅z)</pre>
 </div>
 <p>As with <tt class="docutils literal"><span class="pre">powsimp</span></tt> and <tt class="docutils literal"><span class="pre">powdenest</span></tt>, <tt class="docutils literal"><span class="pre">expand_log</span></tt> has a <tt class="docutils literal"><span class="pre">force</span></tt> option
 that can be used to ignore assumptions.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_log</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">z</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
-<span class="go">   ⎛ 2⎞</span>
-<span class="go">log⎝z ⎠</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expand_log</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">z</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">force</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="go">2⋅log(z)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expand_log(log(z**2))
+   ⎛ 2⎞
+log⎝z ⎠
+&gt;&gt;&gt; expand_log(log(z**2), force=True)
+2⋅log(z)</pre>
 </div>
 </div>
 <div class="section" id="logcombine">
 <h3><tt class="docutils literal"><span class="pre">logcombine</span></tt><a class="headerlink" href="#logcombine" title="Permalink to this headline">¶</a></h3>
 <p>To apply identities 1 and 2 from right to left, use <tt class="docutils literal"><span class="pre">logcombine</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">logcombine</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">log</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-<span class="go">log(x⋅y)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">logcombine</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="go">   ⎛ n⎞</span>
-<span class="go">log⎝x ⎠</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; logcombine(log(x) + log(y))
+log(x⋅y)
+&gt;&gt;&gt; logcombine(n*log(x))
+   ⎛ n⎞
+log⎝x ⎠</pre>
 </div>
 <p><tt class="docutils literal"><span class="pre">logcombine</span></tt> also has a <tt class="docutils literal"><span class="pre">force</span></tt> option that can be used to ignore
 assumptions.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">logcombine</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">log</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">force</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="go">   ⎛ n⎞</span>
-<span class="go">log⎝z ⎠</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; logcombine(n*log(z), force=True)
+   ⎛ n⎞
+log⎝z ⎠</pre>
 </div>
 </div>
 </div>
@@ -618,44 +581,39 @@ SymPy.</p>
 <p>Let&#8217;s define <tt class="docutils literal"><span class="pre">x</span></tt>, <tt class="docutils literal"><span class="pre">y</span></tt>, and <tt class="docutils literal"><span class="pre">z</span></tt> as regular, complex Symbols, removing any
 assumptions we put on them in the previous section.  We will also define <tt class="docutils literal"><span class="pre">k</span></tt>,
 <tt class="docutils literal"><span class="pre">m</span></tt>, and <tt class="docutils literal"><span class="pre">n</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;x y z&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">k</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;k m n&#39;</span><span class="p">)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; x, y, z = symbols('x y z')
+&gt;&gt;&gt; k, m, n = symbols('k m n')</pre>
 </div>
 <p>The <a class="reference external" href="http://en.wikipedia.org/wiki/Factorial">factorial</a> function is
 <tt class="docutils literal"><span class="pre">factorial</span></tt>.  <tt class="docutils literal"><span class="pre">factorial(n)</span></tt> represents <span class="math">\(n!= 1\cdot2\cdots(n - 1)\cdot
 n\)</span>. <span class="math">\(n!\)</span> represents the number of permutations of <span class="math">\(n\)</span> distinct items.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-<span class="go">n!</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; factorial(n)
+n!</pre>
 </div>
 <p>The <a class="reference external" href="http://en.wikipedia.org/wiki/Binomial_coefficient">binomial coefficient</a> function is
 <tt class="docutils literal"><span class="pre">binomial</span></tt>.  <tt class="docutils literal"><span class="pre">binomial(n,</span> <span class="pre">k)</span></tt> represents <span class="math">\(\binom{n}{k}\)</span>, the number of
 ways to choose <span class="math">\(k\)</span> items from a set of <span class="math">\(n\)</span> distinct items.  It is also often
 written as <span class="math">\(nCk\)</span>, and is pronounced &#8220;<span class="math">\(n\)</span> choose <span class="math">\(k\)</span>&#8221;.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
-<span class="go">⎛n⎞</span>
-<span class="go">⎜ ⎟</span>
-<span class="go">⎝k⎠</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; binomial(n, k)
+⎛n⎞
+⎜ ⎟
+⎝k⎠</pre>
 </div>
 <p>The factorial function is closely related to the <a class="reference external" href="http://en.wikipedia.org/wiki/Gamma_function">gamma function</a>, <tt class="docutils literal"><span class="pre">gamma</span></tt>.  <tt class="docutils literal"><span class="pre">gamma(z)</span></tt>
 represents <span class="math">\(\Gamma(z) = \int_0^\infty t^{z - 1}e^{-t}\,dt\)</span>, which for positive integer
 <span class="math">\(z\)</span> is the same as <span class="math">\((z - 1)!\)</span>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gamma</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-<span class="go">Γ(z)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; gamma(z)
+Γ(z)</pre>
 </div>
 <p>The <a class="reference external" href="http://en.wikipedia.org/wiki/Generalized_hypergeometric_function">generalized hypergeometric function</a> is
 <tt class="docutils literal"><span class="pre">hyper</span></tt>.  <tt class="docutils literal"><span class="pre">hyper([a_1,</span> <span class="pre">...,</span> <span class="pre">a_p],</span> <span class="pre">[b_1,</span> <span class="pre">...,</span> <span class="pre">b_q],</span> <span class="pre">z)</span></tt> represents
 <span class="math">\({}_pF_q\left(\begin{matrix} a_1, \dots, a_p \\ b_1, \dots, b_q \end{matrix}
 \middle| z \right)\)</span>.  The most common case is <span class="math">\({}_2F_1\)</span>, which is often
 referred to as the <a class="reference external" href="http://en.wikipedia.org/wiki/Hypergeometric_function">ordinary hypergeometric function</a>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">hyper</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">z</span><span class="p">)</span>
-<span class="go"> ┌─  ⎛1, 2 │  ⎞</span>
-<span class="go"> ├─  ⎜     │ z⎟</span>
-<span class="go">2╵ 1 ⎝ 3   │  ⎠</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; hyper([1, 2], [3], z)
+ ┌─  ⎛1, 2 │  ⎞
+ ├─  ⎜     │ z⎟
+2╵ 1 ⎝ 3   │  ⎠</pre>
 </div>
 <div class="section" id="rewrite">
 <h3><tt class="docutils literal"><span class="pre">rewrite</span></tt><a class="headerlink" href="#rewrite" title="Permalink to this headline">¶</a></h3>
@@ -663,14 +621,13 @@ referred to as the <a class="reference external" href="http://en.wikipedia.org/w
 another.  This works for any function in SymPy, not just special functions.
 To rewrite an expression in terms of a function, use
 <tt class="docutils literal"><span class="pre">expr.rewrite(function)</span></tt>.  For example,</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">rewrite</span><span class="p">(</span><span class="n">sin</span><span class="p">)</span>
-<span class="go">     2</span>
-<span class="go">2⋅sin (x)</span>
-<span class="go">─────────</span>
-<span class="go"> sin(2⋅x)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">factorial</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">rewrite</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
-<span class="go">Γ(x + 1)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; tan(x).rewrite(sin)
+     2
+2⋅sin (x)
+─────────
+ sin(2⋅x)
+&gt;&gt;&gt; factorial(x).rewrite(gamma)
+Γ(x + 1)</pre>
 </div>
 <p>For some tips on applying more targeted rewriting, see the
 <a class="reference internal" href="manipulation.html#tutorial-manipulation"><em>Advanced Expression Manipulation</em></a> section.</p>
@@ -679,53 +636,48 @@ To rewrite an expression in terms of a function, use
 <h3><tt class="docutils literal"><span class="pre">expand_func</span></tt><a class="headerlink" href="#expand-func" title="Permalink to this headline">¶</a></h3>
 <p>To expand special functions in terms of some identities, use <tt class="docutils literal"><span class="pre">expand_func</span></tt>.
 For example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expand_func</span><span class="p">(</span><span class="n">gamma</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">3</span><span class="p">))</span>
-<span class="go">x⋅(x + 1)⋅(x + 2)⋅Γ(x)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expand_func(gamma(x + 3))
+x⋅(x + 1)⋅(x + 2)⋅Γ(x)</pre>
 </div>
 </div>
 <div class="section" id="hyperexpand">
 <h3><tt class="docutils literal"><span class="pre">hyperexpand</span></tt><a class="headerlink" href="#hyperexpand" title="Permalink to this headline">¶</a></h3>
 <p>To rewrite <tt class="docutils literal"><span class="pre">hyper</span></tt> in terms of more standard functions, use
 <tt class="docutils literal"><span class="pre">hyperexpand</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">hyperexpand</span><span class="p">(</span><span class="n">hyper</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">z</span><span class="p">))</span>
-<span class="go">-log(-z + 1)</span>
-<span class="go">────────────</span>
-<span class="go">     z</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; hyperexpand(hyper([1, 1], [2], z))
+-log(-z + 1)
+────────────
+     z</pre>
 </div>
 <p><tt class="docutils literal"><span class="pre">hyperexpand</span></tt> also works on the more general Meijer G-function (see
 <tt class="xref py py-meth docutils literal"><span class="pre">its</span> <span class="pre">documentation</span></tt> for more information).</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">meijerg</span><span class="p">([[</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[[</span><span class="mi">1</span><span class="p">],[]],</span> <span class="o">-</span><span class="n">z</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span>
-<span class="go">╭─╮1, 1 ⎛1  1 │   ⎞</span>
-<span class="go">│╶┐     ⎜     │ -z⎟</span>
-<span class="go">╰─╯2, 1 ⎝1    │   ⎠</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hyperexpand</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
-<span class="go"> 1</span>
-<span class="go"> ─</span>
-<span class="go"> z</span>
-<span class="go">ℯ</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; expr = meijerg([[1],[1]], [[1],[]], -z)
+&gt;&gt;&gt; expr
+╭─╮1, 1 ⎛1  1 │   ⎞
+│╶┐     ⎜     │ -z⎟
+╰─╯2, 1 ⎝1    │   ⎠
+&gt;&gt;&gt; hyperexpand(expr)
+ 1
+ ─
+ z
+ℯ</pre>
 </div>
 </div>
 <div class="section" id="combsimp">
 <h3><tt class="docutils literal"><span class="pre">combsimp</span></tt><a class="headerlink" href="#combsimp" title="Permalink to this headline">¶</a></h3>
 <p>To simplify combinatorial expressions, use <tt class="docutils literal"><span class="pre">combsimp</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">combsimp</span><span class="p">(</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">3</span><span class="p">))</span>
-<span class="go">n⋅(n - 2)⋅(n - 1)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">combsimp</span><span class="p">(</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span>
-<span class="go">n + 1</span>
-<span class="go">─────</span>
-<span class="go">k + 1</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; combsimp(factorial(n)/factorial(n - 3))
+n⋅(n - 2)⋅(n - 1)
+&gt;&gt;&gt; combsimp(binomial(n+1, k+1)/binomial(n, k))
+n + 1
+─────
+k + 1</pre>
 </div>
 <p><tt class="docutils literal"><span class="pre">combsimp</span></tt> also simplifies expressions with <tt class="docutils literal"><span class="pre">gamma</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">combsimp</span><span class="p">(</span><span class="n">gamma</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">gamma</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">))</span>
-<span class="go">   π</span>
-<span class="go">────────</span>
-<span class="go">sin(π⋅x)</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; combsimp(gamma(x)*gamma(1 - x))
+   π
+────────
+sin(π⋅x)</pre>
 </div>
 </div>
 </div>
@@ -746,58 +698,54 @@ to its continued fraction form.  The easiest way to construct a continued
 fraction from a list is to work backwards.  Note that despite the apparent
 symmetry of the definition, the first element, <span class="math">\(a_0\)</span>, must usually be handled
 differently from the rest.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">list_to_frac</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="n">expr</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
-<span class="gp">... </span>        <span class="n">expr</span> <span class="o">+=</span> <span class="n">i</span>
-<span class="gp">... </span>        <span class="n">expr</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">expr</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">expr</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">list_to_frac</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
-<span class="go">      1</span>
-<span class="go">x + ─────</span>
-<span class="go">        1</span>
-<span class="go">    y + ─</span>
-<span class="go">        z</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; def list_to_frac(l):
+...     expr = Integer(0)
+...     for i in reversed(l[1:]):
+...         expr += i
+...         expr = 1/expr
+...     return l[0] + expr
+&gt;&gt;&gt; list_to_frac([x, y, z])
+      1
+x + ─────
+        1
+    y + ─
+        z</pre>
 </div>
 <p>We use <tt class="docutils literal"><span class="pre">Integer(0)</span></tt> in <tt class="docutils literal"><span class="pre">list_to_frac</span></tt> so that the result will always be a
 SymPy object, even if we only pass in Python ints.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">list_to_frac</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
-<span class="go">43</span>
-<span class="go">──</span>
-<span class="go">30</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; list_to_frac([1, 2, 3, 4])
+43
+──
+30</pre>
 </div>
 <p>Every finite continued fraction is a rational number, but we are interested
 in symbolics here, so let&#8217;s create a symbolic continued fraction.  The
 <tt class="docutils literal"><span class="pre">symbols</span></tt> function that we have been using has a shortcut to create numbered
 symbols.  <tt class="docutils literal"><span class="pre">symbols('a0:5')</span></tt> will create the symbols <tt class="docutils literal"><span class="pre">a0</span></tt>, <tt class="docutils literal"><span class="pre">a1</span></tt>, ...,
 <tt class="docutils literal"><span class="pre">a5</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">syms</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;a0:5&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">syms</span>
-<span class="go">(a₀, a₁, a₂, a₃, a₄)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span> <span class="o">=</span> <span class="n">syms</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span> <span class="o">=</span> <span class="n">list_to_frac</span><span class="p">(</span><span class="n">syms</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span>
-<span class="go">             1</span>
-<span class="go">a₀ + ─────────────────</span>
-<span class="go">               1</span>
-<span class="go">     a₁ + ────────────</span>
-<span class="go">                  1</span>
-<span class="go">          a₂ + ───────</span>
-<span class="go">                    1</span>
-<span class="go">               a₃ + ──</span>
-<span class="go">                    a₄</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; syms = symbols('a0:5')
+&gt;&gt;&gt; syms
+(a₀, a₁, a₂, a₃, a₄)
+&gt;&gt;&gt; a0, a1, a2, a3, a4 = syms
+&gt;&gt;&gt; frac = list_to_frac(syms)
+&gt;&gt;&gt; frac
+             1
+a₀ + ─────────────────
+               1
+     a₁ + ────────────
+                  1
+          a₂ + ───────
+                    1
+               a₃ + ──
+                    a₄</pre>
 </div>
 <p>This form is useful for understanding continued fractions, but lets put it
 into standard rational function form using <tt class="docutils literal"><span class="pre">cancel</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span> <span class="o">=</span> <span class="n">cancel</span><span class="p">(</span><span class="n">frac</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span>
-<span class="go">a₀⋅a₁⋅a₂⋅a₃⋅a₄ + a₀⋅a₁⋅a₂ + a₀⋅a₁⋅a₄ + a₀⋅a₃⋅a₄ + a₀ + a₂⋅a₃⋅a₄ + a₂ + a₄</span>
-<span class="go">─────────────────────────────────────────────────────────────────────────</span>
-<span class="go">                 a₁⋅a₂⋅a₃⋅a₄ + a₁⋅a₂ + a₁⋅a₄ + a₃⋅a₄ + 1</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; frac = cancel(frac)
+&gt;&gt;&gt; frac
+a₀⋅a₁⋅a₂⋅a₃⋅a₄ + a₀⋅a₁⋅a₂ + a₀⋅a₁⋅a₄ + a₀⋅a₃⋅a₄ + a₀ + a₂⋅a₃⋅a₄ + a₂ + a₄
+─────────────────────────────────────────────────────────────────────────
+                 a₁⋅a₂⋅a₃⋅a₄ + a₁⋅a₂ + a₁⋅a₄ + a₃⋅a₄ + 1</pre>
 </div>
 <p>Now suppose we were given <tt class="docutils literal"><span class="pre">frac</span></tt> in the above canceled form. In fact, we
 might be given the fraction in any form, but we can always put it into the
@@ -812,57 +760,55 @@ could then get a continued fraction with our <tt class="docutils literal"><span 
 <span class="math">\(c\)</span>. This is because <span class="math">\(f\)</span> does not contain <span class="math">\(c\)</span>.  This means we need to use the
 <tt class="docutils literal"><span class="pre">apart</span></tt> function.  We use <tt class="docutils literal"><span class="pre">apart</span></tt> to pull the term out, then subtract it
 from the expression, and take the reciprocal to get the <span class="math">\(f\)</span> part.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span> <span class="o">=</span> <span class="n">apart</span><span class="p">(</span><span class="n">frac</span><span class="p">,</span> <span class="n">a0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span>
-<span class="go">                a₂⋅a₃⋅a₄ + a₂ + a₄</span>
-<span class="go">a₀ + ───────────────────────────────────────</span>
-<span class="go">     a₁⋅a₂⋅a₃⋅a₄ + a₁⋅a₂ + a₁⋅a₄ + a₃⋅a₄ + 1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">frac</span> <span class="o">-</span> <span class="n">a0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span>
-<span class="go">a₁⋅a₂⋅a₃⋅a₄ + a₁⋅a₂ + a₁⋅a₄ + a₃⋅a₄ + 1</span>
-<span class="go">───────────────────────────────────────</span>
-<span class="go">           a₂⋅a₃⋅a₄ + a₂ + a₄</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; l = []
+&gt;&gt;&gt; frac = apart(frac, a0)
+&gt;&gt;&gt; frac
+                a₂⋅a₃⋅a₄ + a₂ + a₄
+a₀ + ───────────────────────────────────────
+     a₁⋅a₂⋅a₃⋅a₄ + a₁⋅a₂ + a₁⋅a₄ + a₃⋅a₄ + 1
+&gt;&gt;&gt; l.append(a0)
+&gt;&gt;&gt; frac = 1/(frac - a0)
+&gt;&gt;&gt; frac
+a₁⋅a₂⋅a₃⋅a₄ + a₁⋅a₂ + a₁⋅a₄ + a₃⋅a₄ + 1
+───────────────────────────────────────
+           a₂⋅a₃⋅a₄ + a₂ + a₄</pre>
 </div>
 <p>Now we repeat this process</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span> <span class="o">=</span> <span class="n">apart</span><span class="p">(</span><span class="n">frac</span><span class="p">,</span> <span class="n">a1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span>
-<span class="go">         a₃⋅a₄ + 1</span>
-<span class="go">a₁ + ──────────────────</span>
-<span class="go">     a₂⋅a₃⋅a₄ + a₂ + a₄</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">frac</span> <span class="o">-</span> <span class="n">a1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span> <span class="o">=</span> <span class="n">apart</span><span class="p">(</span><span class="n">frac</span><span class="p">,</span> <span class="n">a2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span>
-<span class="go">         a₄</span>
-<span class="go">a₂ + ─────────</span>
-<span class="go">     a₃⋅a₄ + 1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">frac</span> <span class="o">-</span> <span class="n">a2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span> <span class="o">=</span> <span class="n">apart</span><span class="p">(</span><span class="n">frac</span><span class="p">,</span> <span class="n">a3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span>
-<span class="go">     1</span>
-<span class="go">a₃ + ──</span>
-<span class="go">     a₄</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">frac</span> <span class="o">-</span> <span class="n">a3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span> <span class="o">=</span> <span class="n">apart</span><span class="p">(</span><span class="n">frac</span><span class="p">,</span> <span class="n">a4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">frac</span>
-<span class="go">a₄</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">list_to_frac</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-<span class="go">             1</span>
-<span class="go">a₀ + ─────────────────</span>
-<span class="go">               1</span>
-<span class="go">     a₁ + ────────────</span>
-<span class="go">                  1</span>
-<span class="go">          a₂ + ───────</span>
-<span class="go">                    1</span>
-<span class="go">               a₃ + ──</span>
-<span class="go">                    a₄</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; frac = apart(frac, a1)
+&gt;&gt;&gt; frac
+         a₃⋅a₄ + 1
+a₁ + ──────────────────
+     a₂⋅a₃⋅a₄ + a₂ + a₄
+&gt;&gt;&gt; l.append(a1)
+&gt;&gt;&gt; frac = 1/(frac - a1)
+&gt;&gt;&gt; frac = apart(frac, a2)
+&gt;&gt;&gt; frac
+         a₄
+a₂ + ─────────
+     a₃⋅a₄ + 1
+&gt;&gt;&gt; l.append(a2)
+&gt;&gt;&gt; frac = 1/(frac - a2)
+&gt;&gt;&gt; frac = apart(frac, a3)
+&gt;&gt;&gt; frac
+     1
+a₃ + ──
+     a₄
+&gt;&gt;&gt; l.append(a3)
+&gt;&gt;&gt; frac = 1/(frac - a3)
+&gt;&gt;&gt; frac = apart(frac, a4)
+&gt;&gt;&gt; frac
+a₄
+&gt;&gt;&gt; l.append(a4)
+&gt;&gt;&gt; list_to_frac(l)
+             1
+a₀ + ─────────────────
+               1
+     a₁ + ────────────
+                  1
+          a₂ + ───────
+                    1
+               a₃ + ──
+                    a₄</pre>
 </div>
 <div class="sidebar">
 <p class="first sidebar-title">Quick Tip</p>
@@ -875,12 +821,11 @@ executing.</p>
 exercise.  Take a list of symbols and randomize them, and create the canceled
 continued fraction, and see if you can reproduce the original list.  For
 example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">symbols</span><span class="p">(</span><span class="s">&#39;a0:5&#39;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">orig_frac</span> <span class="o">=</span> <span class="n">frac</span> <span class="o">=</span> <span class="n">cancel</span><span class="p">(</span><span class="n">list_to_frac</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">l</span>
-</pre></div>
+<div class="highlight-python"><pre>&gt;&gt;&gt; import random
+&gt;&gt;&gt; l = list(symbols('a0:5'))
+&gt;&gt;&gt; random.shuffle(l)
+&gt;&gt;&gt; orig_frac = frac = cancel(list_to_frac(l))
+&gt;&gt;&gt; del l</pre>
 </div>
 <p>Click on &#8220;Run code block in SymPy Live&#8221; on the definition of <tt class="docutils literal"><span class="pre">list_to_frac</span></tt>
 above, and then on the above example, and try to reproduce <tt class="docutils literal"><span class="pre">l</span></tt> from
@@ -995,8 +940,8 @@ at each stage (hint: think of what happens to <span class="math">\(a_0\)</span> 
     </div>
     <div class="footer">
         &copy; Copyright 2013 SymPy Development Team.
-      Last updated on Jun 23, 2013.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2pre.
+      Last updated on Jun 24, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>
